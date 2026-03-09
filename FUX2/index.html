@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cost of Stillness — Exercise & Aging Visualization</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  #wrapper {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+  }
+  video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div id="wrapper">
+  <video id="bgVideo" muted playsinline>
+    <source src="make-health-last.mp4" type="video/mp4">
+  </video>
+  <canvas id="c"></canvas>
+</div>
+<script>
+// ─── CONFIG ───
+const W = 1920, H = 1080;
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const video = document.getElementById('bgVideo');
+canvas.width = W;
+canvas.height = H;
+
+// Scale wrapper to fit viewport
+const wrapper = document.getElementById('wrapper');
+function fitCanvas() {
+  const scale = Math.min(window.innerWidth / W, window.innerHeight / H);
+  wrapper.style.width = (W * scale) + 'px';
+  wrapper.style.height = (H * scale) + 'px';
+  wrapper.style.transform = `scale(1)`;
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+}
+fitCanvas();
+window.addEventListener('resize', fitCanvas);
+
+// ─── COLORS ───
+const COL = {
+  sedentary: '#ff4d6a',
+  active: '#4dffb8',
+  threshold: '#ff9f1c',
+  grid: 'rgba(255,255,255,0.08)',
+  textDim: 'rgba(255,255,255,0.5)',
+  textMid: 'rgba(255,255,255,0.75)',
+  textBright: 'rgba(255,255,255,0.95)',
+  white: '#ffffff',
+};
+
+// ─── DATA MODEL ───
+const AGE_START = 25;
+const AGE_END = 90;
+const VO2_PEAK = 45;
+const THRESHOLD = 18;
+
+function vo2Sedentary(age) {
+  if (age <= 25) return VO2_PEAK;
+  if (age <= 50) return VO2_PEAK * Math.pow(0.88, (age - 25) / 10);
+  const v50 = VO2_PEAK * Math.pow(0.88, 2.5);
+  return v50 * Math.pow(0.84, (age - 50) / 10);
+}
+
+function vo2Active(age) {
+  if (age <= 25) return VO2_PEAK;
+  if (age <= 50) return VO2_PEAK * Math.pow(0.945, (age - 25) / 10);
+  const v50 = VO2_PEAK * Math.pow(0.945, 2.5);
+  return v50 * Math.pow(0.92, (age - 50) / 10);
+}
+
+function findThresholdAge(fn) {
+  for (let a = 25; a <= 95; a += 0.1) {
+    if (fn(a) <= THRESHOLD) return a;
+  }
+  return 95;
+}
+const sedThresholdAge = findThresholdAge(vo2Sedentary);
+const actThresholdAge = findThresholdAge(vo2Active);
+
+function muscleSedentary(age) {
+  if (age <= 30) return 100;
+  if (age <= 50) return 100 - ((age - 30) / 10) * 8;
+  return 100 - 16 - ((age - 50) / 10) * 15;
+}
+function muscleActive(age) {
+  if (age <= 30) return 100;
+  if (age <= 50) return 100 - ((age - 30) / 10) * 4;
+  return 100 - 8 - ((age - 50) / 10) * 7;
+}
+
+// ─── TIMELINE ───
+// Total: ~60s to sync with video (~61s)
+// Phase 0: Title card — video plays behind with heavy overlay (0–5s)
+// Phase 1: Chart framework fades in, overlay lightens (5–9s)
+// Phase 2: Curves draw age 25→50 (9–22s)
+// Phase 3: Curves 50→70, threshold appears (22–35s)
+// Phase 4: Curves 70→90, crossing moment (35–46s)
+// Phase 5: Stats cards (46–53s)
+// Phase 6: Closing message (53–60s)
+
+const DURATION = 60;
+let frame = 0;
+let startTime = null;
+
+// ─── HELPERS ───
+function lerp(a, b, t) { return a + (b - a) * t; }
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+function easeInOut(t) { return t < 0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+// Chart area — shifted right and smaller to leave room for video
+const CHART = {
+  left: W * 0.08,
+  right: W * 0.92,
+  top: H * 0.22,
+  bottom: H * 0.78,
+};
+const CHART_W = CHART.right - CHART.left;
+const CHART_H = CHART.bottom - CHART.top;
+
+function ageToX(age) {
+  return CHART.left + ((age - AGE_START) / (AGE_END - AGE_START)) * CHART_W;
+}
+function vo2ToY(v) {
+  return CHART.bottom - ((v) / 50) * CHART_H;
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+// Text with dark shadow for readability over video
+function drawText(text, x, y, opts = {}) {
+  ctx.save();
+  ctx.font = opts.font || '16px "Helvetica Neue", Arial';
+  ctx.fillStyle = opts.color || COL.textBright;
+  ctx.textAlign = opts.align || 'center';
+  ctx.globalAlpha = opts.alpha !== undefined ? opts.alpha : 1;
+  // Shadow for contrast against video
+  ctx.shadowColor = 'rgba(0,0,0,0.9)';
+  ctx.shadowBlur = 8;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 2;
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+// ─── DRAW FUNCTIONS ───
+
+function drawVideoOverlay(darkness) {
+  // Semi-transparent dark overlay on top of video
+  ctx.fillStyle = `rgba(5,5,12,${darkness})`;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawChartBackdrop(opacity) {
+  // Frosted dark panel behind chart area for readability
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  const pad = 50;
+  const grad = ctx.createLinearGradient(0, CHART.top - 120, 0, CHART.bottom + 90);
+  grad.addColorStop(0, 'rgba(5,5,15,0.0)');
+  grad.addColorStop(0.1, 'rgba(5,5,15,0.75)');
+  grad.addColorStop(0.9, 'rgba(5,5,15,0.75)');
+  grad.addColorStop(1, 'rgba(5,5,15,0.0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, CHART.top - 120, W, CHART_H + 210);
+  ctx.restore();
+}
+
+function drawTitle(opacity) {
+  drawText('The Cost of Stillness', W/2, H/2 - 70,
+    { font: 'bold 80px "Helvetica Neue", Arial', color: COL.white, alpha: opacity });
+  drawText('How small amounts of exercise reshape your biological future', W/2, H/2 + 5,
+    { font: '30px "Helvetica Neue", Arial', color: 'rgba(255,255,255,0.7)', alpha: opacity });
+  drawText('Based on longitudinal VO₂ Max research', W/2, H/2 + 65,
+    { font: '20px "Helvetica Neue", Arial', color: 'rgba(255,255,255,0.4)', alpha: opacity });
+}
+
+function drawChartFrame(opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+
+  // Chart title
+  drawText('VO₂ Max Decline Over a Lifetime', W/2, CHART.top - 60,
+    { font: 'bold 30px "Helvetica Neue", Arial', color: COL.textBright, alpha: opacity });
+  drawText('Maximum oxygen uptake — the strongest predictor of cardiovascular fitness & longevity', W/2, CHART.top - 28,
+    { font: '16px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+
+  // Grid lines
+  ctx.strokeStyle = COL.grid;
+  for (let v = 0; v <= 50; v += 10) {
+    const y = vo2ToY(v);
+    ctx.lineWidth = v === 0 ? 1.5 : 0.8;
+    ctx.beginPath();
+    ctx.moveTo(CHART.left, y);
+    ctx.lineTo(CHART.right, y);
+    ctx.stroke();
+    drawText(v + '', CHART.left - 18, y + 5,
+      { font: '13px "Helvetica Neue", Arial', color: COL.textDim, align: 'right', alpha: opacity });
+  }
+
+  for (let a = 30; a <= 90; a += 10) {
+    const x = ageToX(a);
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(x, CHART.top);
+    ctx.lineTo(x, CHART.bottom);
+    ctx.stroke();
+    drawText(a + '', x, CHART.bottom + 24,
+      { font: '13px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+  }
+
+  // Y axis label
+  ctx.save();
+  ctx.translate(CHART.left - 55, CHART.top + CHART_H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.shadowColor = 'rgba(0,0,0,0.9)';
+  ctx.shadowBlur = 6;
+  ctx.fillStyle = COL.textDim;
+  ctx.globalAlpha = opacity;
+  ctx.font = '14px "Helvetica Neue", Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('VO₂ Max (ml/kg/min)', 0, 0);
+  ctx.restore();
+
+  drawText('Age (years)', W / 2, CHART.bottom + 50,
+    { font: '14px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(CHART.left, CHART.top);
+  ctx.lineTo(CHART.left, CHART.bottom);
+  ctx.lineTo(CHART.right, CHART.bottom);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawCurve(fn, color, maxAge, glow) {
+  ctx.save();
+  ctx.shadowColor = color;
+  ctx.shadowBlur = glow || 15;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  let started = false;
+  for (let a = AGE_START; a <= maxAge; a += 0.5) {
+    const x = ageToX(a);
+    const y = vo2ToY(fn(a));
+    if (!started) { ctx.moveTo(x, y); started = true; }
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // Bright dot at end
+  if (maxAge > AGE_START + 1) {
+    const ex = ageToX(maxAge), ey = vo2ToY(fn(maxAge));
+    ctx.shadowBlur = 25;
+    ctx.beginPath();
+    ctx.arc(ex, ey, 6, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    // Outer pulse
+    ctx.globalAlpha = 0.3 + 0.15 * Math.sin(frame * 0.06);
+    ctx.beginPath();
+    ctx.arc(ex, ey, 14, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Area fill under curve for visual weight
+function drawCurveArea(fn, color, maxAge, opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.beginPath();
+  ctx.moveTo(ageToX(AGE_START), CHART.bottom);
+  for (let a = AGE_START; a <= maxAge; a += 0.5) {
+    ctx.lineTo(ageToX(a), vo2ToY(fn(a)));
+  }
+  ctx.lineTo(ageToX(maxAge), CHART.bottom);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, CHART.top, 0, CHART.bottom);
+  grad.addColorStop(0, color.replace(')', ',0.15)').replace('rgb', 'rgba'));
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawThresholdLine(opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  const y = vo2ToY(THRESHOLD);
+
+  ctx.setLineDash([14, 7]);
+  ctx.strokeStyle = COL.threshold;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = COL.threshold;
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  ctx.moveTo(CHART.left, y);
+  ctx.lineTo(CHART.right, y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  drawText('⚠  INDEPENDENCE THRESHOLD — 18 ml/kg/min', CHART.left + 15, y - 14,
+    { font: 'bold 16px "Helvetica Neue", Arial', color: COL.threshold, align: 'left', alpha: opacity });
+  drawText('Below: unable to climb stairs, carry groceries, or get up from a chair unassisted', CHART.left + 15, y + 24,
+    { font: '13px "Helvetica Neue", Arial', color: 'rgba(255,159,28,0.65)', align: 'left', alpha: opacity });
+}
+
+function drawAgeCounter(age, opacity) {
+  // Large age counter top-right
+  drawText('AGE', W - 120, CHART.top - 50,
+    { font: '16px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+  drawText(Math.floor(age) + '', W - 120, CHART.top + 5,
+    { font: 'bold 60px "Helvetica Neue", Arial', color: COL.white, alpha: opacity });
+}
+
+function drawLegend(opacity) {
+  const lx = CHART.left + 20;
+  const ly = CHART.top + 18;
+
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.shadowColor = 'rgba(0,0,0,0.8)';
+  ctx.shadowBlur = 6;
+
+  // Sedentary
+  ctx.fillStyle = COL.sedentary;
+  ctx.beginPath(); ctx.arc(lx, ly, 7, 0, Math.PI * 2); ctx.fill();
+  drawText('Sedentary — no regular exercise', lx + 20, ly + 5,
+    { font: '14px "Helvetica Neue", Arial', color: COL.sedentary, align: 'left', alpha: opacity });
+
+  // Active
+  ctx.fillStyle = COL.active;
+  ctx.beginPath(); ctx.arc(lx, ly + 28, 7, 0, Math.PI * 2); ctx.fill();
+  drawText('Lightly Active — 15–30 min/day, most days', lx + 20, ly + 33,
+    { font: '14px "Helvetica Neue", Arial', color: COL.active, align: 'left', alpha: opacity });
+
+  ctx.restore();
+}
+
+function drawThresholdCrossing(age, color, label, yOffset, opacity) {
+  const x = ageToX(age);
+  const y = vo2ToY(THRESHOLD);
+
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  const pulse = 1 + 0.2 * Math.sin(frame * 0.07);
+
+  // Pulsing ring
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 20;
+  ctx.beginPath();
+  ctx.arc(x, y, 12 * pulse, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Inner fill
+  ctx.globalAlpha = opacity * 0.4;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(x, y, 8, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  drawText(label, x, y + yOffset,
+    { font: 'bold 20px "Helvetica Neue", Arial', color: color, alpha: opacity });
+  drawText('Age ' + Math.round(age), x, y + yOffset + 24,
+    { font: '15px "Helvetica Neue", Arial', color: 'rgba(255,255,255,0.7)', alpha: opacity });
+}
+
+function drawMuscleBar(x, w, pct, color, label, opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  const barH = 16;
+  const y = CHART.bottom + 75;
+
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  roundRect(ctx, x, y, w, barH, 4); ctx.fill();
+
+  ctx.fillStyle = color;
+  ctx.globalAlpha = opacity * 0.75;
+  roundRect(ctx, x, y, w * (pct / 100), barH, 4); ctx.fill();
+  ctx.restore();
+
+  drawText(label + ': ' + Math.round(pct) + '%', x, y - 8,
+    { font: '12px "Helvetica Neue", Arial', color: COL.textDim, align: 'left', alpha: opacity });
+}
+
+function drawStats(opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+
+  // Heavy overlay for readability
+  ctx.fillStyle = `rgba(5,5,12,0.88)`;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  drawText('The Numbers Don\'t Lie', W/2, 155,
+    { font: 'bold 46px "Helvetica Neue", Arial', color: COL.textBright, alpha: opacity });
+
+  const stats = [
+    { value: Math.round(sedThresholdAge), unit: 'years old', label: 'Sedentary loses independence', color: COL.sedentary },
+    { value: Math.round(actThresholdAge), unit: 'years old', label: 'Active loses independence', color: COL.active },
+    { value: '+' + Math.round(actThresholdAge - sedThresholdAge), unit: 'extra years', label: 'Years of independence gained', color: COL.threshold },
+    { value: '15–30', unit: 'min / day', label: 'Is all it takes', color: '#8b9fff' },
+  ];
+
+  const cardW = 380, cardH = 190, gap = 40;
+  const sx = W/2 - cardW - gap/2, sy = 210;
+
+  stats.forEach((s, i) => {
+    const col = i % 2, row = Math.floor(i / 2);
+    const x = sx + col * (cardW + gap);
+    const y = sy + row * (cardH + gap);
+
+    ctx.save();
+    ctx.globalAlpha = opacity;
+    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    roundRect(ctx, x, y, cardW, cardH, 14); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    roundRect(ctx, x, y, cardW, cardH, 14); ctx.stroke();
+    ctx.restore();
+
+    drawText(s.value + '', x + cardW/2, y + 90,
+      { font: 'bold 68px "Helvetica Neue", Arial', color: s.color, alpha: opacity });
+    drawText(s.unit, x + cardW/2, y + 122,
+      { font: '22px "Helvetica Neue", Arial', color: 'rgba(255,255,255,0.45)', alpha: opacity });
+    drawText(s.label, x + cardW/2, y + 158,
+      { font: '18px "Helvetica Neue", Arial', color: COL.textMid, alpha: opacity });
+  });
+
+  drawText('Source: Journal of Applied Physiology — Longitudinal Master Athletes vs Sedentary Study', W/2, H - 70,
+    { font: '14px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+}
+
+function drawClosing(opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.fillStyle = `rgba(5,5,12,0.85)`;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  drawText('You don\'t need to be an athlete.', W/2, H/2 - 80,
+    { font: 'bold 58px "Helvetica Neue", Arial', color: COL.active, alpha: opacity });
+  drawText('You just need to move a little, most days.', W/2, H/2,
+    { font: '38px "Helvetica Neue", Arial', color: COL.textBright, alpha: opacity });
+  drawText('15 minutes of walking  ·  A few flights of stairs  ·  A short stretch', W/2, H/2 + 70,
+    { font: '22px "Helvetica Neue", Arial', color: COL.textDim, alpha: opacity });
+  drawText('That\'s ' + Math.round(actThresholdAge - sedThresholdAge) + ' more years of independence.', W/2, H/2 + 150,
+    { font: 'bold 30px "Helvetica Neue", Arial', color: COL.threshold, alpha: opacity });
+}
+
+// ─── MAIN RENDER ───
+function render(t) {
+  // Clear canvas (transparent — lets video show through)
+  ctx.clearRect(0, 0, W, H);
+
+  // Phase 0: Title (0–5s) — heavy overlay, video barely visible
+  if (t < 5) {
+    const overlayDark = lerp(0.5, 0.1, clamp(t / 5, 0, 1));
+    drawVideoOverlay(overlayDark);
+    const fadeIn = easeOut(clamp(t / 1.5, 0, 1));
+    const fadeOut = t > 3.5 ? clamp((5 - t) / 1.5, 0, 1) : 1;
+    drawTitle(fadeIn * fadeOut);
+    return;
+  }
+
+  // Phase 1+: Chart visible — video shows through with moderate overlay
+  // Overlay gets lighter as we progress to let more video emotion through
+  const baseOverlay = t < 9 ? lerp(0.1, 0.1, clamp((t - 5) / 4, 0, 1)) :
+                      t < 46 ? 0.1 :
+                      0.1;
+  drawVideoOverlay(baseOverlay);
+
+  // Chart backdrop (frosted panel)
+  const chartFade = easeOut(clamp((t - 5) / 2, 0, 1));
+  drawChartBackdrop(chartFade);
+  drawChartFrame(chartFade);
+  drawLegend(chartFade);
+
+  if (t < 9) return;
+
+  // Phase 2–4: Curves (9–46s)
+  const curveStartT = 9;
+  const curveEndT = 44;
+  const curveProgress = clamp((t - curveStartT) / (curveEndT - curveStartT), 0, 1);
+  const currentAge = AGE_START + (AGE_END - AGE_START) * easeInOut(curveProgress);
+
+  // Filled areas under curves
+  drawCurveArea(vo2Active, 'rgb(77,255,184)', currentAge, 0.08);
+  drawCurveArea(vo2Sedentary, 'rgb(255,77,106)', currentAge, 0.06);
+
+  // Curves
+  drawCurve(vo2Sedentary, COL.sedentary, currentAge, 15);
+  drawCurve(vo2Active, COL.active, currentAge, 15);
+
+  // Age counter
+  if (t >= 9 && t < 46) {
+    drawAgeCounter(currentAge, 1);
+  }
+
+  // Threshold line at age ~45
+  if (currentAge >= 45) {
+    drawThresholdLine(easeOut(clamp((currentAge - 45) / 5, 0, 1)));
+  }
+
+  // Threshold crossings
+  if (currentAge >= sedThresholdAge) {
+    const fade = easeOut(clamp((currentAge - sedThresholdAge) / 3, 0, 1));
+    drawThresholdCrossing(sedThresholdAge, COL.sedentary, 'Loses Independence', -38, fade);
+  }
+  if (currentAge >= actThresholdAge && actThresholdAge <= AGE_END) {
+    const fade = easeOut(clamp((currentAge - actThresholdAge) / 3, 0, 1));
+    drawThresholdCrossing(actThresholdAge, COL.active, 'Still Independent', -38, fade);
+  }
+
+  // Muscle bars
+  if (currentAge > 30) {
+    const barFade = clamp((currentAge - 30) / 5, 0, 1);
+    const barW = (CHART_W / 2) - 50;
+    drawMuscleBar(CHART.left, barW, muscleSedentary(currentAge), COL.sedentary, 'Muscle Mass — Sedentary', barFade);
+    drawMuscleBar(CHART.left + barW + 100, barW, muscleActive(currentAge), COL.active, 'Muscle Mass — Active', barFade);
+  }
+
+  // Phase 5: Stats (46–53s)
+  if (t >= 46 && t < 54) {
+    const sFade = easeOut(clamp((t - 46) / 1.5, 0, 1));
+    const sOut = t > 52 ? clamp((54 - t) / 2, 0, 1) : 1;
+    drawStats(sFade * sOut);
+  }
+
+  // Phase 6: Closing (54–60s)
+  if (t >= 54) {
+    drawClosing(easeOut(clamp((t - 54) / 2, 0, 1)));
+  }
+}
+
+// ─── ANIMATION LOOP ───
+function animate(timestamp) {
+  if (!startTime) startTime = timestamp;
+  const t = (timestamp - startTime) / 1000;
+  frame++;
+
+  if (t <= DURATION + 2) {
+    render(Math.min(t, DURATION));
+    requestAnimationFrame(animate);
+  } else {
+    render(DURATION);
+  }
+}
+
+// Start: play video and begin animation simultaneously
+video.addEventListener('canplay', function onReady() {
+  video.removeEventListener('canplay', onReady);
+  video.play();
+  requestAnimationFrame(animate);
+}, { once: true });
+
+// Fallback if already loaded
+if (video.readyState >= 3) {
+  video.play();
+  setTimeout(() => requestAnimationFrame(animate), 100);
+}
+
+video.load();
+</script>
+</body>
+</html>

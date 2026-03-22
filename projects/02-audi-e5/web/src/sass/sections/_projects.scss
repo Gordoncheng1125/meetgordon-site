@@ -1,0 +1,459 @@
+#projects {
+  background-color: $white-color;
+  color: $dark-blue-text;
+  margin-top: -10rem;
+  padding-top: 15rem;
+
+  @include respond(tab-land) {
+    margin-top: 0;
+    padding-top: 5rem;
+  }
+
+  .project-wrapper {
+    margin-bottom: 15rem;
+
+    @include respond(phone) {
+      margin-bottom: 0rem;
+    }
+
+    .row {
+      margin-bottom: 8rem;
+
+      @include respond(phone) {
+        margin-bottom: 4rem;
+      }
+    }
+
+    &__text {
+      text-align: left;
+
+      @include respond(phone) {
+        margin-bottom: 2.5rem !important;
+      }
+      @include respond(tab-land) {
+        margin-bottom: 4.8rem;
+      }
+
+      &-title {
+        font-weight: bold;
+        margin-bottom: 1.8rem;
+        font-size: $mid-font-size;
+
+        @include respond(phone) {
+          font-size: 2rem;
+        }
+      }
+
+      & p > a {
+        color: $secondary-color;
+      }
+    }
+
+    &__image {
+      width: 90%;
+      margin: 0 auto;
+
+      @include respond(tab-land) {
+        width: 100%;
+        margin: 0;
+      }
+
+      & .thumbnail {
+        border: none;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+        transition: 0.5s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+          0.5s box-shadow,
+          0.5s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+
+        @include respond(phone) {
+          border: 1px solid $light-grey;
+          box-shadow: none;
+          margin-bottom: 3.2rem;
+        }
+      }
+    }
+  }
+}
+
+// Section dividers
+.section-divider {
+  margin-top: 80px;
+}
+
+// Stat numbers
+.stat-number {
+  font-size: 2.8rem;
+  color: $accent-purple;
+  display: block;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 1.4rem;
+  color: #666;
+}
+
+.stat-highlight {
+  font-size: 1.6rem;
+  color: $accent-purple;
+  display: block;
+  margin-top: 1rem;
+}
+
+// Pullquotes
+.pullquote-row {
+  margin-top: 60px !important;
+  margin-bottom: 60px !important;
+}
+
+.pullquote {
+  font-size: 2rem;
+  font-style: italic;
+  color: #333;
+  border-left: 4px solid $accent-purple;
+  padding-left: 30px;
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: left;
+
+  @include respond(phone) {
+    font-size: 1.6rem;
+    padding-left: 20px;
+  }
+}
+
+.pullquote-footer {
+  font-size: 1rem;
+  font-style: normal;
+  margin-top: 15px;
+  color: #666;
+  display: block;
+}
+
+// Challenge visuals
+.challenge-visual {
+  background: linear-gradient(135deg, $dark-grey 0%, lighten($dark-grey, 10%) 100%);
+  padding: 60px 40px;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @include respond(phone) {
+    padding: 40px 20px;
+    min-height: 250px;
+  }
+}
+
+.challenge-subtitle {
+  font-size: 1.4rem;
+  color: $accent-purple;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  margin-top: -0.5rem;
+}
+
+.challenge-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  @include respond(phone) {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+.challenge-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: $white-color;
+
+  @include respond(phone) {
+    width: 110px;
+    height: 110px;
+    font-size: 1.2rem;
+  }
+
+  &--left {
+    border: 3px solid #ccc;
+  }
+
+  &--right {
+    border: 3px solid $accent-purple;
+  }
+}
+
+.challenge-bridge {
+  font-size: 3rem;
+  color: $accent-purple;
+  font-weight: 700;
+
+  @include respond(phone) {
+    font-size: 2.4rem;
+  }
+}
+
+.challenge-caption {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.2rem;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+// Market context chart
+.market-context {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.market-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+
+  &--audi {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+.market-brand {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: 120px;
+  text-align: right;
+  flex-shrink: 0;
+
+  @include respond(phone) {
+    width: 90px;
+    font-size: 1.1rem;
+  }
+}
+
+.market-bar {
+  height: 24px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.35));
+  border-radius: 4px;
+  transition: width 1s ease;
+
+  &--audi {
+    background: linear-gradient(90deg, $accent-purple, $accent-purple-light);
+  }
+}
+
+.market-label {
+  color: $accent-purple-light;
+  font-size: 1.1rem;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+// Answer cards
+.answer-card {
+  background: #f8f8f8;
+  border-left: 4px solid $accent-purple;
+  padding: 30px;
+  height: 100%;
+
+  &__title {
+    font-size: 1.2rem;
+    color: $accent-purple;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+
+  &__subtitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: $dark-grey;
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 1.8;
+  }
+}
+
+// TVC Specs
+.tvc-specs {
+  background: $dark-grey;
+  border-radius: 8px;
+  padding: 40px;
+
+  &__title {
+    color: $white-color;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+}
+
+.tvc-spec-item {
+  text-align: left;
+  padding: 20px 0;
+  border-left: 3px solid $accent-purple;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.tvc-spec-label {
+  display: block;
+  color: $accent-purple-light;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.tvc-spec-value {
+  display: block;
+  color: $white-color;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.tvc-spec-detail {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+}
+
+// Product specs grid
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @include respond(phone) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.spec-card {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 30px 20px;
+  text-align: center;
+
+  &__number {
+    display: block;
+    font-size: 3.6rem;
+    font-weight: 700;
+    color: $accent-purple;
+    line-height: 1;
+
+    @include respond(phone) {
+      font-size: 2.8rem;
+    }
+  }
+
+  &__unit {
+    display: block;
+    font-size: 1.4rem;
+    color: #999;
+    margin-bottom: 8px;
+  }
+
+  &__label {
+    display: block;
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+// Career bridge
+.career-bridge {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 40px;
+
+  @include respond(phone) {
+    padding: 20px;
+  }
+}
+
+.bridge-card {
+  padding: 20px;
+
+  &__from,
+  &__to {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  &__from {
+    color: $dark-grey;
+  }
+
+  &__to {
+    color: $accent-purple;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  li {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    padding: 5px 0;
+    padding-left: 15px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: $accent-purple;
+    }
+  }
+
+  &--future {
+    border-left: 3px solid $accent-purple;
+
+    @include respond(phone) {
+      border-left: none;
+      border-top: 3px solid $accent-purple;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+  }
+}
+
+.bridge-thesis {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $dark-grey;
+  max-width: 800px;
+  margin: 30px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  font-style: italic;
+}

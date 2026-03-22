@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" class="sr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="shortcut icon" type="image/png" href="assets/favicon.png" /> -->
+
+    <title>Making a Japanese Luxury Brand Feel Like Home | Gordon Cheng</title>
+    <meta name="keywords" content="Gordon Cheng, Acura, CDX, Brand Repositioning, Dentsu, Honda China, Creative Director">
+    <meta name="description" content="Acura China Brand Repositioning — Led creative strategy that drove +53% awareness and +76% brand affinity. Associate Creative Director, Dentsu ONE Beijing.">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <style>
+      .load-hidden { visibility: visible !important; opacity: 1 !important; transform: none !important; }
+      .mb-8 { margin-bottom: 8rem !important; }
+      html { font-size: 62.5%; }
+      body { text-align: center; scroll-behavior: smooth; font-family: Montserrat, sans-serif; }
+      h1, .h1 { font-weight: 700; }
+      p, a { font-family: Montserrat, sans-serif; font-size: 1.6rem; }
+      a, a:link, a:hover, a:visited, a:active { text-decoration: none; }
+      a:hover { transition: all .3s ease-in-out; }
+      .section-title { text-transform: uppercase; margin: 0 0 4.5rem; font-size: 4rem; font-weight: bold; }
+      @media (max-width: 37.5em) { .section-title { font-size: 2.8rem; } }
+      .dark-blue-text { color: #272341 !important; }
+      .text-color-main { color: #333; -webkit-text-fill-color: #333; }
+      .cta-btn { z-index: 1; padding: .8rem 1.6rem; font-weight: bold; line-height: 1; transition: all .6s cubic-bezier(.19, 1, .22, 1); display: inline-block; position: relative; }
+      .cta-btn:after { content: ""; width: 0; height: 100%; z-index: -1; transition: all .3s cubic-bezier(.19, 1, .22, 1); display: block; position: absolute; bottom: 0; left: 0; }
+      .cta-btn--hero { color: #fff; -webkit-text-fill-color: #fff; border: 2px solid #fff; }
+      .cta-btn--hero:after { background: #fff; }
+      .cta-btn--hero:hover { -webkit-text-fill-color: #000; color: #000; text-decoration: none; }
+      .cta-btn--hero:hover:after { width: 100%; }
+      .cta-btn--resume { color: #fff; border: 2px solid #fff; }
+      .cta-btn--resume:after { background: #fff; }
+      .cta-btn--resume:hover { color: #333; text-decoration: none; }
+      .cta-btn--resume:hover:after { width: 100%; }
+      .up i { color: #272727; }
+      .footer { color: #fff; background-color: #333; padding: 4.8rem 0; }
+      .footer__text { color: gray; font-size: 1.3rem; }
+      .footer__text a { color: gray; background-color: #333; font-size: 1.3rem; transition: all .4s; display: inline-block; }
+      .footer__text a:hover, .footer__text a:active { color: #000; box-shadow: 0 1.5rem 4rem #00000026; }
+      .footer hr { width: 50%; border: 0; border-top: 2px solid gray; margin: 1rem auto; }
+      .social-links { flex-direction: row; justify-content: center; display: flex; }
+      .social-links a { color: #fff; width: 5rem; height: 5rem; flex-direction: column; justify-content: center; margin: 1.6rem; font-size: 3rem; transition: all .2s ease-in; display: flex; }
+      .social-links a:hover { transform: translateY(-2px); }
+      .back-to-top i { color: #fff; margin: 1rem 0 1.6rem; transition: all .2s ease-in; }
+      .back-to-top i:hover { transform: translateY(-2px); }
+      section { padding: 5rem 0; }
+      @media (max-width: 37.5em) { section { border: none; padding-left: 1rem; padding-right: 1rem; } }
+      #about { color: #333; height: 100%; background-color: #f5f5f5; border-top: 0; padding-bottom: 10%; }
+      @media (max-width: 75em) { #about { height: 100%; } }
+      #about .about-wrapper__image { height: 100%; justify-content: center; align-items: center; display: flex; }
+      @media (max-width: 48em) { #about .about-wrapper__image { padding-bottom: 6.4rem; } }
+      #about .about-wrapper__info { height: 100%; flex-direction: column; justify-content: center; display: flex; }
+      @media (max-width: 48em) { #about .about-wrapper__info { align-items: center; } }
+      #about .about-wrapper__info-text { text-align: left; }
+      @media (max-width: 48em) { #about .about-wrapper__info-text { text-align: center; } }
+      #contact { color: #fff; background-image: linear-gradient(135deg, #000 0%, #333 100%); padding: 10rem 0; }
+      #contact .contact-wrapper { backface-visibility: hidden; margin-top: 3.2rem; padding: 0 2rem; }
+      #contact .contact-wrapper__text { margin-bottom: 2.5rem; }
+      #contact .contact-wrapper__text, #contact .contact-wrapper a { font-size: 2.4rem; }
+      @media (max-width: 37.5em) { #contact .contact-wrapper__text, #contact .contact-wrapper a { font-size: 2rem; } }
+      #hero { min-height: 100vh; height: 100vh; color: #fff; z-index: -1; background: linear-gradient(#0000008c, #000000bf), url("cdx-aspec-01.ae751be0.jpg") center/cover no-repeat; background-attachment: fixed; border-bottom: 0; align-items: center; margin-bottom: 0; padding: 0 5.6rem; font-weight: 400; display: flex; }
+      @media (max-width: 37.5em) { #hero { padding: 0 1.6rem; } }
+      #hero .hero-title { text-align: left; color: #fff; text-shadow: 3px 3px 12px #000c, 0 0 40px #00000080; margin-bottom: 2rem; font-size: 5.6rem; font-weight: 700; }
+      @media (max-width: 75em) { #hero .hero-title { font-size: 4rem; } }
+      @media (max-width: 56.25em) { #hero .hero-title { text-align: center; font-size: 3.6rem; } }
+      @media (max-width: 37.5em) { #hero .hero-title { font-size: 3.5rem; line-height: 1.5; } }
+      #hero .hero-cta { display: flex; }
+      @media (max-width: 56.25em) { #hero .hero-cta { justify-content: center; } }
+      #hero .hero-cta a { font-size: 2.4rem; }
+      @media (max-width: 37.5em) { #hero .hero-cta a { font-size: 2rem; } }
+      #projects { color: #272341; background-color: #fff; padding-top: 5rem; }
+      #projects .project-wrapper { margin-bottom: 15rem; }
+      @media (max-width: 37.5em) { #projects .project-wrapper { margin-bottom: 0; } }
+      #projects .project-wrapper .row { margin-bottom: 8rem; }
+      @media (max-width: 37.5em) { #projects .project-wrapper .row { margin-bottom: 4rem; } }
+      #projects .project-wrapper__text { text-align: left; }
+      @media (max-width: 37.5em) { #projects .project-wrapper__text { margin-bottom: 2.5rem !important; } }
+      @media (max-width: 75em) { #projects .project-wrapper__text { margin-bottom: 4.8rem; } }
+      #projects .project-wrapper__text-title { margin-bottom: 1.8rem; font-size: 2.5rem; font-weight: bold; }
+      @media (max-width: 37.5em) { #projects .project-wrapper__text-title { font-size: 2rem; } }
+      #projects .project-wrapper__text p > a { color: #333; }
+      #projects .project-wrapper__image { width: 90%; margin: 0 auto; }
+      @media (max-width: 75em) { #projects .project-wrapper__image { width: 100%; margin: 0; } }
+      #projects .project-wrapper__image .thumbnail { border: none; transition: transform .5s cubic-bezier(.155, 1.105, .295, 1.12), box-shadow .5s; box-shadow: 0 6px 10px #00000014, 0 0 6px #0000000d; }
+      @media (max-width: 37.5em) { #projects .project-wrapper__image .thumbnail { box-shadow: none; border: 1px solid #d2d2d2; margin-bottom: 3.2rem; } }
+    </style>
+  </head>
+
+  <body>
+    <div id="top"></div>
+
+    <!-- **** Hero Section **** -->
+    <!-- Framework #1: Title + #3: Hero Image + #4: 1-Sentence Description -->
+    <section id="hero" class="jumbotron">
+      <div class="container">
+        <h1 class="hero-title load-hidden">
+          Making a Japanese Luxury Brand Feel Like Home
+        </h1>
+        <p class="hero-cta load-hidden" style="margin-bottom: 1.5rem">
+          <span style="opacity: 1; font-size: 1.5rem; font-weight: 500">
+            Acura China Brand Repositioning
+          </span>
+        </p>
+        <p class="hero-cta load-hidden">
+          <span style="opacity: .9; font-size: 1.2rem">
+            +53% Awareness | +76% Brand Affinity | 2 Competitive Pitches Won
+          </span>
+        </p>
+        <p class="hero-cta load-hidden" style="margin-top: 20px">
+          <a rel="noreferrer" class="cta-btn cta-btn--hero" href="#about">View Case Study</a>
+        </p>
+      </div>
+    </section>
+    <!-- /END Hero Section -->
+
+    <!-- **** About Section (Project Overview) **** -->
+    <!-- Framework #2: Credential Box + #4: 1-Sentence Description -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title load-hidden">Project Overview</h2>
+        <div class="row about-wrapper">
+          <div class="col-md-6 col-sm-12">
+            <div class="about-wrapper__image load-hidden">
+              <img alt="Acura CDX at 2016 Beijing Auto Show" class="img-fluid rounded shadow-lg" height="auto" width="450px" src="./cdx-aspec-01.ae751be0.jpg">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="about-wrapper__info load-hidden">
+              <p class="about-wrapper__info-text" style="font-size: 1.1rem; font-weight: 500">
+                Led the creative strategy that transformed Acura from a niche, utilitarian Japanese import into an approachable luxury brand for Chinese consumers — driving +53% awareness and +76% brand affinity in one year.
+              </p>
+              <p class="about-wrapper__info-text">
+                <strong>Role:</strong> Associate Creative Director — Creative strategy, campaign execution, Japanese-to-Chinese brand localization<br>
+                <strong>Client:</strong> Acura China / Honda China<br>
+                <strong>Agency:</strong> Dentsu ONE Beijing<br>
+                <strong>Duration:</strong> Apr 2015 – May 2016<br>
+                <strong>Category:</strong> Brand Strategy / Cross-cultural Localization
+              </p>
+              <p class="about-wrapper__info-text" style="color: #000; font-weight: 500">
+                "Acura didn't need to be more premium. It needed to be more human."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /END About Section -->
+
+    <!-- **** Projects Section **** -->
+    <section id="projects">
+      <div class="container">
+        <div class="project-wrapper">
+
+          <!-- Framework #7: Solution & Impact (Start at the End) -->
+          <h2 class="section-title dark-blue-text">The Results</h2>
+
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">Impact & Recognition</h3>
+                <div>
+                  <p class="mb-4">
+                    <strong style="color: #000; font-size: 2rem">+53%</strong><br>Consumer Awareness YOY<br><br>
+                    <strong style="color: #000; font-size: 2rem">+76%</strong><br>Brand Affinity YOY<br><br>
+                    <strong style="color: #000; font-size: 2rem">16,348</strong><br>Units in 2017 (+100.8% YOY, Historic Best)<br><br>
+                    <strong style="color: #000; font-size: 1.5rem">2 Pitch Wins</strong><br>CDX Launch + Annual Brand Campaign
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura CDX front three-quarter view" class="img-fluid" src="./cdx-aspec-04.2016233a.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Results -->
+
+          <!-- Framework #5: Pullquote #1 -->
+          <div class="row" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="col-12 text-center">
+              <blockquote style="color: #333; max-width: 800px; text-align: left; border-left: 4px solid #000; margin: 0 auto; padding-left: 30px; font-size: 2rem; font-style: italic">
+                "No luxury brand in China felt genuinely approachable. Every brand talked <em>at</em> consumers. None talked <em>with</em> them."
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- Framework #6: Problem Statement -->
+          <h2 class="section-title dark-blue-text" style="margin-top: 80px">The Challenge</h2>
+
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">The Invisible Luxury Brand</h3>
+                <div>
+                  <p class="mb-4">
+                    By 2015, Acura had been in China for nearly a decade — and almost no one cared. Annual sales: ~5,000 units in a market selling 20+ million cars per year.
+                    <br><br>
+                    <strong>Three Compounding Challenges:</strong><br>
+                    • <strong>Lost in Translation</strong> — "Precision Crafted Performance" resonated in America but landed flat in China. Japanese cars = reliability, not luxury<br><br>
+                    • <strong>Perception Death Sentence</strong> — Consumers saw Acura as "niche" and "utilitarian." They respected the product but felt nothing for the brand<br><br>
+                    • <strong>Ticking Clock</strong> — Honda was about to produce Acura locally (CDX, mid-2016). The brand needed emotional repositioning <em>before</em> the launch, not after
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded" style="text-align: center; background: linear-gradient(135deg, #000 0%, #333 100%); padding: 60px">
+                  <p style="color: #fff; margin: 0; font-size: 1.8rem; line-height: 1.6">
+                    72 Dealerships Nationwide<br>
+                    ~5,000 Annual Sales<br>
+                    "Niche & Utilitarian" Perception<br><br>
+                    <span style="opacity: .7; font-size: 1.2rem">vs. BMW, Mercedes, Lexus</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Challenge -->
+
+          <!-- Framework #7: Solution -->
+          <h2 class="section-title dark-blue-text" style="margin-top: 80px">The Solution</h2>
+
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">From "Precision" to "Approachable"</h3>
+                <div>
+                  <p class="mb-4">
+                    The core insight was counterintuitive: every luxury competitor in China was racing toward prestige. The market was saturated with "I'm better than you" messaging.
+                    <br><br>
+                    <strong>The Repositioning:</strong><br>
+                    • Engineering-first → Lifestyle-first<br>
+                    • "We are technically superior" → "We understand your life"<br>
+                    • Niche & exclusive tone → Warm & confident tone<br>
+                    • Japanese heritage emphasis → China-relevant emotional territory
+                    <br><br>
+                    <strong>Two Pitch Wins, One Story:</strong><br>
+                    Won both the CDX launch campaign and the annual brand repositioning — owning the complete Acura narrative in China.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura CDX side profile" class="img-fluid" src="./cdx-aspec-03.3a697545.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CDX Launch Sub-section -->
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">CDX Launch: THE WAY I AM</h3>
+                <div>
+                  <p class="mb-4">
+                    <strong>"THE WAY I AM — 唯自己 可追随"</strong><br>(Only Yourself Worth Following)
+                    <br><br>
+                    Acura's first China-produced vehicle: compact luxury SUV at ¥229,800–309,800. Launched July 29, 2016 at Shanghai Tower — China's tallest building.
+                    <br><br>
+                    Neon installations lit up Wangfujing, Beijing's busiest commercial district — turning a brand message into a physical landmark.
+                    <br><br>
+                    <strong>Awards:</strong> Sharp Technology Award + Best Exterior Design Award, China Auto Media Awards 2016
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura CDX rear three-quarter view" class="img-fluid" src="./cdx-aspec-06.1d5eb7c9.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Solution -->
+
+          <!-- Framework #5: Pullquote #2 -->
+          <div class="row" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="col-12 text-center">
+              <blockquote style="color: #333; max-width: 800px; text-align: left; border-left: 4px solid #000; margin: 0 auto; padding-left: 30px; font-size: 2rem; font-style: italic">
+                "You can't localize a brand by translating its tagline. You have to translate its emotional logic."
+                <footer style="color: #666; margin-top: 15px; font-size: 1rem; font-style: normal">— Gordon Cheng, Associate Creative Director</footer>
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- Framework #8: 1-Paragraph Description -->
+          <div class="row" style="margin-bottom: 60px">
+            <div class="col-lg-10 col-sm-12 mx-auto">
+              <div class="load-hidden">
+                <p style="color: #333; background: #f8f8f8; border-radius: 8px; padding: 30px; font-size: 1.1rem; line-height: 1.8">
+                  As Associate Creative Director at Dentsu ONE Beijing, I led the creative strategy for Acura's brand repositioning in China during a pivotal moment — the year before Honda's first locally-produced Acura vehicle would launch. The challenge was transforming a brand perceived as "niche and utilitarian" into one that felt emotionally relevant to Chinese luxury consumers, without the budget or heritage advantages of BMW, Mercedes, or Lexus. By shifting the creative strategy from engineering-first messaging to lifestyle-first storytelling, and by reframing Acura's underdog position as authentic approachability, the campaign drove a 53% YOY increase in consumer awareness and a 76% increase in brand affinity — fundamentally changing how Chinese consumers felt about the brand ahead of the critical CDX launch.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Framework #9: More Great Images -->
+          <h2 class="section-title dark-blue-text" style="margin-top: 80px">Project Gallery</h2>
+
+          <!-- NSX — Gordon also led NSX China communications -->
+          <div class="row">
+            <div class="col-lg-8 col-sm-12" style="margin-bottom: 20px">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura NSX supercar in red — also part of Gordon's Acura China portfolio" class="img-fluid" src="./acura-nsx-hero.3f0fbb3c.jpg">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-12" style="margin-bottom: 20px">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="2019 Acura NSX with Thermal Orange Pearl" class="img-fluid" src="./acura-nsx-2019.54ccf615.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CDX A-Spec -->
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura CDX A-Spec red — front dramatic lighting" class="img-fluid" src="./cdx-aspec-04.2016233a.jpg">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 20px">
+              <div class="project-wrapper__image load-hidden">
+                <div class="thumbnail rounded">
+                  <img alt="Acura CDX Sport Hybrid A-Spec driving" class="img-fluid" src="./cdx-aspec-06.1d5eb7c9.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Gallery -->
+
+          <!-- Framework #10: Process -->
+          <h2 class="section-title dark-blue-text" style="margin-top: 80px">The Process</h2>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12" style="margin-bottom: 30px">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title" style="font-size: 1.3rem">1. Research & Audit</h3>
+                <div>
+                  <p>
+                    China luxury automotive market analysis. Consumer perception audit — understanding why "precision" failed to resonate. Competitive messaging landscape: Lexus, BMW, Mercedes.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12" style="margin-bottom: 30px">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title" style="font-size: 1.3rem">2. Core Insight</h3>
+                <div>
+                  <p>
+                    Chinese luxury consumers were tired of being talked down to. They wanted a brand that felt like a peer, not a lecture. Acura's "underdog" position was an asset — it could be genuine when everyone else was performing.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12" style="margin-bottom: 30px">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title" style="font-size: 1.3rem">3. Creative Development</h3>
+                <div>
+                  <p>
+                    Two separate pitch wins requiring distinct but connected strategies. Annual brand campaign set the emotional stage; CDX launch creative capitalized on it.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12" style="margin-bottom: 30px">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title" style="font-size: 1.3rem">4. Cross-cultural Localization</h3>
+                <div>
+                  <p>
+                    Japanese-to-Chinese brand adaptation — not just language, but cultural emotional codes. Translating what "luxury" means in Japan (understated) into what it needs to mean in China (confident, relatable).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Process -->
+
+          <!-- Framework #5: Pullquote #3 -->
+          <div class="row" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="col-12 text-center">
+              <blockquote style="color: #333; max-width: 800px; text-align: left; border-left: 4px solid #000; margin: 0 auto; padding-left: 30px; font-size: 2rem; font-style: italic">
+                "Great creative strategy can change perception, but it cannot substitute for product-market fit."
+                <footer style="color: #666; margin-top: 15px; font-size: 1rem; font-style: normal">— Post-project Reflection</footer>
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- Framework #11: Takeaways -->
+          <h2 class="section-title dark-blue-text" style="margin-top: 80px">Takeaways</h2>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">What Worked</h3>
+                <div>
+                  <p class="mb-4">
+                    • <strong>Reframing weakness as strength:</strong> Acura's low awareness was permission to define something new. No baggage, unlike BMW or Mercedes<br><br>
+                    • <strong>Human over premium:</strong> Being the brand that whispered "I understand you" was genuinely distinctive. The +76% affinity increase proved it<br><br>
+                    • <strong>Two wins, one story:</strong> Winning both the brand annual and CDX launch meant a coherent creative ecosystem
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+              <div class="project-wrapper__text load-hidden">
+                <h3 class="project-wrapper__text-title">What I Learned</h3>
+                <div>
+                  <p class="mb-4" style="background: #f8f8f8; border-left: 4px solid #000; padding: 20px">
+                    <strong style="color: #000">"Repositioning ≠ Rebranding. Acura didn't need a new logo. It needed a new emotional position."</strong>
+                    <br><br>
+                    The product was always good. The gap was between what the product delivered and what the brand communicated. Our job was to close that gap with creativity, not with more engineering claims.
+                    <br><br>
+                    <strong>Historical note:</strong> Acura exited China in 2023. The 2015–2016 repositioning was the brand's strongest growth period. The lesson: when the story is true, +53% awareness gains happen. When the product stops earning the story, no amount of creativity can save it.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /END Takeaways -->
+
+        </div>
+      </div>
+    </section>
+    <!-- /END Projects Section -->
+
+    <!-- **** Contact Section **** -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-wrapper load-hidden">
+          <p class="contact-wrapper__text">Interested in working together?</p>
+          <a rel="noreferrer" target="_blank" class="cta-btn cta-btn--resume" href="mailto:hi@meetgordon.ai">Contact Me</a>
+        </div>
+      </div>
+    </section>
+    <!-- /END Contact Section -->
+
+    <!-- **** Footer Section **** -->
+    <footer class="footer navbar-static-bottom">
+      <div class="container">
+        <a rel="noreferrer" href="#top" class="back-to-top">
+          <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i>
+        </a>
+        <div class="social-links">
+          <a rel="noreferrer" href="https://www.linkedin.com/in/meetgordon" target="_blank">
+            <i class="fa fa-linkedin fa-inverse"></i>
+          </a>
+        </div>
+
+        <hr>
+
+        <p class="footer__text">
+          © 2026 Gordon Cheng | Creative Director
+        </p>
+        <p class="footer__text" style="opacity: .7; font-size: .8rem">
+          Template by <a rel="noreferrer" href="https://github.com/cobiwave" target="_blank">Simplefolio</a>
+        </p>
+      </div>
+    </footer>
+    <!-- /END Footer Section -->
+
+    <script defer="" src="./index.975ef6c8.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        document.querySelectorAll('.load-hidden').forEach(function(el) {
+          el.style.visibility = 'visible';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.transition = 'none';
+        });
+      });
+    </script>
+  </body>
+</html>

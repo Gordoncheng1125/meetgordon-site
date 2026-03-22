@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUDI E5 Sportback Launch — Gordon Cheng</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 4.7 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #000;
+      --secondary: #333;
+      --dark-blue: #272341;
+      --accent: #7B2D8E;
+      --accent-light: #9B4DB0;
+      --silver: #C0C0C0;
+      --silver-light: #E8E8E8;
+      --off-white: #F5F5F5;
+      --dark-bg: #0A0A0A;
+      --darker-bg: #050505;
+      --card-bg: #141414;
+      --card-border: #222;
+      --text-primary: #FFFFFF;
+      --text-secondary: #999;
+      --text-muted: #666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker-bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* ── Navigation ── */
+    .nav-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s ease;
+    }
+
+    .nav-top.scrolled {
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(123,45,142,0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 2rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/audi-e5-hero.jpg') center center / cover no-repeat;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+
+    .hero.loaded .hero-bg { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.95) 0%,
+        rgba(0,0,0,0.6) 40%,
+        rgba(0,0,0,0.3) 70%,
+        rgba(0,0,0,0.15) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5vw 8vh;
+      max-width: 800px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.05;
+    }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 300;
+      color: var(--silver);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .hero-badge.accent {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+
+    /* ── Section Styles ── */
+    .section { padding: 7rem 0; }
+    .section-dark { background: var(--dark-bg); }
+    .section-darker { background: var(--darker-bg); }
+    .section-card-bg { background: var(--card-bg); }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-text {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 720px;
+    }
+
+    /* ── Overview ── */
+    .overview-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* ── Stats ── */
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 3vw, 2.75rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number .highlight { color: var(--accent-light); }
+
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Pullquote ── */
+    .pullquote {
+      border-left: 3px solid var(--accent);
+      padding: 2rem 0 2rem 2rem;
+      margin: 3rem 0;
+    }
+
+    .pullquote p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+      font-weight: 500;
+      font-style: italic;
+      color: var(--silver-light);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .pullquote cite {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* ── Credential Box ── */
+    .credential-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .credential-item {}
+
+    .credential-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .credential-value {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Challenge Cards ── */
+    .challenge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 3rem 2.5rem;
+      height: 100%;
+      transition: border-color 0.3s;
+    }
+
+    .challenge-card:hover { border-color: var(--accent); }
+
+    .challenge-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .challenge-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .challenge-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ── Solution ── */
+    .solution-image {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .solution-card {
+      background: rgba(123,45,142,0.06);
+      border: 1px solid rgba(123,45,142,0.2);
+      border-radius: 4px;
+      padding: 2.5rem;
+      height: 100%;
+    }
+
+    .solution-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--accent-light);
+    }
+
+    .solution-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .full-width-image {
+      width: 100%;
+      height: 50vh;
+      min-height: 350px;
+      object-fit: cover;
+    }
+
+    /* ── Testimonials (inline) ── */
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      height: 100%;
+    }
+
+    .testimonial-card .quote-icon {
+      color: var(--accent);
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-card blockquote {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--silver-light);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-card cite {
+      font-style: normal;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .testimonial-card cite strong {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: var(--card-border);
+    }
+
+    @media (max-width: 768px) {
+      .timeline::before { left: 1.5rem; }
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.5rem 0;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      position: absolute;
+      left: 50%;
+      top: 2rem;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-dot { left: 1.5rem; }
+    }
+
+    .timeline-content {
+      width: 45%;
+      padding: 1.5rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+    }
+
+    .timeline-content.left { margin-right: auto; }
+    .timeline-content.right { margin-left: auto; }
+
+    @media (max-width: 768px) {
+      .timeline-content { width: calc(100% - 3.5rem); margin-left: 3.5rem !important; margin-right: 0 !important; }
+    }
+
+    .timeline-phase {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 4px;
+      aspect-ratio: 16/10;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ── Takeaways ── */
+    .takeaway-block {
+      margin-bottom: 3rem;
+    }
+
+    .takeaway-block h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--accent-light);
+    }
+
+    .takeaway-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .takeaway-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .takeaway-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    .takeaway-insight {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--silver-light);
+      line-height: 1.6;
+      border-left: 3px solid var(--accent);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+
+    /* ── Who/What/Wow ── */
+    .wow-statement {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--silver-light);
+      line-height: 1.5;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ── Description Block ── */
+    .description-block {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 780px;
+    }
+
+    /* ── Inline Testimonial ── */
+    .inline-testimonial {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .inline-testimonial blockquote {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--silver-light);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .inline-testimonial cite {
+      font-style: normal;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--primary);
+      border-top: 1px solid var(--card-border);
+      padding: 4rem 0 3rem;
+    }
+
+    .footer-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-school {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-right: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--accent-light); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: var(--accent-light); }
+
+    /* ── Utilities ── */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      margin: 2rem 0;
+    }
+
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-content { padding: 0 1.5rem 5vh; }
+      .section { padding: 4.5rem 0; }
+      .overview-image { height: 300px; }
+      .credential-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .pullquote { padding-left: 1.25rem; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .credential-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════ NAV ══════════ -->
+  <nav class="nav-top" id="mainNav">
+    <a href="#" class="nav-logo">Gordon Cheng</a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#results">Results</a>
+      <a href="#takeaways">Takeaways</a>
+    </div>
+  </nav>
+
+  <!-- ══════════ 1. HERO ══════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content fade-in">
+      <h1>Two Stories No One Knew How to Tell</h1>
+      <p class="hero-subtitle">AUDI E5 Sportback Launch Campaign</p>
+      <div class="hero-badges">
+        <span class="hero-badge accent">Freelance Creative Strategist</span>
+        <span class="hero-badge">Ogilvy China</span>
+        <span class="hero-badge">2025</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2. CREDENTIAL BOX ══════════ -->
+  <section class="section section-card-bg">
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">Credentials</span>
+        <h2 class="section-title" style="font-size:1.5rem; margin-bottom:2rem;">Project Details</h2>
+        <div class="credential-grid">
+          <div class="credential-item">
+            <div class="credential-label">Role</div>
+            <div class="credential-value">Freelance Creative Strategist via Ogilvy China</div>
+          </div>
+          <div class="credential-item">
+            <div class="credential-label">Client</div>
+            <div class="credential-value">SAIC Audi</div>
+          </div>
+          <div class="credential-item">
+            <div class="credential-label">Year</div>
+            <div class="credential-value">2025</div>
+          </div>
+          <div class="credential-item">
+            <div class="credential-label">Team</div>
+            <div class="credential-value">Ogilvy Shanghai creative team</div>
+          </div>
+          <div class="credential-item">
+            <div class="credential-label">Skills</div>
+            <div class="credential-value">Brand Strategy, Creative Direction, Film Production, Visual Storytelling</div>
+          </div>
+          <div class="credential-item">
+            <div class="credential-label">Methods</div>
+            <div class="credential-value">Market Psychology Research, Dual-narrative Framework, Cinematic Production</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 3. OVERVIEW IMAGE ══════════ -->
+  <section class="section section-dark" id="overview">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 fade-in">
+          <img src="assets/audi-e5-static.jpg" alt="AUDI E5 Sportback in dramatic studio lighting" class="overview-image" style="width:100%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 4. WHO/WHAT/WOW ══════════ -->
+  <section class="section section-darker" style="padding:5rem 0;">
+    <div class="container">
+      <div class="fade-in">
+        <p class="wow-statement">An integrated campaign that turned an ancient road into Audi's electric story &mdash; 10,153 launch orders.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 5. PULLQUOTE #1 ══════════ -->
+  <section class="section section-dark" style="padding:4rem 0;">
+    <div class="container">
+      <div class="row justify-content-center fade-in">
+        <div class="col-lg-8">
+          <div class="pullquote">
+            <p>"You can't argue your way to that feeling. You have to show it."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 6. RESULTS ══════════ -->
+  <section class="section section-darker" id="results">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <span class="section-label">Results</span>
+        <h2 class="section-title">The Numbers</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 fade-in">
+          <div class="stat-card">
+            <div class="stat-number"><span class="highlight">10,153</span></div>
+            <div class="stat-label">Orders / 30 Minutes</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in">
+          <div class="stat-card">
+            <div class="stat-number">47,000+</div>
+            <div class="stat-label">Annual Units / +23% YOY</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in">
+          <div class="stat-card">
+            <div class="stat-number" style="font-size:clamp(1.5rem,2.2vw,2rem)">2026</div>
+            <div class="stat-label">China Car of the Year</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 fade-in">
+          <div class="stat-card">
+            <div class="stat-number">200+</div>
+            <div class="stat-label">User Centers / 100+ Cities</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 7. PROBLEM ══════════ -->
+  <section class="section section-dark" id="problem">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <span class="section-label">The Problem</span>
+        <h2 class="section-title">Two Impossible Briefs</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6 fade-in">
+          <div class="challenge-card">
+            <div class="challenge-number">Challenge #1</div>
+            <h3>A German Car That Needs a China Story</h3>
+            <p>Audi created AUDI &mdash; a standalone brand exclusively for China. It needed a narrative authentically <em>of</em> China, not just adapted for it. How do you make a German luxury brand feel Chinese without losing what makes it German?</p>
+          </div>
+        </div>
+        <div class="col-lg-6 fade-in">
+          <div class="challenge-card">
+            <div class="challenge-number">Challenge #2</div>
+            <h3>Selling German When Chinese Means Better</h3>
+            <p>In 2025, Chinese consumers believed domestic EV brands &mdash; BYD, NIO, XPeng &mdash; were more advanced. "German engineering" became a legacy talking point. The question: how do you make someone <em>feel</em> something for a German EV?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 8. SOLUTION ══════════ -->
+  <section class="section section-darker" id="solution">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-12 fade-in">
+          <span class="section-label">The Solution</span>
+          <h2 class="section-title">Don't Argue. Show.</h2>
+        </div>
+      </div>
+      <div class="row mb-5 fade-in">
+        <div class="col-12">
+          <img src="assets/panlong-road-1.jpg" alt="Aerial view of Panlong Ancient Road serpentine switchbacks" class="solution-image" style="aspect-ratio:21/9; object-fit:cover;">
+        </div>
+      </div>
+      <div class="row mb-5 fade-in">
+        <div class="col-lg-8">
+          <p class="section-text">Panlong Ancient Road in Xinjiang &mdash; 36 kilometers, 600+ hairpin turns, from 3,000m to 4,200m altitude. We placed the AUDI E5 on this road and let it speak.</p>
+        </div>
+      </div>
+      <div class="row g-4 mb-5">
+        <div class="col-lg-6 fade-in">
+          <div class="solution-card">
+            <h4><i class="fa fa-map-marker" style="margin-right:0.5rem;"></i> The China Story</h4>
+            <p>Panlong is iconic Chinese landscape &mdash; raw, dramatic, unmistakably rooted in this land. No voiceover needed. The road says it. The mountains say it.</p>
+            <div class="inline-testimonial">
+              <blockquote>"Winning China Car of the Year validated the entire strategy &mdash; the product, the story, and the way we told it."</blockquote>
+              <cite>Ferm&iacute;n Soneira, Creative Director</cite>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 fade-in">
+          <div class="solution-card">
+            <h4><i class="fa fa-cog" style="margin-right:0.5rem;"></i> Why German</h4>
+            <p>600 turns of relentless physics. Altitude that thins the air. Switchbacks that punish imprecision. This is where German engineering becomes a feeling you experience in your body.</p>
+            <div class="inline-testimonial">
+              <blockquote>"The campaign didn't just sell cars &mdash; it redefined what a German brand could mean in China."</blockquote>
+              <cite>Rahul Ahuja, Strategy Lead</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 9. DESCRIPTION ══════════ -->
+  <section class="section section-dark" style="padding:5rem 0;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 fade-in">
+          <p class="description-block">As Freelance Creative Strategist working with Ogilvy China, I developed the core creative concept for SAIC Audi's E5 Sportback launch &mdash; the brand's first model built exclusively for China. The dual challenge was unprecedented: make a German luxury brand feel authentically Chinese, while convincing consumers that German EVs could compete with dominant domestic brands. The Panlong Ancient Road concept answered both &mdash; 36 kilometers of extreme switchbacks in Xinjiang that are unmistakably Chinese landscape, yet demand the kind of engineering precision that only German craft delivers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 10. PULLQUOTE #2 ══════════ -->
+  <section class="section section-darker" style="padding:4rem 0;">
+    <div class="container">
+      <div class="row justify-content-center fade-in">
+        <div class="col-lg-8">
+          <div class="pullquote">
+            <p>"The road didn't just test the car. It told the story no tagline could."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 11. VIDEO + PANLONG IMAGE ══════════ -->
+  <section style="background:#000; padding:60px 0;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; background:#111;">
+            <iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+              src="https://www.youtube.com/embed/N4-qb7o1UNM"
+              title="SAIC Audi E5 Sportback Launch Event"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          <p style="text-align:center; color:#666; margin-top:12px; font-size:0.85rem;">
+            SAIC Audi E5 Sportback Launch Event &middot; September 16, 2025, Guangzhou
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full-width visual break -->
+  <div class="fade-in">
+    <img src="assets/panlong-road-2.jpg" alt="Wider aerial of Panlong switchbacks through mountain landscape" class="full-width-image">
+  </div>
+
+  <!-- ══════════ 12. PROCESS TIMELINE (4 phases) ══════════ -->
+  <section class="section section-darker">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <span class="section-label">Process</span>
+        <h2 class="section-title">How We Got There</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left">
+            <div class="timeline-phase">Phase 1</div>
+            <h4>Research &amp; Brand Strategy</h4>
+            <p>Mapped China's EV perception landscape &mdash; why domestic brands were winning hearts. Identified the dual-story framework: China belonging and German credibility had to be solved simultaneously.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content right">
+            <div class="timeline-phase">Phase 2</div>
+            <h4>Creative Development</h4>
+            <p>Landed on Panlong Ancient Road as the single image that answers both challenges. Developed the "Don't Argue, Show" creative philosophy.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left">
+            <div class="timeline-phase">Phase 3</div>
+            <h4>Production</h4>
+            <p>Cinematic shoot at 3,000&ndash;4,200m altitude. Aerial photography capturing 600+ switchbacks. Full campaign asset production across channels.</p>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content right">
+            <div class="timeline-phase">Phase 4</div>
+            <h4>Launch</h4>
+            <p>Coordinated rollout: TVC debut, digital &amp; social activation, dealer events, 200+ user centers. 10,153 orders in 30 minutes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 13. GALLERY ══════════ -->
+  <section class="section section-dark" id="gallery">
+    <div class="container">
+      <div class="text-center mb-5 fade-in">
+        <span class="section-label">Gallery</span>
+        <h2 class="section-title">Visual Story</h2>
+      </div>
+      <div class="gallery-grid fade-in">
+        <div class="gallery-item">
+          <img src="assets/panlong-road-3.jpg" alt="Closer aerial of snake-like Panlong road turns" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/audi-e5-static.jpg" alt="AUDI E5 Sportback in dramatic studio setting" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/panlong-road-1.jpg" alt="Aerial view of serpentine Panlong road" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 14. PULLQUOTE #3 ══════════ -->
+  <section class="section section-darker" style="padding:4rem 0;">
+    <div class="container">
+      <div class="row justify-content-center fade-in">
+        <div class="col-lg-8">
+          <div class="pullquote">
+            <p>"The best brand storytelling doesn't explain the product. It makes you feel why the product exists."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 15. TAKEAWAYS ══════════ -->
+  <section class="section section-card-bg" id="takeaways">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 fade-in">
+          <span class="section-label">Takeaways</span>
+          <h2 class="section-title">Reflection</h2>
+          <div class="divider" style="margin-bottom:3rem;"></div>
+
+          <div class="takeaway-block">
+            <h4>What Worked</h4>
+            <ul class="takeaway-list">
+              <li><strong>One image, two answers</strong> &mdash; Panlong Ancient Road solved the China story and the German credibility problem in a single visual concept</li>
+              <li><strong>Show, don't argue</strong> &mdash; No claims about German engineering. 600 hairpin turns proved it cinematically</li>
+            </ul>
+          </div>
+
+          <div class="takeaway-block">
+            <h4>If I Did It Again</h4>
+            <ul class="takeaway-list">
+              <li><strong>Series concept</strong> &mdash; Extend the Panlong narrative into multi-episode content following different drivers and seasons</li>
+              <li><strong>Community layer</strong> &mdash; Build owner community around the "roads that test you" concept with user-generated routes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-name">Gordon Cheng</div>
+      <div class="footer-school">SVA MFA Interaction Design</div>
+      <a href="../../../gordon-portfolio/index.html" class="back-link">&larr; Back to Portfolio</a>
+      <div class="footer-links">
+        <a href="#">All Projects</a>
+        <a href="#">About</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Resume</a>
+      </div>
+      <div class="footer-copy">&copy; 2025 Gordon Cheng. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ── Nav scroll effect ──
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // ── Hero load animation ──
+    window.addEventListener('load', () => {
+      document.querySelector('.hero').classList.add('loaded');
+      // Trigger hero content fade-in
+      document.querySelector('.hero .fade-in').classList.add('visible');
+    });
+
+    // ── Intersection Observer for fade-in ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      // Don't re-observe hero content (handled by load event)
+      if (!el.closest('.hero')) {
+        observer.observe(el);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Alipay A Word Worth Gold | Gordon Cheng</title>
+    <meta name="keywords" content="Gordon Cheng, Alipay, Spring Festival, Red Envelope, Chinese New Year, Campaign, Creative Director, HAOMAI, Zhang Guoli, Golden Lion, Tiger Roar" />
+    <meta name="description" content="Alipay 'A Word Worth Gold' Spring Festival Campaign 2018 — Turning Chinese calligraphy into a viral digital red envelope experience. 100M+ views, Tiger Roar Silver, Golden Lion Bronze." />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+
+      :root {
+        --primary: #000000;
+        --secondary: #333333;
+        --dark-blue: #272341;
+        --red: #C41E3A;
+        --red-dark: #9B1B30;
+        --red-light: #E8344E;
+        --gold: #D4A853;
+        --gold-light: #F0D48A;
+        --cream: #F5F0E8;
+        --dark-bg: #0a0a0a;
+        --dark-section: #111111;
+        --dark-card: #1a1a1a;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #ccc;
+        background: var(--dark-bg);
+      }
+
+      h1, h2, h3, .serif {
+        font-family: 'Noto Serif SC', 'Georgia', serif;
+      }
+
+      /* ===== HERO ===== */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(rgba(26, 5, 8, 0.7), rgba(10, 10, 10, 0.75)), url('assets/project-image-3.png') center/cover no-repeat;
+      }
+      #hero::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background:
+          radial-gradient(ellipse at 30% 50%, rgba(196, 30, 58, 0.12) 0%, transparent 60%),
+          radial-gradient(ellipse at 70% 30%, rgba(212, 168, 83, 0.08) 0%, transparent 50%);
+      }
+      #hero .hero-fu {
+        max-width: 160px;
+        margin-bottom: 30px;
+        opacity: 0.15;
+        filter: brightness(1.5);
+      }
+      #hero h1 {
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      #hero .hero-cn {
+        font-family: 'Noto Serif SC', serif;
+        font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+        font-weight: 900;
+        color: var(--gold);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.15em;
+      }
+      #hero .hero-subtitle {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(0.95rem, 2vw, 1.2rem);
+        font-weight: 300;
+        opacity: 0.7;
+        margin-bottom: 2rem;
+      }
+      #hero .hero-badges {
+        font-size: 0.85rem;
+        opacity: 0.5;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      #hero .hero-badges span {
+        margin: 0 8px;
+      }
+      .hero-divider {
+        color: var(--gold);
+        opacity: 0.6;
+      }
+
+      /* ===== SECTIONS ===== */
+      section { padding: 80px 0; }
+
+      .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+      }
+      .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: var(--red);
+        margin: 15px auto 0;
+      }
+      .section-title-left {
+        text-align: left;
+      }
+      .section-title-left::after {
+        margin: 15px 0 0;
+      }
+
+      /* ===== OVERVIEW ===== */
+      #overview { background: var(--dark-bg); }
+      .overview-text {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: #bbb;
+        max-width: 750px;
+      }
+
+      /* ===== IMAGES ===== */
+      .section-img {
+        width: 100%;
+        border-radius: 6px;
+        object-fit: cover;
+      }
+      .img-wide {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      }
+
+      /* ===== RESULTS ===== */
+      #results { background: var(--dark-section); }
+      .stat-number {
+        font-family: 'Noto Serif SC', serif;
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1.1;
+      }
+      .stat-label {
+        font-size: 0.9rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 8px;
+      }
+      .award-badge {
+        max-height: 80px;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+        background: #fff;
+        padding: 10px 14px;
+      }
+      .award-badge:hover {
+        transform: scale(1.05);
+      }
+      .pullquote {
+        font-family: 'Noto Serif SC', serif;
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        font-weight: 600;
+        color: var(--gold-light);
+        text-align: center;
+        padding: 40px 0;
+        border-top: 1px solid rgba(212, 168, 83, 0.2);
+        border-bottom: 1px solid rgba(212, 168, 83, 0.2);
+        line-height: 1.8;
+        max-width: 700px;
+        margin: 50px auto 0;
+      }
+
+      /* ===== CREDENTIAL BOX ===== */
+      #credential { background: var(--dark-bg); }
+      .credential-box {
+        background: var(--dark-card);
+        border: 1px solid rgba(212, 168, 83, 0.15);
+        border-radius: 10px;
+        padding: 40px;
+      }
+      .credential-label {
+        font-weight: 600;
+        color: var(--gold);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 4px;
+      }
+      .credential-value {
+        color: #ddd;
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      /* ===== PROBLEM ===== */
+      #problem { background: var(--dark-section); }
+      .problem-question {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--red-light);
+        padding: 24px 30px;
+        border-left: 3px solid var(--red);
+        background: rgba(196, 30, 58, 0.05);
+        border-radius: 0 6px 6px 0;
+        margin-top: 30px;
+      }
+
+      /* ===== SOLUTION ===== */
+      #solution { background: var(--dark-bg); }
+      .solution-subtitle {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.4rem;
+        color: var(--gold);
+        margin-bottom: 20px;
+      }
+      .campaign-scroll {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 20px 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--red-dark) transparent;
+      }
+      .campaign-scroll::-webkit-scrollbar {
+        height: 6px;
+      }
+      .campaign-scroll::-webkit-scrollbar-thumb {
+        background: var(--red-dark);
+        border-radius: 3px;
+      }
+      .campaign-card {
+        flex: 0 0 auto;
+        width: 220px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+      }
+      .campaign-card:hover {
+        transform: translateY(-4px);
+      }
+      .campaign-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* ===== FILM SCENES ===== */
+      #film-scenes { background: var(--dark-section); }
+      .scene-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+      .scene-card img {
+        width: 100%;
+        display: block;
+        border-radius: 8px;
+        transition: transform 0.4s ease;
+      }
+      .scene-card:hover img {
+        transform: scale(1.02);
+      }
+      .scene-overlay {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        padding: 30px 24px 20px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.85));
+        border-radius: 0 0 8px 8px;
+      }
+      .scene-char {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .scene-poem {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 0.95rem;
+        color: rgba(255,255,255,0.8);
+      }
+      .scene-desc {
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.5);
+        margin-top: 4px;
+      }
+
+      /* ===== PROCESS ===== */
+      #process { background: var(--dark-bg); }
+      .process-step {
+        text-align: center;
+        padding: 20px;
+      }
+      .process-num {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--red);
+        opacity: 0.4;
+        line-height: 1;
+      }
+      .process-label {
+        font-weight: 600;
+        color: #eee;
+        margin-top: 8px;
+        font-size: 1rem;
+      }
+      .process-detail {
+        font-size: 0.85rem;
+        color: #888;
+        margin-top: 6px;
+      }
+      .team-list {
+        list-style: none;
+        padding: 0;
+      }
+      .team-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        color: #aaa;
+        font-size: 0.95rem;
+      }
+      .team-list li strong {
+        color: var(--gold);
+      }
+
+      /* ===== RED ENVELOPE GALLERY ===== */
+      #gallery { background: var(--dark-section); }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      @media (max-width: 767px) {
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .gallery-item {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+      }
+      .gallery-item:hover {
+        transform: translateY(-4px);
+      }
+      .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* ===== TAKEAWAYS ===== */
+      #takeaways { background: var(--dark-bg); }
+      .takeaway-card {
+        background: var(--dark-card);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        padding: 30px;
+        height: 100%;
+      }
+      .takeaway-card h4 {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.15rem;
+        color: var(--gold);
+        margin-bottom: 16px;
+      }
+      .takeaway-card ul {
+        padding-left: 18px;
+        color: #aaa;
+      }
+      .takeaway-card ul li {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+      .takeaway-quote {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--red-light);
+        line-height: 1.7;
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: #050505;
+        padding: 60px 0 40px;
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.05);
+      }
+      footer h3 {
+        font-size: 1.3rem;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+      footer p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+      footer .footer-links {
+        margin-top: 20px;
+      }
+      footer .footer-links a {
+        color: #888;
+        text-decoration: none;
+        margin: 0 12px;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+      }
+      footer .footer-links a:hover {
+        color: var(--gold);
+      }
+
+      /* ===== UTILITIES ===== */
+      .text-red { color: var(--red); }
+      .text-gold { color: var(--gold); }
+      .text-muted-custom { color: #888; }
+      .bg-dark-section { background: var(--dark-section); }
+      .bg-dark-main { background: var(--dark-bg); }
+      .mb-section { margin-bottom: 60px; }
+
+      /* ===== BACK TO TOP ===== */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 44px;
+        height: 44px;
+        background: var(--red);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        z-index: 999;
+      }
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .back-to-top:hover {
+        background: var(--gold);
+        transform: translateY(-3px);
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 767px) {
+        section { padding: 50px 0; }
+        .credential-box { padding: 24px; }
+        .campaign-card { width: 180px; }
+        .scene-char { font-size: 1.8rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ===== 1. HERO ===== -->
+    <section id="hero">
+      <div class="container position-relative" style="z-index:1;">
+        <img src="assets/article-cover.jpg" alt="Fu character" class="hero-fu" />
+        <h1>Every Emotion Hides<br />in a Chinese Character</h1>
+        <div class="hero-cn">一字千金 &middot; A Word Worth Gold</div>
+        <p class="hero-subtitle">Alipay Spring Festival Campaign 2018</p>
+        <div class="hero-badges">
+          <span>Creative Director</span>
+          <span class="hero-divider">&middot;</span>
+          <span>HAOMAI 好卖广告</span>
+          <span class="hero-divider">&middot;</span>
+          <span>2018</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. CREDENTIAL BOX ===== -->
+    <section id="credential">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="credential-box">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Role</div>
+                  <div class="credential-value">Creative Director &mdash; Full campaign lead</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Client</div>
+                  <div class="credential-value">Alipay (Ant Group)</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Time</div>
+                  <div class="credential-value">2018 Spring Festival</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Agency</div>
+                  <div class="credential-value">HAOMAI 好卖广告 (Beijing)</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Production</div>
+                  <div class="credential-value">1PA 一拍即合</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Talent</div>
+                  <div class="credential-value">Zhang Guoli (张国立)</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Skills</div>
+                  <div class="credential-value">Creative Direction, Campaign Strategy, Cultural Storytelling, Film Direction</div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="credential-label">Methods</div>
+                  <div class="credential-value">Cultural Research, Concept Development, Celebrity Collaboration, Cross-platform Launch</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. OVERVIEW IMAGE ===== -->
+    <section id="overview">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <img src="assets/project-image-3.png" alt="Grand calligraphy hall with scrolls" class="img-wide" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. WHO/WHAT/WOW ===== -->
+    <section style="background: var(--dark-bg); padding: 40px 0 20px;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="overview-text" style="margin: 0 auto; font-size: 1.25rem; color: #ddd; font-weight: 400;">
+              A digital red envelope that turned a payment app into a poetry platform &mdash; 100M+ users in 5 days.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. PULLQUOTE #1 ===== -->
+    <section style="background: var(--dark-bg); padding: 0 0 60px;">
+      <div class="container">
+        <div class="pullquote" style="margin-top: 0;">
+          &ldquo;Everyone was asking &lsquo;How do we give away more money?&rsquo; We asked: &lsquo;How do we give away more meaning?&rsquo;&rdquo;
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. RESULTS / AWARDS ===== -->
+    <section id="results">
+      <div class="container">
+        <h2 class="section-title">Results &amp; Recognition</h2>
+        <div class="row text-center mb-5">
+          <div class="col-6 col-md-3 mb-4">
+            <div class="stat-number">100M+</div>
+            <div class="stat-label">Views</div>
+          </div>
+          <div class="col-6 col-md-3 mb-4">
+            <div class="stat-number">9.6</div>
+            <div class="stat-label">Digitaling Score /10</div>
+          </div>
+          <div class="col-6 col-md-3 mb-4">
+            <div class="stat-number" style="font-size: clamp(1.4rem, 3vw, 2rem);">Tiger Roar</div>
+            <div class="stat-label">Silver 2018</div>
+          </div>
+          <div class="col-6 col-md-3 mb-4">
+            <div class="stat-number" style="font-size: clamp(1.4rem, 3vw, 2rem);">Golden Lion</div>
+            <div class="stat-label">Bronze 2019</div>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <div class="col-auto text-center">
+            <img src="assets/golden-lion-logo.png" alt="Golden Lion Award" class="award-badge me-4" />
+            <img src="assets/hooxiao-badge-2.png" alt="Tiger Roar Award" class="award-badge" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7. PROBLEM STATEMENT ===== -->
+    <section id="problem">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <h2 class="section-title section-title-left">How Do You Make a Payment App Feel Like Poetry?</h2>
+            <p style="color:#aaa; margin-bottom:16px;">
+              Spring Festival red envelopes had become purely transactional &mdash; tap, send money, done. Every tech company competed with bigger cash giveaways. The cultural richness of Chinese New Year was being reduced to a number.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <img src="assets/project-image-1.png" alt="Zhang Guoli touching ancient calligraphy wall" class="img-wide" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. SOLUTION ===== -->
+    <section id="solution">
+      <div class="container">
+        <h2 class="section-title">One Character. One Heart.</h2>
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8 text-center">
+            <p class="solution-subtitle">一字千金，一字见心</p>
+            <p style="color:#aaa; font-size:1.05rem; line-height:1.8;">
+              <strong style="color:#eee;">The concept:</strong> A red envelope where you choose <span style="color:var(--gold); font-weight:600;">ONE character</span> that says everything. Not money &mdash; meaning.
+            </p>
+          </div>
+        </div>
+
+        <!-- Campaign UI scrolling row -->
+        <div class="campaign-scroll mb-5">
+          <div class="campaign-card"><img src="assets/campaign-image-1.jpg" alt="哒 character red envelope" /></div>
+          <div class="campaign-card"><img src="assets/campaign-image-5.jpg" alt="呵 character red envelope" /></div>
+          <div class="campaign-card"><img src="assets/campaign-image-10.jpg" alt="帅 character red envelope" /></div>
+          <div class="campaign-card"><img src="assets/campaign-image-15.jpg" alt="棒 character red envelope" /></div>
+          <div class="campaign-card"><img src="assets/campaign-image-18.jpg" alt="美 character red envelope" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 9. 1-PARAGRAPH DESCRIPTION ===== -->
+    <section style="background: var(--dark-section); padding: 60px 0;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <p style="color:#bbb; font-size:1.05rem; line-height:1.9;">
+              As Creative Director at HAOMAI, I led the complete creative strategy for Alipay's 2018 Spring Festival red envelope campaign &mdash; from concept development through celebrity talent direction and cross-platform launch. The insight was counterintuitive: in a market where every tech company competed with bigger cash giveaways, we stripped the red envelope down to its emotional essence &mdash; one Chinese character that says everything. Zhang Guoli narrated a 2:59 brand film tracing characters from ancient pictographs to modern emotions, while the in-app experience let users choose their own character to send. The campaign earned Tiger Roar Silver and Golden Lion Bronze.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 10. PULLQUOTE #2 ===== -->
+    <section style="background: var(--dark-section); padding: 0 0 60px;">
+      <div class="container">
+        <div class="pullquote" style="margin-top: 0;">
+          &ldquo;Chinese characters aren't just text &mdash; they're compressed emotions. A single character carries centuries of meaning.&rdquo;
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 11. FILM SCENES ===== -->
+    <section id="film-scenes">
+      <div class="container">
+        <h2 class="section-title">Three Scenes, Three Characters</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="scene-card">
+              <img src="assets/project-image-4.png" alt="Know - friends parting at airport" />
+              <div class="scene-overlay">
+                <div class="scene-char">知</div>
+                <div class="scene-poem">海内存知己，天涯若比邻</div>
+                <div class="scene-desc">Friends parting at the airport</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="scene-card">
+              <img src="assets/project-image-8.png" alt="Heart - couple in love" />
+              <div class="scene-overlay">
+                <div class="scene-char">心</div>
+                <div class="scene-poem">愿得一人心，白首不相离</div>
+                <div class="scene-desc">A couple in love</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="scene-card">
+              <img src="assets/project-image-9.png" alt="Home - family reunion dinner" />
+              <div class="scene-overlay">
+                <div class="scene-char">家</div>
+                <div class="scene-poem">每一个字，都有我们的故事</div>
+                <div class="scene-desc">Family reunion dinner</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 12. BRAND FILM / VIDEO ===== -->
+    <section id="brand-film" style="background: var(--dark-bg);">
+      <div class="container">
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <h3 style="color:#fff; margin-bottom:16px;">The Brand Film</h3>
+            <p style="color:#aaa; line-height:1.8;">
+              Zhang Guoli narrates a 2:59 film tracing Chinese characters from Cangjie's 28 original pictographs to the emotions they carry today. From ancient cave carvings to airport farewells &mdash; every character holds a story.
+            </p>
+          </div>
+          <div class="col-lg-3 col-6 mb-3">
+            <img src="assets/project-image-7.png" alt="Zhang Guoli with phone" class="img-wide" />
+          </div>
+          <div class="col-lg-3 col-6 mb-3">
+            <img src="assets/project-cover.jpg" alt="Zhang Guoli in calligraphy room" class="img-wide" />
+          </div>
+        </div>
+
+        <!-- Video Embed -->
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; background:#000;">
+              <iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                src="https://www.youtube.com/embed/dB9rwK90t5E"
+                title="Alipay — A Word Worth Gold (一字千金)"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <p style="text-align:center; color:#666; margin-top:12px; font-size:0.85rem;">
+              《一字千金，一字见心》Brand Film &middot; Featuring Zhang Guoli &middot; 2:59
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 13. PROCESS ===== -->
+    <section id="process">
+      <div class="container">
+        <h2 class="section-title">Process</h2>
+        <div class="row mb-5">
+          <div class="col-6 col-md-3">
+            <div class="process-step">
+              <div class="process-num">01</div>
+              <div class="process-label">Research</div>
+              <div class="process-detail">Cultural immersion in calligraphy history &amp; character semantics</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="process-step">
+              <div class="process-num">02</div>
+              <div class="process-label">Concept</div>
+              <div class="process-detail">One-character red envelope mechanic + cultural narrative arc</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="process-step">
+              <div class="process-num">03</div>
+              <div class="process-label">Production</div>
+              <div class="process-detail">Brand film with Zhang Guoli; UI design for red envelope cards</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="process-step">
+              <div class="process-num">04</div>
+              <div class="process-label">Launch</div>
+              <div class="process-detail">Spring Festival release via Alipay, 100M+ views</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <h3 style="color:#fff; margin-bottom:20px; font-size:1.2rem;">Creative Team</h3>
+            <ul class="team-list">
+              <li><strong>Gordon Cheng</strong> &mdash; Creative Director</li>
+              <li><strong>Morling</strong> &mdash; Copywriter</li>
+              <li><strong>刘阿淇</strong> &mdash; Copywriter</li>
+              <li><strong>噜噜噜</strong> &mdash; Copywriter</li>
+              <li><strong>1PA 一拍即合</strong> &mdash; Production</li>
+              <li><strong>Zhang Guoli 张国立</strong> &mdash; Talent</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 14. PULLQUOTE #3 ===== -->
+    <section style="background: var(--dark-bg); padding: 0 0 20px;">
+      <div class="container">
+        <div class="pullquote" style="margin-top: 0;">
+          &ldquo;The most viral content isn't the loudest &mdash; it's the most resonant.&rdquo;
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 15. RED ENVELOPE GALLERY ===== -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="section-title">Red Envelope Gallery</h2>
+        <div class="gallery-grid mb-4">
+          <div class="gallery-item"><img src="assets/campaign-image-1.jpg" alt="哒 character" /></div>
+          <div class="gallery-item"><img src="assets/campaign-image-3.jpg" alt="哇 character" /></div>
+          <div class="gallery-item"><img src="assets/campaign-image-7.jpg" alt="酷 character" /></div>
+          <div class="gallery-item"><img src="assets/campaign-image-12.jpg" alt="白 character" /></div>
+          <div class="gallery-item"><img src="assets/campaign-image-15.jpg" alt="棒 character" /></div>
+          <div class="gallery-item"><img src="assets/campaign-image-20.jpg" alt="靓 character" /></div>
+        </div>
+        <p class="text-center" style="color:#777; font-size:0.95rem;">
+          Users chose from hundreds of characters &mdash; each one a compressed blessing.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== 16. TAKEAWAYS ===== -->
+    <section id="takeaways">
+      <div class="container">
+        <h2 class="section-title">Takeaways</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="takeaway-card">
+              <h4>What Worked</h4>
+              <ul>
+                <li>Cultural depth as differentiator in a crowded market</li>
+                <li>One-character simplicity &mdash; easy to understand, hard to forget</li>
+                <li>Celebrity as cultural bridge, not just a famous face</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="takeaway-card">
+              <h4>What I Learned</h4>
+              <p class="takeaway-quote">
+                &ldquo;The most viral content isn't the loudest &mdash; it's the most resonant.&rdquo;
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="takeaway-card">
+              <h4>If I Did It Again</h4>
+              <ul>
+                <li>Add a community layer &mdash; let users share their character choices</li>
+                <li>Build a character-of-the-year tradition for annual campaigns</li>
+                <li>In-app calligraphy animation for the reveal moment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <div class="container">
+        <h3>Gordon Cheng</h3>
+        <p>SVA MFA Interaction Design</p>
+        <a href="../../../gordon-portfolio/index.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:20px;">&larr; Back to Portfolio</a>
+        <div class="footer-links">
+          <a href="#">&larr; Previous Project</a>
+          <a href="#">All Projects</a>
+          <a href="#">Next Project &rarr;</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fa fa-chevron-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Back to top button
+      window.addEventListener('scroll', function() {
+        var btn = document.querySelector('.back-to-top');
+        if (window.scrollY > 400) {
+          btn.classList.add('show');
+        } else {
+          btn.classList.remove('show');
+        }
+      });
+    </script>
+  </body>
+</html>

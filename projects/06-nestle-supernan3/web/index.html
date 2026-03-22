@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nestlé SuperNan3 — Do You Feel What I Feel | Gordon Cheng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+      :root {
+        --primary: #1a1a2e;
+        --secondary: #444;
+        --accent: #7B2D8E;
+        --accent-light: #A855C7;
+        --warm-bg: #F8F5FB;
+        --light-grey: #f8f8f8;
+        --soft-purple: #EDE7F6;
+        --nestle-red: #C8102E;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--secondary);
+      }
+      h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
+
+      /* HERO */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(rgba(26,26,46,0.6), rgba(58,31,94,0.7)), url('assets/frame-05s.jpg') center/cover no-repeat;
+        color: #fff;
+        padding: 0 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      #hero h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+      }
+      #hero .hero-subtitle {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        font-style: italic;
+        opacity: 0.85;
+        margin-bottom: 1.5rem;
+      }
+      #hero .hero-badges {
+        font-size: 0.9rem;
+        opacity: 0.6;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .cta-btn {
+        display: inline-block;
+        padding: 12px 36px;
+        border: 2px solid #fff;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+      }
+      .cta-btn:hover { background: #fff; color: var(--primary); }
+
+      /* SECTIONS */
+      section { padding: 80px 0; }
+      .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: var(--accent);
+        margin: 15px auto 0;
+      }
+
+      /* STATS */
+      .stat-card {
+        text-align: center;
+        padding: 30px 15px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        height: 100%;
+      }
+      .stat-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--accent);
+        display: block;
+        line-height: 1.2;
+      }
+      .stat-label {
+        font-size: 0.85rem;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 8px;
+      }
+
+      /* CREDENTIAL */
+      #credential { background: var(--warm-bg); }
+      .credential-label { font-weight: 600; color: var(--primary); }
+      .tech-tag {
+        display: inline-block;
+        padding: 5px 14px;
+        background: var(--soft-purple);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--accent);
+        margin: 3px;
+      }
+
+      /* PULLQUOTE */
+      .pullquote {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+        font-style: italic;
+        color: var(--secondary);
+        border-left: 4px solid var(--accent);
+        padding-left: 30px;
+        margin: 0 auto;
+        max-width: 800px;
+      }
+
+      /* PROBLEM */
+      .problem-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 28px;
+        height: 100%;
+        border-top: 4px solid var(--accent);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      }
+      .problem-card h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* SOLUTION STEPS */
+      .pillar-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+      }
+      .pillar-card:hover { transform: translateY(-4px); }
+      .pillar-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--soft-purple);
+        color: var(--accent);
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+      .pillar-card h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* CONFLICT */
+      .conflict-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 35px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      }
+      .conflict-vs {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--accent);
+      }
+
+      /* TAKEAWAYS */
+      #takeaways { background: var(--warm-bg); }
+      .takeaway-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      }
+      .takeaway-box h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+      }
+      .takeaway-highlight {
+        background: var(--soft-purple);
+        padding: 18px;
+        border-left: 4px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        margin-top: 15px;
+      }
+
+      /* IMAGES */
+      .section-img {
+        width: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--primary);
+        color: #fff;
+        padding: 40px 0;
+        text-align: center;
+      }
+      footer a { color: #fff; text-decoration: none; }
+      footer .social-links a {
+        display: inline-block;
+        width: 40px; height: 40px; line-height: 40px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        margin: 0 5px;
+        transition: all 0.3s;
+      }
+      footer .social-links a:hover { background: rgba(255,255,255,0.1); }
+
+      @media (max-width: 768px) {
+        section { padding: 50px 0; }
+        .section-title { font-size: 1.6rem; margin-bottom: 30px; }
+        .stat-number { font-size: 2rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="top"></div>
+
+    <!-- 1. HERO -->
+    <section id="hero">
+      <div class="container" style="position: relative; z-index: 1;">
+        <p style="font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px;">Nestlé China &times; Publicis Groupe</p>
+        <h1>Do You Feel<br/>What I Feel?</h1>
+        <p class="hero-subtitle">妈妈，你能感受到我的感受吗？</p>
+        <p class="hero-badges">
+          Creative Director &bull; Brand Strategy &bull; Experience Design &bull; 2019
+        </p>
+        <a class="cta-btn" href="#credential">View Case Study</a>
+      </div>
+    </section>
+
+    <!-- 2. CREDENTIAL BOX -->
+    <section id="credential">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="row g-3" style="font-size: 0.95rem;">
+              <div class="col-sm-6">
+                <p><span class="credential-label">Category:</span> Brand Strategy / Integrated Campaign</p>
+                <p><span class="credential-label">Client:</span> Nestlé China — SuperNan3 (超启能恩3) NAN H.A.</p>
+                <p><span class="credential-label">Agency:</span> Publicis Groupe, Beijing</p>
+                <p><span class="credential-label">Role:</span> Creative Director — Brand strategy, campaign big idea, experience center direction, brand film supervision</p>
+                <p><span class="credential-label">Duration:</span> 2019 (6 months)</p>
+              </div>
+              <div class="col-sm-6">
+                <p><span class="credential-label">Team:</span> Led creative concept, directed brand film, designed experience center</p>
+                <p><span class="credential-label">Methods:</span> Consumer Research (Ipsos FGD, Kantar U&amp;A), Concept Development, Production Direction</p>
+                <p><span class="credential-label">Tools:</span> TVC Production, iQiyi/Tencent Distribution, Offline Experience Design</p>
+                <p><span class="credential-label">Awards:</span> "Healthy China 2018 Annual Public Trust Brand"</p>
+              </div>
+            </div>
+            <div style="margin-top: 15px;">
+              <span class="tech-tag">Brand Strategy</span>
+              <span class="tech-tag">Experience Design</span>
+              <span class="tech-tag">Multi-sensory Design</span>
+              <span class="tech-tag">Campaign Direction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. WHO/WHAT/WOW -->
+    <section style="background: #fff; padding: 50px 0;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p style="font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 700; color: var(--primary); line-height: 1.5;">
+              A brand campaign that made Chinese mothers <em>feel</em> infant sensitivity — lifting market share from #9 to #7.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PULLQUOTE #1 -->
+    <section style="background: #fff; padding: 40px 0 60px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "81.74% of Chinese babies experience minor sensitivities — but only 5% of mothers rank it as their top concern. The gap became our strategy."
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. RESULTS -->
+    <section id="results" style="background: var(--warm-bg);">
+      <div class="container">
+        <h2 class="section-title">The Results</h2>
+        <div class="row g-4 mb-4">
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <span class="stat-number">#9→#7</span>
+              <span class="stat-label">Market Share Ranking</span>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <span class="stat-number">+3.83%</span>
+              <span class="stat-label">Market Share Growth</span>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <span class="stat-number">3 yr</span>
+              <span class="stat-label">Brand Strategy Lifespan</span>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <span class="stat-number">¥100M+</span>
+              <span class="stat-label">Annual Revenue Milestone</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PROBLEM -->
+    <section style="background: #fff;">
+      <div class="container">
+        <h2 class="section-title">The Problem</h2>
+
+        <!-- 82% Stat Callout -->
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8">
+            <div style="background: linear-gradient(135deg, var(--accent), #3a1f5e); border-radius: 12px; padding: 40px; text-align: center; color: #fff;">
+              <span style="font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; display: block;">81.74%</span>
+              <p style="font-size: 1.1rem; opacity: 0.9; margin-top: 8px;">of Chinese babies have experienced or are experiencing "minor sensitivities"</p>
+              <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 4px;">Source: Babytree Research, 2018 (n=2,114)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conflict Box -->
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8">
+            <div class="conflict-box">
+              <div class="row text-center">
+                <div class="col-5">
+                  <h4 style="color: var(--accent); font-weight: 700;">Product Truth</h4>
+                  <p>H.A. hydrolyzed protein<br/>Clinically proven<br/><strong>Prevents allergy</strong></p>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                  <span class="conflict-vs">VS</span>
+                </div>
+                <div class="col-5">
+                  <h4 style="color: var(--primary); font-weight: 700;">Consumer Reality</h4>
+                  <p>"Allergy is from heredity, not formula"<br/>"It's normal — baby will outgrow it"<br/><strong>Only 5% rate it Top 1 concern</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="problem-card">
+              <h4>High Knowledge Barrier</h4>
+              <p>Mothers see hydrolyzed formula as medicine, not prevention. The link between allergy and infant formula remains poorly understood.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="problem-card">
+              <h4>Invisible Symptoms</h4>
+              <p>Babies scratch, cry, and can't sleep — but can't say why. Only <strong>5% of mothers rate allergy as a top 1 concern</strong>.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="problem-card">
+              <h4>Weak Category Position</h4>
+              <p>No competing brand addresses "special issues" in communications. SuperNan3 ranked #9 — invisible between regular and prescription formulas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. SOLUTION -->
+    <section style="background: var(--warm-bg);">
+      <div class="container">
+        <h2 class="section-title">The Solution</h2>
+
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8 text-center">
+            <p style="font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--primary);">
+              Do You Feel What I Feel?
+            </p>
+            <p style="font-size: 1.1rem; color: #555; margin-top: 10px;">
+              Stop explaining the technology. Start letting parents <strong>feel</strong> what their baby feels.
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="pillar-card">
+              <div class="pillar-icon"><i class="fa fa-film"></i></div>
+              <h4>Brand Film (OTV)</h4>
+              <p>Shot entirely from baby's POV — baby's internal monologue: <em>"Even though it's minor, my body feels it in a major way."</em> Distributed on iQiyi and Tencent Video.</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="pillar-card" style="border: 2px solid var(--accent);">
+              <div class="pillar-icon" style="background: var(--accent); color: #fff;"><i class="fa fa-hand-paper-o"></i></div>
+              <h4>Multi-Sensory Experience Center</h4>
+              <p>Immersive offline space where parents physically <strong>feel</strong> baby allergy symptoms — simulated skin irritation, distressed infant heartbeat, and blurred uncomfortable vision — turning abstract science into body memory.</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="pillar-card">
+              <div class="pillar-icon"><i class="fa fa-calendar"></i></div>
+              <h4>Children's Day Campaign</h4>
+              <p>Timed to June 1st Children's Day — cross-platform launch driving awareness at a high-emotion moment for parents.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ONE-PARAGRAPH DESCRIPTION -->
+    <section style="background: #fff; padding: 60px 0;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <p style="font-size: 1.1rem; color: #555; line-height: 1.8;">
+              As Creative Director at Publicis Groupe Beijing, I led the creative strategy that reframed a technical product — partially hydrolyzed infant formula — from clinical science into emotional experience. The insight: mothers couldn't feel what their babies felt. So we built a multi-sensory experience center where parents physically experienced allergy symptoms through touch, sound, and vision, supported by a brand film shot entirely from the baby's point of view. The idea became a 3-year brand platform, not just a campaign.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. PULLQUOTE #2 -->
+    <section style="background: #fff; padding: 20px 0 60px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "The best brand communication doesn't tell consumers how good the product is — it makes them feel how real the problem is."
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. BRAND FILM STILLS STRIP -->
+    <section style="background: var(--warm-bg); padding: 60px 0;">
+      <div class="container">
+        <div class="row g-3">
+          <div class="col-md-4"><img src="assets/frame-45s.jpg" class="section-img" style="height:220px;" alt="Mother holding baby intimately"/></div>
+          <div class="col-md-4"><img src="assets/frame-100s.jpg" class="section-img" style="height:220px;" alt="Child blowing dandelion — freedom from sensitivities"/></div>
+          <div class="col-md-4"><img src="assets/frame-108s.jpg" class="section-img" style="height:220px;" alt="SuperNan3 product end card with NAN H.A. logo"/></div>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:#aaa;margin-top:8px;">Stills from the brand film "Do You Feel What I Feel"</p>
+
+        <!-- Brand Film Video -->
+        <div class="row justify-content-center" style="margin-top: 40px;">
+          <div class="col-lg-10">
+            <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.12);">
+              <iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                src="https://www.youtube.com/embed/bWloBRZ6qUM"
+                title="Nestlé SuperNan3 — Do You Feel What I Feel (感受篇)"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <p style="text-align:center;font-size:0.85rem;color:#aaa;margin-top:10px;">Brand Film — "Do You Feel What I Feel" (感受篇)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. PROCESS -->
+    <section style="background: #fff;">
+      <div class="container">
+        <h2 class="section-title">The Process</h2>
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div style="text-align: center; padding: 20px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">1</div>
+              <h4 style="font-size: 1rem; font-weight: 600;">Consumer Insight</h4>
+              <p style="font-size: 0.9rem; color: #666;">Ipsos FGD + Kantar U&amp;A revealed: moms dismiss symptoms as "normal growing up."</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div style="text-align: center; padding: 20px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">2</div>
+              <h4 style="font-size: 1rem; font-weight: 600;">Brand Strategy</h4>
+              <p style="font-size: 0.9rem; color: #666;">Developed 4 creative directions; winning concept: baby POV emotional narrative.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div style="text-align: center; padding: 20px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">3</div>
+              <h4 style="font-size: 1rem; font-weight: 600;">Experience Design</h4>
+              <p style="font-size: 0.9rem; color: #666;">Designed multi-sensory offline space simulating infant allergy through touch, sound, and vision.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div style="text-align: center; padding: 20px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">4</div>
+              <h4 style="font-size: 1rem; font-weight: 600;">Launch & Scale</h4>
+              <p style="font-size: 0.9rem; color: #666;">Brand film + experience center + Children's Day campaign across iQiyi and Tencent Video.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. PULLQUOTE #3 -->
+    <section style="background: #fff; padding: 40px 0 60px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "Design is not about delivering information. It's about creating sensation."
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. TAKEAWAYS -->
+    <section id="takeaways">
+      <div class="container">
+        <h2 class="section-title">Takeaways</h2>
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="takeaway-box">
+              <h3>What Worked</h3>
+              <p><strong>"Feel" beats "Understand."</strong> Once parents physically experienced allergy discomfort, they didn't need convincing — they understood.</p>
+              <p><strong>3-year platform, not 1-time campaign.</strong> "Do You Feel What I Feel" became a scalable narrative framework, not just a tagline.</p>
+              <p><strong>Offline experience as brand asset.</strong> The sensory center was more persuasive than any TVC. Bodies remember what minds forget.</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="takeaway-box">
+              <h3>What I Learned</h3>
+              <p>
+                This project was the turning point in my career — from advertising creative director to interaction designer. <strong>The most powerful way to change behavior isn't a 30-second ad. It's letting people feel it with their own body.</strong>
+              </p>
+              <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">
+                This same principle later drove JOYCUBE (spatial brand experience) and Drink Like David (physical computing ritual).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <a href="../../../gordon-portfolio/index.html" style="display:inline-block; margin-bottom:20px; color:#fff; text-decoration:none; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase;">&larr; Back to Portfolio</a>
+        <br/>
+        <a href="#top" style="display:inline-block; margin-bottom: 20px;">
+          <i class="fa fa-angle-up fa-2x" style="color: #fff;"></i>
+        </a>
+        <div class="social-links" style="margin-bottom: 20px;">
+          <a href="#!"><i class="fa fa-linkedin fa-inverse"></i></a>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.15);" />
+        <p style="margin-top: 15px;">&copy; 2026 Gordon Cheng</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">
+          Publicis Groupe &bull; Nestlé China &bull; 2019
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    </script>
+  </body>
+</html>

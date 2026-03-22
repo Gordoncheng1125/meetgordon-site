@@ -1,0 +1,84 @@
+#hero {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 0px;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(107, 63, 160, 0.7) 100%),
+    url("./assets/audi-e5-hero.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  font-weight: 400;
+  color: $white-color;
+  padding: 0rem 5.6rem;
+  margin-bottom: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+
+  @include respond(phone) {
+    padding: 0rem $default-font-size;
+    background-attachment: scroll;
+  }
+
+  .hero-title {
+    font-size: 5.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: left;
+    color: $white-color;
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.5);
+
+    @include respond(tab-land) {
+      font-size: 4rem;
+    }
+    @include respond(tab-port) {
+      font-size: 3.6rem;
+      text-align: center;
+    }
+    @include respond(phone) {
+      font-size: 3.5rem;
+      line-height: 1.5;
+    }
+    @include respond(phone-xs) {
+      font-size: 2.8rem;
+    }
+  }
+
+  .hero-cta {
+    display: flex;
+    align-items: center;
+
+    @include respond(tab-port) {
+      justify-content: center;
+    }
+
+    @include respond(phone) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    & a {
+      font-size: 2.4rem;
+
+      @include respond(phone) {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: $accent-purple;
+    color: $white-color;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}

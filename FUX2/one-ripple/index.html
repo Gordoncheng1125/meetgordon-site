@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>One Ripple — Full Deck</title>
+<title>One Ripple</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #000; overflow: hidden; cursor: none; }
@@ -14,12 +14,25 @@
   }
   .slide-frame.active { display: block; }
 
+  /* Click overlay — captures mouse events above iframes */
+  .click-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 50; cursor: default;
+    pointer-events: none;
+  }
+  .click-zone {
+    position: absolute; pointer-events: auto; cursor: pointer;
+  }
+  .click-zone.left { top: 0; left: 0; width: 80px; height: 100%; }
+  .click-zone.right { top: 0; right: 0; width: 80px; height: 100%; }
+  .click-zone.bottom { bottom: 0; left: 0; right: 0; height: 60px; }
+  .click-zone.top-right { top: 0; right: 0; width: 80px; height: 60px; }
+
   /* Navigation dots */
   .nav-dots {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 10px; z-index: 100; opacity: 0; transition: opacity 0.4s;
+    display: flex; gap: 10px; z-index: 100; transition: opacity 0.4s;
   }
-  body.moving .nav-dots { opacity: 1; }
   .nav-dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: rgba(255,255,255,0.15); cursor: pointer;
@@ -34,10 +47,9 @@
     width: 48px; height: 48px; border: none; border-radius: 50%;
     background: rgba(255,255,255,0.05); color: rgba(196,166,122,0.5);
     font-size: 20px; cursor: pointer; z-index: 100;
-    opacity: 0; transition: opacity 0.4s, background 0.2s;
+    transition: opacity 0.4s, background 0.2s;
     display: flex; align-items: center; justify-content: center;
   }
-  body.moving .nav-arrow { opacity: 1; }
   .nav-arrow:hover { background: rgba(255,255,255,0.1); color: rgba(196,166,122,0.8); }
   .nav-arrow.left { left: 20px; }
   .nav-arrow.right { right: 20px; }
@@ -46,10 +58,8 @@
   .page-counter {
     position: fixed; bottom: 28px; right: 32px;
     font-family: 'Helvetica Neue', sans-serif; font-size: 11px;
-    color: rgba(255,255,255,0.12); z-index: 100;
-    opacity: 0; transition: opacity 0.4s;
+    color: rgba(255,255,255,0.2); z-index: 100;
   }
-  body.moving .page-counter { opacity: 1; }
 
   /* Music button */
   .music-btn {
@@ -58,10 +68,9 @@
     border: 1px solid rgba(196,166,122,0.2); background: transparent;
     color: rgba(196,166,122,0.5); font-size: 14px;
     cursor: pointer; z-index: 100;
-    opacity: 0; transition: opacity 0.4s, box-shadow 0.3s;
+    transition: box-shadow 0.3s;
     display: flex; align-items: center; justify-content: center;
   }
-  body.moving .music-btn { opacity: 1; }
   .music-btn.playing { box-shadow: 0 0 12px rgba(196,166,122,0.3); color: rgba(196,166,122,0.8); }
 </style>
 </head>
@@ -82,6 +91,14 @@
 <iframe class="slide-frame" src="slide-vo2max-C.html" id="s12"></iframe>
 <iframe class="slide-frame" src="slide-09-closing.html" id="s13"></iframe>
 
+<!-- Click overlay for mouse events above iframes -->
+<div class="click-overlay">
+  <div class="click-zone left" id="clickLeft"></div>
+  <div class="click-zone right" id="clickRight"></div>
+  <div class="click-zone bottom"></div>
+  <div class="click-zone top-right"></div>
+</div>
+
 <!-- Navigation -->
 <div class="nav-dots" id="dots"></div>
 <button class="nav-arrow left" id="prevBtn">&#8249;</button>
@@ -98,7 +115,6 @@
 const frames = document.querySelectorAll('.slide-frame');
 const total = frames.length;
 let cur = 0;
-let mouseTimer;
 
 // Build dots
 const dotsEl = document.getElementById('dots');
@@ -118,10 +134,13 @@ function goTo(idx) {
   dotsEl.children[cur].classList.add('active');
   document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
 
-  // Auto-play music on metaphor slide
+  // Auto-play music on metaphor slide, stop when leaving
+  const m = document.getElementById('bgMusic');
+  const mb = document.getElementById('musicBtn');
   if (cur === 3) {
-    const m = document.getElementById('bgMusic');
-    if (m.paused) { m.play().catch(() => {}); document.getElementById('musicBtn').classList.add('playing'); }
+    if (m.paused) { m.play().catch(() => {}); mb.classList.add('playing'); }
+  } else {
+    if (!m.paused) { m.pause(); mb.classList.remove('playing'); }
   }
 }
 
@@ -139,16 +158,11 @@ document.addEventListener('keydown', e => {
   if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
 });
 
-// Arrow buttons
+// Arrow buttons + click zones
 document.getElementById('prevBtn').addEventListener('click', prev);
 document.getElementById('nextBtn').addEventListener('click', next);
-
-// Mouse move → show UI
-document.addEventListener('mousemove', () => {
-  document.body.classList.add('moving');
-  clearTimeout(mouseTimer);
-  mouseTimer = setTimeout(() => document.body.classList.remove('moving'), 2500);
-});
+document.getElementById('clickLeft').addEventListener('click', prev);
+document.getElementById('clickRight').addEventListener('click', next);
 
 // Touch swipe
 let tx = 0;

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 03 — Insights & Principles</title>
+<style>
+  @font-face { font-family: 'Heart Rate'; src: url('HeartRate.ttf'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .scale-wrapper { width: 1920px; height: 1080px; transform: scale(var(--s)); transform-origin: center center; }
+  .slide {
+    width: 1920px; height: 1080px;
+    background: radial-gradient(ellipse at 50% 50%, #FAF3EB 0%, #F5EDE3 60%, #EDE4D8 100%);
+    position: relative; overflow: hidden;
+  }
+
+  /* Subtle ripple hint — top left */
+  .ripple-bg {
+    position: absolute;
+    border-radius: 50%;
+    top: -200px; left: -300px;
+    transform: translate(-50%, -50%);
+  }
+  .ripple-bg:nth-child(1) { width: 400px; height: 400px; border: 1.5px solid rgba(78, 205, 196, 0.12); }
+  .ripple-bg:nth-child(2) { width: 700px; height: 700px; border: 1px solid rgba(78, 205, 196, 0.08); }
+  .ripple-bg:nth-child(3) { width: 1050px; height: 1050px; border: 1px solid rgba(78, 205, 196, 0.05); }
+
+  /* Section label */
+  .section-label {
+    position: absolute;
+    top: 50px; left: 100px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(78, 205, 196, 0.6);
+    z-index: 10;
+  }
+
+  /* Title */
+  .page-title {
+    position: absolute;
+    top: 80px; left: 100px;
+    font-family: 'Georgia', serif;
+    font-size: 48px;
+    color: #5C2E2E;
+    z-index: 10;
+  }
+
+  /* Three cards */
+  .cards {
+    position: absolute;
+    top: 180px; left: 60px; right: 60px; bottom: 80px;
+    display: flex;
+    gap: 30px;
+    z-index: 10;
+  }
+  .card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(92, 46, 46, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card img {
+    width: 100%;
+    height: 65%;
+    object-fit: contain;
+    background: #FAF3EB;
+    padding: 8px;
+    border-bottom: 1px solid rgba(92, 46, 46, 0.06);
+  }
+  .card-text {
+    padding: 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(78, 205, 196, 0.8);
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-family: 'Georgia', serif;
+    font-size: 20px;
+    color: #5C2E2E;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    color: #E87E6E;
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* Stanford data card */
+  .data-visual {
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(78, 205, 196, 0.06) 0%, transparent 70%);
+  }
+  .age-burst {
+    text-align: center;
+  }
+  .age-number {
+    font-family: 'Georgia', serif;
+    font-size: 100px;
+    color: #4ecdc4;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(78, 205, 196, 0.15);
+  }
+  .age-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    color: #9B7F7F;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Page number */
+  .page-num {
+    position: absolute;
+    bottom: 30px; right: 80px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    color: rgba(92, 46, 46, 0.25);
+    z-index: 10;
+  }
+</style>
+<script>
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.querySelector('.scale-wrapper').style.setProperty('--s', s);
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('DOMContentLoaded', fit);
+</script>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="slide">
+  <div class="ripple-bg"></div>
+  <div class="ripple-bg"></div>
+  <div class="ripple-bg"></div>
+
+  <div class="section-label">Recap &mdash; Insights &amp; Principles</div>
+  <div class="page-title">What we've learned</div>
+
+  <div class="cards">
+    <div class="card">
+      <img src="img-body-mind.png" alt="Body-Mind Gap">
+      <div class="card-text">
+        <div class="card-label">Core Insight</div>
+        <div class="card-title">Exercise changes how you listen to your body</div>
+        <div class="card-desc">The mind says "I can." The body says "not yet."</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img-two-curves.png" alt="Two Curves">
+      <div class="card-text">
+        <div class="card-label">User Map</div>
+        <div class="card-title">Two curves, two lives</div>
+        <div class="card-desc">Active: gradual decline. Sedentary: the cliff.</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img-principles.png" alt="Design Principles">
+      <div class="card-text">
+        <div class="card-label">Design Principles</div>
+        <div class="card-title">5 guardrails for design decisions</div>
+        <div class="card-desc">Quality over length. Dignity is non-negotiable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">3 / 9</div>
+</div>
+</div>
+</body>
+</html>

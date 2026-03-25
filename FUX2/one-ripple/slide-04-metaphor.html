@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 04 — Visual Language Mood Board</title>
+<style>
+  @font-face { font-family: 'Heart Rate'; src: url('HeartRate.ttf'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .scale-wrapper { width: 1920px; height: 1080px; transform: scale(var(--s)); transform-origin: center center; }
+  .slide {
+    width: 1920px; height: 1080px;
+    background: #f4f0ea;
+    position: relative; overflow: hidden;
+  }
+
+  .section-label {
+    position: absolute; top: 24px; left: 50px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(92, 78, 60, 0.5); z-index: 50;
+  }
+
+  .item {
+    position: absolute;
+    box-shadow: 2px 3px 14px rgba(0,0,0,0.10);
+  }
+  .item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* === LEFT COLUMN — Photos (gentle, quiet) === */
+  .p1 { width: 320px; height: 420px; top: 55px; left: 40px; transform: rotate(0deg); z-index: 5; }
+  .p2 { width: 280px; height: 200px; top: 70px; left: 330px; transform: rotate(0deg); z-index: 6; }
+  .p3 { width: 250px; height: 340px; top: 280px; left: 360px; transform: rotate(0deg); z-index: 7; }
+  .p4 { width: 300px; height: 210px; top: 500px; left: 40px; transform: rotate(0deg); z-index: 6; }
+  .p5 { width: 280px; height: 190px; top: 740px; left: 60px; transform: rotate(-1deg); z-index: 5; }
+  .p6 { width: 260px; height: 200px; top: 650px; left: 330px; transform: rotate(0deg); z-index: 8; }
+  .p7 { width: 300px; height: 220px; top: 860px; left: 310px; transform: rotate(0deg); z-index: 7; }
+
+  /* === CENTER — Geometric lines scattered as decoration === */
+  .ripple-deco {
+    position: absolute; z-index: 2; pointer-events: none;
+  }
+  .ripple-deco .ring {
+    position: absolute; border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    border: 1px solid rgba(92, 78, 60, 0.12);
+  }
+  /* Large deco — top right */
+  .deco1 { width: 500px; height: 500px; top: -80px; right: -60px; }
+  .deco1 .ring:nth-child(1) { width: 100px; height: 100px; border-width: 1.5px; border-color: rgba(92,78,60,0.18); }
+  .deco1 .ring:nth-child(2) { width: 220px; height: 220px; }
+  .deco1 .ring:nth-child(3) { width: 360px; height: 360px; border-color: rgba(92,78,60,0.08); }
+  .deco1 .ring:nth-child(4) { width: 500px; height: 500px; border-color: rgba(92,78,60,0.04); }
+
+  /* Medium deco — bottom center-left */
+  .deco2 { width: 350px; height: 350px; bottom: -100px; left: 550px; }
+  .deco2 .ring:nth-child(1) { width: 80px; height: 80px; border-width: 1.5px; border-color: rgba(92,78,60,0.15); }
+  .deco2 .ring:nth-child(2) { width: 180px; height: 180px; }
+  .deco2 .ring:nth-child(3) { width: 300px; height: 300px; border-color: rgba(92,78,60,0.06); }
+
+  /* Small deco — mid left */
+  .deco3 { width: 200px; height: 200px; top: 420px; left: 580px; }
+  .deco3 .ring:nth-child(1) { width: 50px; height: 50px; border-color: rgba(92,78,60,0.20); }
+  .deco3 .ring:nth-child(2) { width: 120px; height: 120px; border-color: rgba(92,78,60,0.10); }
+  .deco3 .ring:nth-child(3) { width: 200px; height: 200px; border-color: rgba(92,78,60,0.05); }
+
+  /* === RIGHT AREA — Font, Color, Text === */
+
+  /* Font showcase — large area */
+  .font-block {
+    width: 520px; height: 380px;
+    top: 55px; left: 660px;
+    background: #1a1714;
+    transform: rotate(0deg);
+    z-index: 10;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 40px 48px;
+    border-radius: 2px;
+  }
+  .font-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.25); margin-bottom: 20px;
+  }
+  .font-big {
+    font-family: 'Heart Rate', serif;
+    font-size: 72px; color: #c4a67a;
+    text-shadow: 0 0 30px rgba(196,166,122,0.1);
+    line-height: 1.15; margin-bottom: 12px;
+  }
+  .font-alpha {
+    font-family: 'Heart Rate', serif;
+    font-size: 36px; color: rgba(196,166,122,0.45);
+    letter-spacing: 4px; line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .font-phrase {
+    font-family: 'Heart Rate', serif;
+    font-size: 28px; color: rgba(196,166,122,0.6);
+    letter-spacing: 2px;
+  }
+
+  /* Color palette — neat horizontal strip */
+  .palette {
+    position: absolute;
+    top: 460px; left: 660px;
+    width: 520px; height: 110px;
+    display: flex; flex-direction: column;
+    z-index: 10;
+    transform: rotate(0deg);
+    box-shadow: 2px 3px 14px rgba(0,0,0,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .palette-bar {
+    display: flex; flex: 1;
+  }
+  .palette-bar .sw {
+    flex: 1; position: relative;
+  }
+  .palette-bar .sw .hex {
+    position: absolute; bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 9px; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+  }
+  .palette-labels {
+    display: flex; height: 26px;
+    background: #f4f0ea;
+  }
+  .palette-labels span {
+    flex: 1; text-align: center;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(92,78,60,0.4);
+    line-height: 26px;
+  }
+
+  /* Metaphor text card */
+  .text-card {
+    width: 520px; height: 180px;
+    top: 600px; left: 660px;
+    background: #fff;
+    transform: rotate(0deg);
+    z-index: 11;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 24px 36px;
+    border-radius: 2px;
+  }
+  .text-card .quote {
+    font-family: 'Georgia', serif;
+    font-size: 19px; color: #5c4e3c;
+    font-style: italic; line-height: 1.7;
+  }
+  .text-card .attr {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: #bbb; margin-top: 10px;
+  }
+
+  /* Sound + Music card */
+  .sound-card {
+    width: 520px; height: 120px;
+    top: 810px; left: 660px;
+    background: #1a1714;
+    transform: rotate(0deg);
+    z-index: 11;
+    display: flex; align-items: center;
+    padding: 16px 28px; gap: 20px;
+    border-radius: 2px;
+  }
+  .s-wave { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+  .s-wave .bar { width: 3px; border-radius: 2px; }
+  .s-info .label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(196,166,122,0.4); margin-bottom: 6px;
+  }
+  .s-info p {
+    font-family: 'Georgia', serif;
+    font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5;
+  }
+  .s-info .track {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 10px; color: rgba(196,166,122,0.3);
+    margin-top: 4px; font-style: italic;
+  }
+
+  /* Right photos — small accents */
+  .p8 { width: 240px; height: 320px; top: 55px; left: 1220px; transform: rotate(-1deg); z-index: 5; }
+  .p9 { width: 220px; height: 170px; top: 400px; left: 1240px; transform: rotate(0deg); z-index: 6; }
+  .p10 { width: 260px; height: 360px; top: 590px; left: 1210px; transform: rotate(0deg); z-index: 5; }
+
+  /* Far right geometric + photos */
+  .p11 { width: 280px; height: 220px; top: 80px; left: 1490px; transform: rotate(0deg); z-index: 6; }
+  .p12 { width: 250px; height: 330px; top: 320px; left: 1500px; transform: rotate(0deg); z-index: 5; }
+  .p13 { width: 300px; height: 240px; top: 670px; left: 1480px; transform: rotate(0deg); z-index: 7; }
+
+  /* Deco — far right */
+  .deco4 { width: 300px; height: 300px; top: 700px; right: -50px; }
+  .deco4 .ring:nth-child(1) { width: 70px; height: 70px; border-color: rgba(92,78,60,0.15); }
+  .deco4 .ring:nth-child(2) { width: 160px; height: 160px; border-color: rgba(92,78,60,0.08); }
+  .deco4 .ring:nth-child(3) { width: 280px; height: 280px; border-color: rgba(92,78,60,0.04); }
+
+  /* Music button */
+  .music-btn {
+    position: absolute;
+    bottom: 40px; left: 50px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #1a1714;
+    color: #c4a67a;
+    font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .music-btn:hover { background: #2a2520; transform: scale(1.1); }
+  .music-btn.playing {
+    background: #c4a67a; color: #1a1714;
+    box-shadow: 0 0 20px rgba(196,166,122,0.3);
+  }
+
+  .page-num {
+    position: absolute; bottom: 14px; right: 40px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px; color: rgba(0,0,0,0.12); z-index: 50;
+  }
+</style>
+<script>
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.querySelector('.scale-wrapper').style.setProperty('--s', s);
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('DOMContentLoaded', fit);
+
+  function toggleMusic() {
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+      btn.innerHTML = '&#9646;&#9646;';
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+      btn.innerHTML = '&#9835;';
+    }
+  }
+</script>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="slide">
+  <div class="section-label">Visual Language &mdash; Mood Board</div>
+
+  <!-- Geometric deco lines -->
+  <div class="ripple-deco deco1"><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="ripple-deco deco2"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="ripple-deco deco3"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="ripple-deco deco4"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+
+  <!-- Left — gentle movement: hiking, walking, yoga -->
+  <div class="item p1" style="background:#f9f6f1;display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <svg width="320" height="420" viewBox="0 0 320 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-20,40 Q80,20 160,60 T340,40" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
+      <path d="M-20,80 Q80,50 160,100 T340,80" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
+      <path d="M-20,120 Q80,90 160,140 T340,120" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
+      <path d="M-20,160 Q80,130 160,180 T340,160" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
+      <path d="M-20,200 Q80,170 160,220 T340,200" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.18"/>
+      <path d="M-20,240 Q80,210 160,260 T340,240" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.16"/>
+      <path d="M-20,280 Q80,250 160,300 T340,280" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.14"/>
+      <path d="M-20,320 Q80,290 160,340 T340,320" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.12"/>
+      <path d="M-20,360 Q80,330 160,380 T340,360" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.10"/>
+      <path d="M-20,400 Q80,370 160,420 T340,400" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.08"/>
+      <circle cx="160" cy="210" r="30" stroke="#c4a67a" stroke-width="1.5" fill="none" opacity="0.25"/>
+      <circle cx="160" cy="210" r="70" stroke="#c4a67a" stroke-width="1" fill="none" opacity="0.15"/>
+      <circle cx="160" cy="210" r="120" stroke="#c4a67a" stroke-width="1" fill="none" opacity="0.10"/>
+      <circle cx="160" cy="210" r="180" stroke="#c4a67a" stroke-width="0.8" fill="none" opacity="0.06"/>
+    </svg>
+  </div>
+  <div class="item p2"><img src="https://i.pinimg.com/originals/c9/4f/a6/c94fa6a8876919f53c3a0d031366ef0d.jpg"></div>
+  <div class="item p3"><img src="https://i.pinimg.com/originals/fe/24/9e/fe249e07024d8ad8ebfb2007409269ea.jpg"></div>
+  <div class="item p4"><img src="https://i.pinimg.com/originals/6d/5d/a6/6d5da6d2f08b4eb7241fefcd88190ef5.jpg"></div>
+  <div class="item p5"><img src="https://i.pinimg.com/originals/ff/3d/98/ff3d98e2f1c986ae663dc5c6c06fc740.jpg"></div>
+  <div class="item p6"><img src="https://i.pinimg.com/originals/e5/0c/c0/e50cc034e9ed26c3420f1d5ba0f693f8.jpg"></div>
+  <div class="item p7"><img src="https://i.pinimg.com/originals/47/44/9f/47449f04ecf9dbe77f50c4f538eb222d.jpg"></div>
+
+  <!-- Right — people: care, hands, connection (from image-board) -->
+  <div class="item p8"><img src="https://i.pinimg.com/originals/e8/78/46/e87846ce59de074b275b466dd63d3947.jpg"></div>
+  <div class="item p9"><img src="https://i.pinimg.com/originals/5e/2e/60/5e2e60369aeca72e79a8949393a72b23.jpg"></div>
+  <div class="item p10"><img src="https://i.pinimg.com/originals/00/f5/53/00f553892ae5bfd6aa50f91006f11321.jpg"></div>
+
+  <!-- Right — watercolor ripple / ink wash textures -->
+  <div class="item p11"><img src="https://i.pinimg.com/originals/71/b8/b9/71b8b937e976b0ddca307c264958b36d.jpg"></div>
+  <div class="item p12"><img src="https://i.pinimg.com/originals/ee/e1/7b/eee17bd85a65499844567e4cfe239ab5.jpg"></div>
+  <div class="item p13"><img src="https://i.pinimg.com/originals/57/ee/1c/57ee1cf4b0ab75e484f6856ac22e0e49.jpg"></div>
+
+  <!-- Font showcase — big -->
+  <div class="item font-block">
+    <div class="font-label">Typeface &mdash; Heart Rate</div>
+    <div class="font-big">One Ripple</div>
+    <div class="font-alpha">A B C D E F G H I J K</div>
+    <div class="font-alpha">a b c d e f g h i j k</div>
+    <div class="font-phrase">Break the Aging Circle</div>
+  </div>
+
+  <!-- Color palette — neat row -->
+  <div class="palette">
+    <div class="palette-bar">
+      <div class="sw" style="background:#5c4e3c"><span class="hex">#5c4e3c</span></div>
+      <div class="sw" style="background:#8b7355"><span class="hex">#8b7355</span></div>
+      <div class="sw" style="background:#c4a67a"><span class="hex">#c4a67a</span></div>
+      <div class="sw" style="background:#dcc8a0"><span class="hex">#dcc8a0</span></div>
+    </div>
+    <div class="palette-labels">
+      <span>espresso</span>
+      <span>bark</span>
+      <span>ochre</span>
+      <span>sand</span>
+    </div>
+  </div>
+
+  <!-- Metaphor text -->
+  <div class="item text-card">
+    <div class="quote">One movement is one drop of water.<br>Its impact ripples outward &mdash; through your body,<br>your family, your world.</div>
+    <div class="attr">Core Metaphor</div>
+  </div>
+
+  <!-- Sound + Music -->
+  <div class="item sound-card">
+    <div class="s-wave">
+      <div class="bar" style="height:8px;background:#c4a67a;opacity:0.3"></div>
+      <div class="bar" style="height:16px;background:#c4a67a;opacity:0.4"></div>
+      <div class="bar" style="height:28px;background:#c4a67a;opacity:0.5"></div>
+      <div class="bar" style="height:42px;background:#c4a67a;opacity:0.5"></div>
+      <div class="bar" style="height:34px;background:#c4a67a;opacity:0.45"></div>
+      <div class="bar" style="height:46px;background:#c4a67a;opacity:0.4"></div>
+      <div class="bar" style="height:28px;background:#c4a67a;opacity:0.35"></div>
+      <div class="bar" style="height:16px;background:#c4a67a;opacity:0.3"></div>
+      <div class="bar" style="height:6px;background:#c4a67a;opacity:0.2"></div>
+    </div>
+    <div class="s-info">
+      <div class="label">Sound &amp; Music</div>
+      <p>Water drop &rarr; echo &rarr; layered soundscape. Movement = rich. Stillness = silence.</p>
+      <div class="track">♪ Francesco Siano — Ordinary Days (Believe)</div>
+    </div>
+  </div>
+
+  <!-- Music player -->
+  <div class="music-btn" id="musicBtn" onclick="toggleMusic()">&#9835;</div>
+  <audio id="bgMusic" src="music.wav" preload="auto"></audio>
+
+  <div class="page-num">4 / 9</div>
+</div>
+</div>
+</body>
+</html>

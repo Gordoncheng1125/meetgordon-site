@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 01 — Cover</title>
+<style>
+  @font-face {
+    font-family: 'Heart Rate';
+    src: url('HeartRate.ttf');
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    background: #000;
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden;
+  }
+  .scale-wrapper {
+    width: 1920px;
+    height: 1080px;
+    transform: scale(var(--s));
+    transform-origin: center center;
+  }
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background — gradient follows ripple center (set by JS) */
+  .bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #1a1510;
+  }
+
+  /* Ripple rings — positioned by JS */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ripple:nth-child(1) { width: 120px;  height: 120px;  border: 2.5px solid rgba(78, 205, 196, 0.55); box-shadow: 0 0 40px rgba(78, 205, 196, 0.12); }
+  .ripple:nth-child(2) { width: 320px;  height: 320px;  border: 2px solid rgba(78, 205, 196, 0.40); }
+  .ripple:nth-child(3) { width: 560px;  height: 560px;  border: 1.5px solid rgba(78, 205, 196, 0.28); }
+  .ripple:nth-child(4) { width: 860px;  height: 860px;  border: 1.5px solid rgba(100, 190, 170, 0.20); }
+  .ripple:nth-child(5) { width: 1220px; height: 1220px; border: 1px solid rgba(150, 170, 130, 0.14); }
+  .ripple:nth-child(6) { width: 1640px; height: 1640px; border: 1px solid rgba(200, 150, 100, 0.09); }
+  .ripple:nth-child(7) { width: 2120px; height: 2120px; border: 1px solid rgba(220, 140, 80, 0.05); }
+
+  /* Glow — positioned by JS */
+  .glow {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(78, 205, 196, 0.22) 0%, rgba(78, 205, 196, 0.06) 35%, transparent 65%);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Ink wash */
+  .ink-wash {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(220, 140, 80, 0.08) 0%, transparent 40%),
+      radial-gradient(ellipse at 90% 85%, rgba(200, 110, 50, 0.07) 0%, transparent 40%),
+      radial-gradient(ellipse at 5% 10%, rgba(180, 120, 60, 0.04) 0%, transparent 35%);
+  }
+
+  /* Content */
+  .content {
+    position: absolute;
+    top: 42%;
+    left: 140px;
+    transform: translateY(-50%);
+    z-index: 10;
+    text-align: left;
+  }
+  .course-info {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.28);
+    margin-bottom: 28px;
+  }
+  .title {
+    font-family: 'Heart Rate', 'Georgia', serif;
+    font-size: 150px;
+    color: #4ecdc4;
+    letter-spacing: 6px;
+    margin-bottom: 24px;
+    text-shadow: 0 0 60px rgba(78, 205, 196, 0.25);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .title .anchor { position: relative; }
+  .subtitle {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    color: rgba(220, 170, 110, 0.8);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+  }
+
+  /* Author — bottom right */
+  .author {
+    position: absolute;
+    bottom: 50px;
+    right: 80px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="slide">
+  <div class="bg"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="glow"></div>
+  <div class="ink-wash"></div>
+
+  <div class="content">
+    <div class="course-info">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
+    <div class="title">One <span class="anchor" id="R">R</span>ipple</div>
+    <div class="subtitle">How exercise reshapes the aging body &mdash;<br>and the lives around it</div>
+  </div>
+
+  <div class="author">Gordon Cheng</div>
+</div>
+</div>
+
+<script>
+function layout() {
+  // Scale to fit
+  const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  document.querySelector('.scale-wrapper').style.setProperty('--s', s);
+
+  // Find "R" position inside the 1920x1080 slide
+  const slide = document.querySelector('.slide');
+  const R = document.getElementById('R');
+  const slideRect = slide.getBoundingClientRect();
+  const rRect = R.getBoundingClientRect();
+
+  // Center of "R" in slide coordinates (unscaled)
+  const cx = (rRect.left + rRect.width / 2 - slideRect.left) / s;
+  const cy = (rRect.top + rRect.height / 2 - slideRect.top) / s;
+
+  // Position all ripples at R center
+  document.querySelectorAll('.ripple').forEach(r => {
+    r.style.left = cx + 'px';
+    r.style.top = cy + 'px';
+  });
+
+  // Position glow
+  const glow = document.querySelector('.glow');
+  glow.style.left = cx + 'px';
+  glow.style.top = cy + 'px';
+
+  // Dynamic background gradient centered on R
+  const bg = document.querySelector('.bg');
+  const pctX = (cx / 1920 * 100).toFixed(1);
+  const pctY = (cy / 1080 * 100).toFixed(1);
+  bg.style.background = `radial-gradient(ellipse at ${pctX}% ${pctY}%, #0d2a3a 0%, #0f2028 20%, #1a1510 45%, #2a1810 70%, #301a0a 100%)`;
+}
+
+window.addEventListener('DOMContentLoaded', () => { requestAnimationFrame(layout); });
+window.addEventListener('resize', layout);
+</script>
+</body>
+</html>

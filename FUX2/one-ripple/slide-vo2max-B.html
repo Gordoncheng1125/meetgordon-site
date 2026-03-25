@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VO2max — Your Life on One Axis</title>
+<style>
+  @font-face { font-family: 'Heart Rate'; src: url('HeartRate.ttf'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .scale-wrapper { width: 1920px; height: 1080px; transform: scale(var(--s)); transform-origin: center center; }
+  .slide {
+    width: 1920px; height: 1080px;
+    background: radial-gradient(ellipse at 50% 60%, #FAF3EB 0%, #F5EDE3 60%, #EDE4D8 100%);
+    position: relative; overflow: hidden;
+  }
+
+  /* Subtle ripple deco */
+  .ripple-bg { position: absolute; border-radius: 50%; bottom: -300px; right: -200px; transform: translate(-50%,-50%); }
+  .ripple-bg:nth-child(1) { width: 400px; height: 400px; border: 1.5px solid rgba(196,166,122,0.12); }
+  .ripple-bg:nth-child(2) { width: 700px; height: 700px; border: 1px solid rgba(196,166,122,0.08); }
+  .ripple-bg:nth-child(3) { width: 1050px; height: 1050px; border: 1px solid rgba(196,166,122,0.05); }
+
+  .section-label {
+    position: absolute; top: 40px; left: 100px;
+    font-family: 'Helvetica Neue', sans-serif; font-size: 12px;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(92,78,60,0.5); z-index: 10;
+  }
+  .page-title {
+    position: absolute; top: 72px; left: 100px;
+    font-family: 'Georgia', serif; font-size: 44px;
+    color: #5c4e3c; z-index: 10;
+  }
+  .page-subtitle {
+    position: absolute; top: 130px; left: 100px;
+    font-family: 'Georgia', serif; font-size: 18px;
+    color: #E87E6E; font-style: italic; z-index: 10;
+  }
+
+  /* Chart area */
+  .chart-area {
+    position: absolute;
+    top: 190px; left: 100px; right: 100px; bottom: 120px;
+    z-index: 10;
+  }
+
+  /* SVG chart */
+  .chart-svg { width: 100%; height: 100%; }
+
+  /* Axis labels */
+  .axis-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px; fill: rgba(92,78,60,0.4);
+    letter-spacing: 1px;
+  }
+  .axis-label-y {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 10px; fill: rgba(92,78,60,0.35);
+  }
+  .axis-tick {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px; fill: rgba(92,78,60,0.5);
+  }
+
+  /* Curve animation */
+  .curve-active {
+    stroke: #4ecdc4; stroke-width: 3; fill: none;
+    stroke-dasharray: 2000; stroke-dashoffset: 2000;
+    animation: drawCurve 3s ease-out 0.5s forwards;
+  }
+  .curve-sedentary {
+    stroke: #c4a67a; stroke-width: 3; fill: none;
+    stroke-dasharray: 2000; stroke-dashoffset: 2000;
+    animation: drawCurve 3s ease-out 1s forwards;
+  }
+  @keyframes drawCurve {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Danger zone */
+  .danger-zone {
+    fill: rgba(232,126,110,0.06);
+  }
+  .danger-line {
+    stroke: #E87E6E; stroke-width: 1.5; stroke-dasharray: 8 6;
+    opacity: 0; animation: fadeIn 0.6s ease 2.5s forwards;
+  }
+  .danger-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 11px; fill: #E87E6E; letter-spacing: 1px;
+    opacity: 0; animation: fadeIn 0.6s ease 2.5s forwards;
+  }
+
+  /* Activity markers */
+  .activity-marker {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .activity-marker.visible { opacity: 1; }
+  .activity-marker.faded { opacity: 0.15; }
+
+  .activity-icon {
+    font-size: 28px;
+    text-anchor: middle;
+  }
+  .activity-text {
+    font-family: 'Georgia', serif;
+    font-size: 13px; fill: #5c4e3c;
+    text-anchor: middle;
+  }
+  .activity-vo2 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 10px; fill: rgba(92,78,60,0.4);
+    text-anchor: middle; letter-spacing: 0.5px;
+  }
+
+  /* Legend */
+  .legend {
+    position: absolute; top: 48px; right: 100px;
+    display: flex; gap: 28px; z-index: 10;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px; color: rgba(92,78,60,0.6);
+  }
+  .legend-line {
+    width: 24px; height: 3px; border-radius: 2px;
+  }
+
+  /* Bottom stat */
+  .bottom-stat {
+    position: absolute; bottom: 40px; left: 100px; right: 100px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10;
+    opacity: 0; animation: fadeIn 0.8s ease 3.5s forwards;
+  }
+  .stat-block {
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .stat-number {
+    font-family: 'Georgia', serif; font-size: 48px; color: #4ecdc4;
+    line-height: 1;
+  }
+  .stat-unit {
+    font-family: 'Georgia', serif; font-size: 18px; color: #4ecdc4;
+  }
+  .stat-desc {
+    font-family: 'Georgia', serif; font-size: 15px;
+    color: rgba(92,78,60,0.6); font-style: italic;
+    max-width: 400px; line-height: 1.5;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .page-num {
+    position: absolute; bottom: 30px; right: 80px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px; color: rgba(92,46,46,0.25); z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div class="scale-wrapper">
+<div class="slide">
+  <div class="ripple-bg"></div><div class="ripple-bg"></div><div class="ripple-bg"></div>
+
+  <div class="section-label">Data Visualization &mdash; VO&#8322;max Decline</div>
+  <div class="page-title">Your life on one axis</div>
+  <div class="page-subtitle">As VO&#8322;max drops, what you can do disappears &mdash; one ability at a time.</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-line" style="background:#4ecdc4"></div>Active</div>
+    <div class="legend-item"><div class="legend-line" style="background:#c4a67a"></div>Sedentary</div>
+  </div>
+
+  <div class="chart-area">
+    <svg class="chart-svg" viewBox="0 0 1720 700" preserveAspectRatio="xMidYMid meet">
+      <!-- Grid lines -->
+      <g opacity="0.15" stroke="#5c4e3c" stroke-width="0.5">
+        <line x1="80" y1="70" x2="1680" y2="70"/>
+        <line x1="80" y1="175" x2="1680" y2="175"/>
+        <line x1="80" y1="280" x2="1680" y2="280"/>
+        <line x1="80" y1="385" x2="1680" y2="385"/>
+        <line x1="80" y1="490" x2="1680" y2="490"/>
+        <line x1="80" y1="595" x2="1680" y2="595"/>
+      </g>
+
+      <!-- Y axis labels -->
+      <text class="axis-label-y" x="70" y="75" text-anchor="end">50</text>
+      <text class="axis-label-y" x="70" y="180" text-anchor="end">40</text>
+      <text class="axis-label-y" x="70" y="285" text-anchor="end">30</text>
+      <text class="axis-label-y" x="70" y="390" text-anchor="end">20</text>
+      <text class="axis-label-y" x="70" y="495" text-anchor="end">10</text>
+      <text class="axis-label-y" x="30" y="340" text-anchor="middle" transform="rotate(-90,30,340)" class="axis-label" style="font-size:11px">VO&#8322;max (ml/kg/min)</text>
+
+      <!-- X axis labels -->
+      <text class="axis-tick" x="80" y="630">20</text>
+      <text class="axis-tick" x="347" y="630">30</text>
+      <text class="axis-tick" x="613" y="630">40</text>
+      <text class="axis-tick" x="880" y="630">50</text>
+      <text class="axis-tick" x="1147" y="630">60</text>
+      <text class="axis-tick" x="1413" y="630">70</text>
+      <text class="axis-tick" x="1680" y="630">80</text>
+      <text class="axis-label" x="880" y="665" text-anchor="middle">AGE</text>
+
+      <!-- Danger zone (below 18 ml/kg/min) -->
+      <rect class="danger-zone" x="80" y="438" width="1600" height="157" rx="4"/>
+      <line class="danger-line" x1="80" y1="438" x2="1680" y2="438"/>
+      <text class="danger-label" x="1670" y="432" text-anchor="end">INDEPENDENCE THRESHOLD (18 ml/kg/min)</text>
+
+      <!-- Active curve: 45→41→37→33→29→25→22 -->
+      <path class="curve-active"
+        d="M 80,123 C 200,123 280,144 347,165 C 420,186 530,207 613,228 C 700,249 800,270 880,291 C 960,312 1060,333 1147,354 C 1240,375 1330,385 1413,406 C 1500,417 1600,427 1680,438"/>
+
+      <!-- Sedentary curve: 45→38→32→26→20→15→12 -->
+      <path class="curve-sedentary"
+        d="M 80,123 C 200,140 280,186 347,228 C 420,270 530,312 613,354 C 700,396 800,427 880,459 C 960,490 1060,522 1147,543 C 1240,560 1330,570 1413,580 C 1500,586 1600,590 1680,595"/>
+
+      <!-- Activity markers along sedentary curve — they fade as VO2max drops -->
+      <g class="activity-marker" data-threshold="45" id="act-run">
+        <text class="activity-icon" x="130" y="90">&#127939;</text>
+        <text class="activity-text" x="130" y="60">Run a 5K</text>
+        <text class="activity-vo2" x="130" y="48">45+</text>
+      </g>
+
+      <g class="activity-marker" data-threshold="35" id="act-hike">
+        <text class="activity-icon" x="430" y="175">&#129406;</text>
+        <text class="activity-text" x="430" y="145">Hike with friends</text>
+        <text class="activity-vo2" x="430" y="133">35+</text>
+      </g>
+
+      <g class="activity-marker" data-threshold="30" id="act-grocery">
+        <text class="activity-icon" x="700" y="248">&#128722;</text>
+        <text class="activity-text" x="700" y="218">Carry groceries upstairs</text>
+        <text class="activity-vo2" x="700" y="206">30+</text>
+      </g>
+
+      <g class="activity-marker" data-threshold="25" id="act-stairs">
+        <text class="activity-icon" x="960" y="330">&#128694;</text>
+        <text class="activity-text" x="960" y="300">Climb a few flights</text>
+        <text class="activity-vo2" x="960" y="288">25+</text>
+      </g>
+
+      <g class="activity-marker" data-threshold="20" id="act-walk">
+        <text class="activity-icon" x="1180" y="420">&#129468;</text>
+        <text class="activity-text" x="1180" y="390">Walk unassisted</text>
+        <text class="activity-vo2" x="1180" y="378">20+</text>
+      </g>
+
+      <g class="activity-marker" data-threshold="15" id="act-independence">
+        <text class="activity-icon" x="1440" y="510">&#128715;</text>
+        <text class="activity-text" x="1440" y="480">Live independently</text>
+        <text class="activity-vo2" x="1440" y="468">15+</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Bottom stat -->
+  <div class="bottom-stat">
+    <div class="stat-block">
+      <div class="stat-number">50–70%</div>
+      <div class="stat-desc">of VO&#8322;max decline is preventable.<br>The cliff is a choice, not a fate.</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-desc" style="text-align:right">Every 1 MET (3.5 ml/kg/min) retained<br>reduces mortality risk by</div>
+      <div class="stat-number">~13%</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function fit() {
+  const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  document.querySelector('.scale-wrapper').style.setProperty('--s', s);
+}
+window.addEventListener('resize', fit);
+window.addEventListener('DOMContentLoaded', () => {
+  fit();
+  // Animate activity markers appearing then fading
+  const markers = document.querySelectorAll('.activity-marker');
+  const thresholds = [45, 35, 30, 25, 20, 15];
+  // First show them all, then fade the lower ones
+  markers.forEach((m, i) => {
+    setTimeout(() => m.classList.add('visible'), 1500 + i * 400);
+  });
+  // After all appear, start fading from bottom up
+  setTimeout(() => {
+    for (let i = markers.length - 1; i >= 0; i--) {
+      setTimeout(() => markers[i].classList.add('faded'), (markers.length - 1 - i) * 600);
+    }
+  }, 5000);
+  // After fade sequence, pulse them back
+  setTimeout(() => {
+    markers.forEach(m => { m.classList.remove('faded'); m.classList.add('visible'); });
+  }, 9500);
+});
+</script>
+</body>
+</html>

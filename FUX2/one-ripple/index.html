@@ -2,650 +2,169 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Ripple — Gordon Cheng</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%234ecdc4' stroke-width='3'/><circle cx='50' cy='50' r='25' fill='none' stroke='%234ecdc4' stroke-width='2'/><circle cx='50' cy='50' r='10' fill='%234ecdc4'/></svg>">
+<title>One Ripple — Full Deck</title>
 <style>
-@font-face {
-  font-family: 'Heart Rate';
-  src: url('HeartRate.ttf') format('truetype');
-  font-display: swap;
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Helvetica Neue', sans-serif; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; overflow: hidden; cursor: none; }
+  body.moving { cursor: default; }
 
-/* === PRESENTATION SHELL === */
-.deck { width: 100%; height: 100%; position: relative; }
-.slide-container {
-  position: absolute; inset: 0;
-  display: flex; justify-content: center; align-items: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.5s ease;
-}
-.slide-container.active { opacity: 1; pointer-events: auto; }
+  .slide-frame {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    border: none; display: none; background: #000;
+  }
+  .slide-frame.active { display: block; }
 
-.scale-wrapper {
-  width: 1920px; height: 1080px;
-  transform: scale(var(--s));
-  transform-origin: center center;
-}
-.slide {
-  width: 1920px; height: 1080px;
-  position: relative; overflow: hidden;
-}
+  /* Navigation dots */
+  .nav-dots {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; z-index: 100; opacity: 0; transition: opacity 0.4s;
+  }
+  body.moving .nav-dots { opacity: 1; }
+  .nav-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-dot.active { background: rgba(196,166,122,0.8); transform: scale(1.3); }
+  .nav-dot:hover { background: rgba(196,166,122,0.5); }
 
-/* === NAV UI === */
-.nav-hint {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px; align-items: center;
-  z-index: 1000; opacity: 0; transition: opacity 0.4s;
-  pointer-events: none;
-}
-.nav-hint.show { opacity: 1; }
-.nav-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: all 0.3s;
-}
-.nav-dot.active { background: rgba(196,166,122,0.8); transform: scale(1.4); }
+  /* Arrow buttons */
+  .nav-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.05); color: rgba(196,166,122,0.5);
+    font-size: 20px; cursor: pointer; z-index: 100;
+    opacity: 0; transition: opacity 0.4s, background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  body.moving .nav-arrow { opacity: 1; }
+  .nav-arrow:hover { background: rgba(255,255,255,0.1); color: rgba(196,166,122,0.8); }
+  .nav-arrow.left { left: 20px; }
+  .nav-arrow.right { right: 20px; }
 
-.nav-arrow {
-  position: fixed; top: 50%; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.4); font-size: 20px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 1000;
-  opacity: 0; transition: all 0.3s;
-  pointer-events: none;
-}
-.nav-arrow.show { opacity: 1; pointer-events: auto; }
-.nav-arrow:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
-.nav-arrow.left { left: 20px; }
-.nav-arrow.right { right: 20px; }
+  /* Page counter */
+  .page-counter {
+    position: fixed; bottom: 28px; right: 32px;
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.12); z-index: 100;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  body.moving .page-counter { opacity: 1; }
 
-/* === SLIDE 01 — COVER === */
-.s01 .slide { background: #1a1510; }
-.s01 .bg { position: absolute; inset: 0; background: #1a1510; }
-.s01 .ripple { position: absolute; border-radius: 50%; transform: translate(-50%, -50%); }
-.s01 .ripple:nth-child(1) { width: 120px; height: 120px; border: 2.5px solid rgba(78,205,196,0.55); box-shadow: 0 0 40px rgba(78,205,196,0.12); }
-.s01 .ripple:nth-child(2) { width: 320px; height: 320px; border: 2px solid rgba(78,205,196,0.40); }
-.s01 .ripple:nth-child(3) { width: 560px; height: 560px; border: 1.5px solid rgba(78,205,196,0.28); }
-.s01 .ripple:nth-child(4) { width: 860px; height: 860px; border: 1.5px solid rgba(100,190,170,0.20); }
-.s01 .ripple:nth-child(5) { width: 1220px; height: 1220px; border: 1px solid rgba(150,170,130,0.14); }
-.s01 .ripple:nth-child(6) { width: 1640px; height: 1640px; border: 1px solid rgba(200,150,100,0.09); }
-.s01 .ripple:nth-child(7) { width: 2120px; height: 2120px; border: 1px solid rgba(220,140,80,0.05); }
-.s01 .glow { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(78,205,196,0.22) 0%, rgba(78,205,196,0.06) 35%, transparent 65%); transform: translate(-50%, -50%); }
-.s01 .ink-wash { position: absolute; inset: 0; background: radial-gradient(ellipse at 85% 15%, rgba(220,140,80,0.08) 0%, transparent 40%), radial-gradient(ellipse at 90% 85%, rgba(200,110,50,0.07) 0%, transparent 40%), radial-gradient(ellipse at 5% 10%, rgba(180,120,60,0.04) 0%, transparent 35%); }
-.s01 .content { position: absolute; top: 42%; left: 140px; transform: translateY(-50%); z-index: 10; text-align: left; }
-.s01 .course-info { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 28px; }
-.s01 .title { font-family: 'Heart Rate', 'Georgia', serif; font-size: 150px; color: #4ecdc4; letter-spacing: 6px; margin-bottom: 24px; text-shadow: 0 0 60px rgba(78,205,196,0.25); line-height: 1.1; white-space: nowrap; }
-.s01 .title .anchor { position: relative; }
-.s01 .subtitle { font-family: 'Georgia', serif; font-size: 24px; color: rgba(220,170,110,0.8); font-style: italic; letter-spacing: 0.5px; line-height: 1.6; }
-.s01 .author { position: absolute; bottom: 50px; right: 80px; font-size: 16px; color: rgba(255,255,255,0.4); letter-spacing: 2px; z-index: 10; }
-
-/* === SLIDES 02 & 03 — LIGHT RECAP CARDS === */
-.s-light .slide { background: radial-gradient(ellipse at 50% 50%, #FAF3EB 0%, #F5EDE3 60%, #EDE4D8 100%); }
-.s-light .ripple-bg { position: absolute; border-radius: 50%; top: -200px; left: -300px; transform: translate(-50%, -50%); }
-.s-light .ripple-bg:nth-child(1) { width: 400px; height: 400px; border: 1.5px solid rgba(78,205,196,0.12); }
-.s-light .ripple-bg:nth-child(2) { width: 700px; height: 700px; border: 1px solid rgba(78,205,196,0.08); }
-.s-light .ripple-bg:nth-child(3) { width: 1050px; height: 1050px; border: 1px solid rgba(78,205,196,0.05); }
-.s-light .section-label { position: absolute; top: 50px; left: 100px; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: rgba(78,205,196,0.6); z-index: 10; }
-.s-light .page-title { position: absolute; top: 80px; left: 100px; font-family: 'Georgia', serif; font-size: 48px; color: #5C2E2E; z-index: 10; }
-.s-light .cards { position: absolute; top: 180px; left: 60px; right: 60px; bottom: 80px; display: flex; gap: 30px; z-index: 10; }
-.s-light .card { flex: 1; background: rgba(255,255,255,0.5); border: 1px solid rgba(92,46,46,0.08); border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.04); overflow: hidden; display: flex; flex-direction: column; }
-.s-light .card img { width: 100%; height: 65%; object-fit: contain; background: #FAF3EB; padding: 8px; border-bottom: 1px solid rgba(92,46,46,0.06); }
-.s-light .card-text { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.s-light .card-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(78,205,196,0.8); margin-bottom: 8px; }
-.s-light .card-title { font-family: 'Georgia', serif; font-size: 20px; color: #5C2E2E; line-height: 1.3; }
-.s-light .card-desc { font-family: 'Georgia', serif; font-size: 14px; color: #E87E6E; font-style: italic; margin-top: 6px; }
-.s-light .data-visual { height: 65%; display: flex; justify-content: center; align-items: center; gap: 60px; background: radial-gradient(ellipse at 50% 50%, rgba(78,205,196,0.06) 0%, transparent 70%); }
-.s-light .age-burst { text-align: center; }
-.s-light .age-number { font-family: 'Georgia', serif; font-size: 100px; color: #4ecdc4; line-height: 1; text-shadow: 0 0 30px rgba(78,205,196,0.15); }
-.s-light .age-label { font-size: 13px; color: #9B7F7F; margin-top: 8px; letter-spacing: 0.5px; }
-.s-light .page-num { position: absolute; bottom: 30px; right: 80px; font-size: 13px; color: rgba(92,46,46,0.25); z-index: 10; }
-
-/* === SLIDE 04 — MOOD BOARD === */
-.s04 .slide { background: #f4f0ea; }
-.s04 .section-label { position: absolute; top: 24px; left: 50px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(92,78,60,0.5); z-index: 50; }
-.s04 .item { position: absolute; box-shadow: 2px 3px 14px rgba(0,0,0,0.10); }
-.s04 .item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.s04 .p1 { width: 320px; height: 420px; top: 55px; left: 40px; z-index: 5; }
-.s04 .p2 { width: 280px; height: 200px; top: 70px; left: 330px; z-index: 6; }
-.s04 .p3 { width: 250px; height: 340px; top: 280px; left: 360px; z-index: 7; }
-.s04 .p4 { width: 300px; height: 210px; top: 500px; left: 40px; z-index: 6; }
-.s04 .p5 { width: 280px; height: 190px; top: 740px; left: 60px; transform: rotate(-1deg); z-index: 5; }
-.s04 .p6 { width: 260px; height: 200px; top: 650px; left: 330px; z-index: 8; }
-.s04 .p7 { width: 300px; height: 220px; top: 860px; left: 310px; z-index: 7; }
-.s04 .ripple-deco { position: absolute; z-index: 2; pointer-events: none; }
-.s04 .ripple-deco .ring { position: absolute; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); border: 1px solid rgba(92,78,60,0.12); }
-.s04 .deco1 { width: 500px; height: 500px; top: -80px; right: -60px; }
-.s04 .deco1 .ring:nth-child(1) { width: 100px; height: 100px; border-width: 1.5px; border-color: rgba(92,78,60,0.18); }
-.s04 .deco1 .ring:nth-child(2) { width: 220px; height: 220px; }
-.s04 .deco1 .ring:nth-child(3) { width: 360px; height: 360px; border-color: rgba(92,78,60,0.08); }
-.s04 .deco1 .ring:nth-child(4) { width: 500px; height: 500px; border-color: rgba(92,78,60,0.04); }
-.s04 .deco2 { width: 350px; height: 350px; bottom: -100px; left: 550px; }
-.s04 .deco2 .ring:nth-child(1) { width: 80px; height: 80px; border-width: 1.5px; border-color: rgba(92,78,60,0.15); }
-.s04 .deco2 .ring:nth-child(2) { width: 180px; height: 180px; }
-.s04 .deco2 .ring:nth-child(3) { width: 300px; height: 300px; border-color: rgba(92,78,60,0.06); }
-.s04 .deco3 { width: 200px; height: 200px; top: 420px; left: 580px; }
-.s04 .deco3 .ring:nth-child(1) { width: 50px; height: 50px; border-color: rgba(92,78,60,0.20); }
-.s04 .deco3 .ring:nth-child(2) { width: 120px; height: 120px; border-color: rgba(92,78,60,0.10); }
-.s04 .deco3 .ring:nth-child(3) { width: 200px; height: 200px; border-color: rgba(92,78,60,0.05); }
-.s04 .deco4 { width: 300px; height: 300px; top: 700px; right: -50px; }
-.s04 .deco4 .ring:nth-child(1) { width: 70px; height: 70px; border-color: rgba(92,78,60,0.15); }
-.s04 .deco4 .ring:nth-child(2) { width: 160px; height: 160px; border-color: rgba(92,78,60,0.08); }
-.s04 .deco4 .ring:nth-child(3) { width: 280px; height: 280px; border-color: rgba(92,78,60,0.04); }
-.s04 .font-block { width: 520px; height: 380px; top: 55px; left: 660px; background: #1a1714; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 40px 48px; border-radius: 2px; }
-.s04 .font-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 20px; }
-.s04 .font-big { font-family: 'Heart Rate', serif; font-size: 72px; color: #c4a67a; text-shadow: 0 0 30px rgba(196,166,122,0.1); line-height: 1.15; margin-bottom: 12px; }
-.s04 .font-alpha { font-family: 'Heart Rate', serif; font-size: 36px; color: rgba(196,166,122,0.45); letter-spacing: 4px; line-height: 1.4; margin-bottom: 16px; }
-.s04 .font-phrase { font-family: 'Heart Rate', serif; font-size: 28px; color: rgba(196,166,122,0.6); letter-spacing: 2px; }
-.s04 .palette { position: absolute; top: 460px; left: 660px; width: 520px; height: 110px; display: flex; flex-direction: column; z-index: 10; box-shadow: 2px 3px 14px rgba(0,0,0,0.08); border-radius: 2px; overflow: hidden; }
-.s04 .palette-bar { display: flex; flex: 1; }
-.s04 .palette-bar .sw { flex: 1; position: relative; }
-.s04 .palette-bar .sw .hex { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; }
-.s04 .palette-labels { display: flex; height: 26px; background: #f4f0ea; }
-.s04 .palette-labels span { flex: 1; text-align: center; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(92,78,60,0.4); line-height: 26px; }
-.s04 .text-card { width: 520px; height: 180px; top: 600px; left: 660px; background: #fff; z-index: 11; display: flex; flex-direction: column; justify-content: center; padding: 24px 36px; border-radius: 2px; }
-.s04 .text-card .quote { font-family: 'Georgia', serif; font-size: 19px; color: #5c4e3c; font-style: italic; line-height: 1.7; }
-.s04 .text-card .attr { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #bbb; margin-top: 10px; }
-.s04 .sound-card { width: 520px; height: 120px; top: 810px; left: 660px; background: #1a1714; z-index: 11; display: flex; align-items: center; padding: 16px 28px; gap: 20px; border-radius: 2px; }
-.s04 .s-wave { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
-.s04 .s-wave .bar { width: 3px; border-radius: 2px; }
-.s04 .s-info .label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(196,166,122,0.4); margin-bottom: 6px; }
-.s04 .s-info p { font-family: 'Georgia', serif; font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
-.s04 .s-info .track { font-size: 10px; color: rgba(196,166,122,0.3); margin-top: 4px; font-style: italic; }
-.s04 .p8 { width: 240px; height: 320px; top: 55px; left: 1220px; transform: rotate(-1deg); z-index: 5; }
-.s04 .p9 { width: 220px; height: 170px; top: 400px; left: 1240px; z-index: 6; }
-.s04 .p10 { width: 260px; height: 360px; top: 590px; left: 1210px; z-index: 5; }
-.s04 .p11 { width: 280px; height: 220px; top: 80px; left: 1490px; z-index: 6; }
-.s04 .p12 { width: 250px; height: 330px; top: 320px; left: 1500px; z-index: 5; }
-.s04 .p13 { width: 300px; height: 240px; top: 670px; left: 1480px; z-index: 7; }
-.s04 .music-btn { position: absolute; bottom: 40px; left: 50px; width: 44px; height: 44px; border-radius: 50%; background: #1a1714; color: #c4a67a; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 50; transition: all 0.2s; box-shadow: 0 2px 10px rgba(0,0,0,0.15); border: none; }
-.s04 .music-btn:hover { background: #2a2520; transform: scale(1.1); }
-.s04 .music-btn.playing { background: #c4a67a; color: #1a1714; box-shadow: 0 0 20px rgba(196,166,122,0.3); }
-.s04 .page-num { position: absolute; bottom: 14px; right: 40px; font-size: 12px; color: rgba(0,0,0,0.12); z-index: 50; }
-
-/* === SLIDE 05 — PROBLEMS & HMW === */
-.s05 .slide { background: #f4f0ea; }
-.s05 .section-label { position: absolute; top: 28px; left: 80px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(92,78,60,0.5); z-index: 10; }
-.s05 .page-title { position: absolute; top: 65px; left: 80px; font-family: 'Georgia', serif; font-size: 48px; color: #5c4e3c; z-index: 10; }
-.s05 .cards { position: absolute; top: 180px; left: 60px; right: 60px; bottom: 60px; display: flex; gap: 30px; z-index: 10; }
-.s05 .card { flex: 1; background: #fff; border-radius: 8px; padding: 40px 36px; display: flex; flex-direction: column; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-.s05 .card-num { font-family: 'Georgia', serif; font-size: 48px; color: #c4a67a; margin-bottom: 16px; }
-.s05 .card-problem { font-family: 'Georgia', serif; font-size: 18px; color: #5c4e3c; font-weight: bold; margin-bottom: 16px; line-height: 1.5; }
-.s05 .card-img { border-radius: 6px; overflow: hidden; margin-bottom: 16px; flex: 1; min-height: 0; }
-.s05 .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%) brightness(0.95); }
-.s05 .card-hmw { font-family: 'Georgia', serif; font-size: 18px; color: #8b7355; font-style: italic; line-height: 1.6; padding: 24px; background: #faf7f2; border-left: 3px solid #c4a67a; border-radius: 4px; }
-.s05 .card-hmw .label { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #c4a67a; margin-bottom: 10px; font-style: normal; }
-.s05 .deco { position: absolute; z-index: 1; pointer-events: none; }
-.s05 .deco .ring { position: absolute; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); border: 1px solid rgba(92,78,60,0.06); }
-.s05 .deco1 { width: 600px; height: 600px; top: -200px; right: -100px; }
-.s05 .deco1 .ring:nth-child(1) { width: 200px; height: 200px; border-color: rgba(92,78,60,0.10); }
-.s05 .deco1 .ring:nth-child(2) { width: 400px; height: 400px; }
-.s05 .deco1 .ring:nth-child(3) { width: 600px; height: 600px; }
-.s05 .page-num { position: absolute; bottom: 20px; right: 80px; font-size: 12px; color: rgba(0,0,0,0.12); z-index: 10; }
-
-/* === SLIDES 06–08 — DARK HYPOTHESES === */
-.s-hypo .slide { position: relative; overflow: hidden; }
-.s-hypo .ripple { position: absolute; border-radius: 50%; transform: translate(-50%,-50%); }
-.s-hypo .ripple:nth-child(1) { width: 100px; height: 100px; border: 2px solid rgba(196,166,122,0.30); }
-.s-hypo .ripple:nth-child(2) { width: 260px; height: 260px; border: 1.5px solid rgba(196,166,122,0.18); }
-.s-hypo .ripple:nth-child(3) { width: 460px; height: 460px; border: 1px solid rgba(196,166,122,0.10); }
-.s-hypo .ripple:nth-child(4) { width: 720px; height: 720px; border: 1px solid rgba(196,166,122,0.05); }
-.s-hypo .ripple:nth-child(5) { width: 1040px; height: 1040px; border: 1px solid rgba(196,166,122,0.03); }
-.s-hypo .content { position: absolute; top: 50%; left: 100px; right: 100px; transform: translateY(-50%); z-index: 10; }
-.s-hypo .label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,166,122,0.5); margin-bottom: 16px; }
-.s-hypo .hypo-num { font-family: 'Georgia', serif; font-size: 80px; color: #c4a67a; margin-bottom: 8px; line-height: 1; }
-.s-hypo .hypo-title { font-family: 'Georgia', serif; font-size: 44px; color: rgba(255,255,255,0.9); margin-bottom: 40px; }
-.s-hypo .hypo-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 36px 40px; max-width: 1200px; }
-.s-hypo .hypo-text { font-family: 'Georgia', serif; font-size: 22px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 24px; }
-.s-hypo .hypo-text strong { color: #c4a67a; }
-.s-hypo .metric-box { background: rgba(196,166,122,0.08); border-left: 3px solid rgba(196,166,122,0.4); padding: 28px 36px; border-radius: 4px; }
-.s-hypo .metric-label { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,166,122,0.5); margin-bottom: 6px; }
-.s-hypo .metric-text { font-family: 'Georgia', serif; font-size: 24px; color: rgba(255,255,255,0.6); line-height: 1.6; font-style: italic; }
-.s-hypo .page-num { position: absolute; bottom: 30px; right: 80px; font-size: 12px; color: rgba(255,255,255,0.12); z-index: 10; }
-
-.s06 .slide { background: radial-gradient(ellipse at 30% 60%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); }
-.s06 .ripple { top: 60%; left: 30%; }
-.s07 .slide { background: radial-gradient(ellipse at 70% 40%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); }
-.s07 .ripple { top: 40%; left: 70%; }
-.s08 .slide { background: radial-gradient(ellipse at 50% 70%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); }
-.s08 .ripple { top: 70%; left: 50%; }
-
-/* === SLIDE 09 — CLOSING === */
-.s09 .slide { background: radial-gradient(ellipse at 50% 50%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); }
-.s09 .ripple { position: absolute; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-.s09 .ripple:nth-child(1) { width: 80px; height: 80px; border: 2.5px solid rgba(196,166,122,0.50); box-shadow: 0 0 30px rgba(196,166,122,0.1); }
-.s09 .ripple:nth-child(2) { width: 200px; height: 200px; border: 2px solid rgba(196,166,122,0.35); }
-.s09 .ripple:nth-child(3) { width: 360px; height: 360px; border: 1.5px solid rgba(196,166,122,0.25); }
-.s09 .ripple:nth-child(4) { width: 560px; height: 560px; border: 1.5px solid rgba(196,166,122,0.16); }
-.s09 .ripple:nth-child(5) { width: 800px; height: 800px; border: 1px solid rgba(196,166,122,0.10); }
-.s09 .ripple:nth-child(6) { width: 1100px; height: 1100px; border: 1px solid rgba(196,166,122,0.06); }
-.s09 .ripple:nth-child(7) { width: 1460px; height: 1460px; border: 1px solid rgba(196,166,122,0.03); }
-.s09 .glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(196,166,122,0.15) 0%, transparent 60%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
-.s09 .content { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 10; text-align: center; width: 1200px; }
-.s09 .main-text { font-family: 'Georgia', serif; font-size: 72px; color: #c4a67a; line-height: 1.3; margin-bottom: 32px; text-shadow: 0 0 40px rgba(196,166,122,0.15); }
-.s09 .sub-text { font-family: 'Georgia', serif; font-size: 24px; color: rgba(255,255,255,0.5); font-style: italic; line-height: 1.6; }
-.s09 .author { position: absolute; bottom: 50px; right: 80px; font-size: 16px; color: rgba(255,255,255,0.3); letter-spacing: 2px; z-index: 10; }
-.s09 .course { position: absolute; bottom: 50px; left: 80px; font-size: 13px; color: rgba(255,255,255,0.15); letter-spacing: 2px; z-index: 10; }
+  /* Music button */
+  .music-btn {
+    position: fixed; top: 24px; right: 28px;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(196,166,122,0.2); background: transparent;
+    color: rgba(196,166,122,0.5); font-size: 14px;
+    cursor: pointer; z-index: 100;
+    opacity: 0; transition: opacity 0.4s, box-shadow 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  body.moving .music-btn { opacity: 1; }
+  .music-btn.playing { box-shadow: 0 0 12px rgba(196,166,122,0.3); color: rgba(196,166,122,0.8); }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" src="music.mp3" preload="auto"></audio>
+<!-- Slides as iframes -->
+<iframe class="slide-frame active" src="slide-01-cover.html" id="s0"></iframe>
+<iframe class="slide-frame" src="slide-02-problem.html" id="s1"></iframe>
+<iframe class="slide-frame" src="slide-03-insights.html" id="s2"></iframe>
+<iframe class="slide-frame" src="slide-04-metaphor.html" id="s3"></iframe>
+<iframe class="slide-frame" src="slide-05-hmw.html" id="s4"></iframe>
+<iframe class="slide-frame" src="slide-06-hypo1.html" id="s5"></iframe>
+<iframe class="slide-frame" src="slide-06b-demo1.html" id="s6"></iframe>
+<iframe class="slide-frame" src="slide-07-hypo2.html" id="s7"></iframe>
+<iframe class="slide-frame" src="slide-07b-demo2.html" id="s8"></iframe>
+<iframe class="slide-frame" src="slide-08-hypo3.html" id="s9"></iframe>
+<iframe class="slide-frame" src="slide-08b-demo3.html" id="s10"></iframe>
+<iframe class="slide-frame" src="slide-vo2max-C.html" id="s12"></iframe>
+<iframe class="slide-frame" src="slide-09-closing.html" id="s13"></iframe>
 
-<div class="deck">
+<!-- Navigation -->
+<div class="nav-dots" id="dots"></div>
+<button class="nav-arrow left" id="prevBtn">&#8249;</button>
+<button class="nav-arrow right" id="nextBtn">&#8250;</button>
+<div class="page-counter" id="counter"></div>
 
-  <!-- SLIDE 01 — COVER -->
-  <div class="slide-container s01 active" data-slide="0">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="bg"></div>
-      <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
-      <div class="glow"></div>
-      <div class="ink-wash"></div>
-      <div class="content">
-        <div class="course-info">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
-        <div class="title">One <span class="anchor" id="R">R</span>ipple</div>
-        <div class="subtitle">How exercise reshapes the aging body &mdash;<br>and the lives around it</div>
-      </div>
-      <div class="author">Gordon Cheng</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 02 — PROBLEM SPACE -->
-  <div class="slide-container s-light" data-slide="1">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple-bg"></div><div class="ripple-bg"></div><div class="ripple-bg"></div>
-      <div class="section-label">Recap &mdash; The Problem Space</div>
-      <div class="page-title">Why this matters now</div>
-      <div class="cards">
-        <div class="card data-card">
-          <div class="data-visual">
-            <div class="age-burst"><div class="age-number">44</div><div class="age-label">First molecular burst</div></div>
-            <div class="age-burst"><div class="age-number">60</div><div class="age-label">Second molecular burst</div></div>
-          </div>
-          <div class="card-text">
-            <div class="card-label">Stanford Medicine, 2024</div>
-            <div class="card-title">Aging isn't gradual &mdash; it hits in two sharp waves</div>
-            <div class="card-desc">81% of 135,000 molecules shift non-linearly. Both men and women.</div>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img-ripple-scope.png" alt="Self Family Society">
-          <div class="card-text">
-            <div class="card-label">Ripple of Impact</div>
-            <div class="card-title">Self &rarr; Family &rarr; Society</div>
-            <div class="card-desc">Decline doesn't just affect you &mdash; it radiates outward</div>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img-three-stages.png" alt="Three stages">
-          <div class="card-text">
-            <div class="card-label">Three Stages of Loss</div>
-            <div class="card-title">Passion &rarr; Dignity &rarr; Life itself</div>
-            <div class="card-desc">The decline is not sudden. It is a slow erosion.</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-num">2 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 03 — INSIGHTS -->
-  <div class="slide-container s-light" data-slide="2">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple-bg"></div><div class="ripple-bg"></div><div class="ripple-bg"></div>
-      <div class="section-label">Recap &mdash; Insights &amp; Principles</div>
-      <div class="page-title">What we've learned</div>
-      <div class="cards">
-        <div class="card">
-          <img src="img-body-mind.png" alt="Body-Mind Gap">
-          <div class="card-text">
-            <div class="card-label">Core Insight</div>
-            <div class="card-title">Exercise changes how you listen to your body</div>
-            <div class="card-desc">The mind says "I can." The body says "not yet."</div>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img-two-curves.png" alt="Two Curves">
-          <div class="card-text">
-            <div class="card-label">User Map</div>
-            <div class="card-title">Two curves, two lives</div>
-            <div class="card-desc">Active: gradual decline. Sedentary: the cliff.</div>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img-principles.png" alt="Design Principles">
-          <div class="card-text">
-            <div class="card-label">Design Principles</div>
-            <div class="card-title">5 guardrails for design decisions</div>
-            <div class="card-desc">Quality over length. Dignity is non-negotiable.</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-num">3 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 04 — MOOD BOARD -->
-  <div class="slide-container s04" data-slide="3" data-music="true">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="section-label">Visual Language &mdash; Mood Board</div>
-      <div class="ripple-deco deco1"><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
-      <div class="ripple-deco deco2"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
-      <div class="ripple-deco deco3"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
-      <div class="ripple-deco deco4"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
-
-      <div class="item p1" style="background:#f9f6f1;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        <svg width="320" height="420" viewBox="0 0 320 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M-20,40 Q80,20 160,60 T340,40" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
-          <path d="M-20,80 Q80,50 160,100 T340,80" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
-          <path d="M-20,120 Q80,90 160,140 T340,120" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
-          <path d="M-20,160 Q80,130 160,180 T340,160" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.2"/>
-          <path d="M-20,200 Q80,170 160,220 T340,200" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.18"/>
-          <path d="M-20,240 Q80,210 160,260 T340,240" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.16"/>
-          <path d="M-20,280 Q80,250 160,300 T340,280" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.14"/>
-          <path d="M-20,320 Q80,290 160,340 T340,320" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.12"/>
-          <path d="M-20,360 Q80,330 160,380 T340,360" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.10"/>
-          <path d="M-20,400 Q80,370 160,420 T340,400" stroke="#5c4e3c" stroke-width="1.2" fill="none" opacity="0.08"/>
-          <circle cx="160" cy="210" r="30" stroke="#c4a67a" stroke-width="1.5" fill="none" opacity="0.25"/>
-          <circle cx="160" cy="210" r="70" stroke="#c4a67a" stroke-width="1" fill="none" opacity="0.15"/>
-          <circle cx="160" cy="210" r="120" stroke="#c4a67a" stroke-width="1" fill="none" opacity="0.10"/>
-          <circle cx="160" cy="210" r="180" stroke="#c4a67a" stroke-width="0.8" fill="none" opacity="0.06"/>
-        </svg>
-      </div>
-      <div class="item p2"><img src="https://i.pinimg.com/originals/c9/4f/a6/c94fa6a8876919f53c3a0d031366ef0d.jpg"></div>
-      <div class="item p3"><img src="https://i.pinimg.com/originals/fe/24/9e/fe249e07024d8ad8ebfb2007409269ea.jpg"></div>
-      <div class="item p4"><img src="https://i.pinimg.com/originals/6d/5d/a6/6d5da6d2f08b4eb7241fefcd88190ef5.jpg"></div>
-      <div class="item p5"><img src="https://i.pinimg.com/originals/ff/3d/98/ff3d98e2f1c986ae663dc5c6c06fc740.jpg"></div>
-      <div class="item p6"><img src="https://i.pinimg.com/originals/e5/0c/c0/e50cc034e9ed26c3420f1d5ba0f693f8.jpg"></div>
-      <div class="item p7"><img src="https://i.pinimg.com/originals/47/44/9f/47449f04ecf9dbe77f50c4f538eb222d.jpg"></div>
-
-      <div class="item p8"><img src="https://i.pinimg.com/originals/e8/78/46/e87846ce59de074b275b466dd63d3947.jpg"></div>
-      <div class="item p9"><img src="https://i.pinimg.com/originals/5e/2e/60/5e2e60369aeca72e79a8949393a72b23.jpg"></div>
-      <div class="item p10"><img src="https://i.pinimg.com/originals/00/f5/53/00f553892ae5bfd6aa50f91006f11321.jpg"></div>
-      <div class="item p11"><img src="https://i.pinimg.com/originals/71/b8/b9/71b8b937e976b0ddca307c264958b36d.jpg"></div>
-      <div class="item p12"><img src="https://i.pinimg.com/originals/ee/e1/7b/eee17bd85a65499844567e4cfe239ab5.jpg"></div>
-      <div class="item p13"><img src="https://i.pinimg.com/originals/57/ee/1c/57ee1cf4b0ab75e484f6856ac22e0e49.jpg"></div>
-
-      <div class="item font-block">
-        <div class="font-label">Typeface &mdash; Heart Rate</div>
-        <div class="font-big">One Ripple</div>
-        <div class="font-alpha">A B C D E F G H I J K</div>
-        <div class="font-alpha">a b c d e f g h i j k</div>
-        <div class="font-phrase">Break the Aging Circle</div>
-      </div>
-
-      <div class="palette">
-        <div class="palette-bar">
-          <div class="sw" style="background:#5c4e3c"><span class="hex">#5c4e3c</span></div>
-          <div class="sw" style="background:#8b7355"><span class="hex">#8b7355</span></div>
-          <div class="sw" style="background:#c4a67a"><span class="hex">#c4a67a</span></div>
-          <div class="sw" style="background:#dcc8a0"><span class="hex">#dcc8a0</span></div>
-        </div>
-        <div class="palette-labels">
-          <span>espresso</span><span>bark</span><span>ochre</span><span>sand</span>
-        </div>
-      </div>
-
-      <div class="item text-card">
-        <div class="quote">One movement is one drop of water.<br>Its impact ripples outward &mdash; through your body,<br>your family, your world.</div>
-        <div class="attr">Core Metaphor</div>
-      </div>
-
-      <div class="item sound-card">
-        <div class="s-wave">
-          <div class="bar" style="height:8px;background:#c4a67a;opacity:0.3"></div>
-          <div class="bar" style="height:16px;background:#c4a67a;opacity:0.4"></div>
-          <div class="bar" style="height:28px;background:#c4a67a;opacity:0.5"></div>
-          <div class="bar" style="height:42px;background:#c4a67a;opacity:0.5"></div>
-          <div class="bar" style="height:34px;background:#c4a67a;opacity:0.45"></div>
-          <div class="bar" style="height:46px;background:#c4a67a;opacity:0.4"></div>
-          <div class="bar" style="height:28px;background:#c4a67a;opacity:0.35"></div>
-          <div class="bar" style="height:16px;background:#c4a67a;opacity:0.3"></div>
-          <div class="bar" style="height:6px;background:#c4a67a;opacity:0.2"></div>
-        </div>
-        <div class="s-info">
-          <div class="label">Sound &amp; Music</div>
-          <p>Water drop &rarr; echo &rarr; layered soundscape. Movement = rich. Stillness = silence.</p>
-          <div class="track">&#9835; Francesco Siano &mdash; Ordinary Days (Believe)</div>
-        </div>
-      </div>
-
-      <button class="music-btn" id="musicBtn" onclick="toggleMusic()">&#9835;</button>
-      <div class="page-num">4 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 05 — PROBLEMS & HMW -->
-  <div class="slide-container s05" data-slide="4">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="deco deco1"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
-      <div class="section-label">Problem Decomposition</div>
-      <div class="page-title">Three Problems, Three Opportunities</div>
-      <div class="cards">
-        <div class="card">
-          <div class="card-num">01</div>
-          <div class="card-problem">People can't sense their body aging until it's too late &mdash; the decline is invisible until the cliff.</div>
-          <div class="card-img"><img src="https://i.pinimg.com/originals/17/00/d6/1700d616472c82a0411470253b48c197.jpg" alt="Man sitting by window"></div>
-          <div class="card-hmw"><div class="label">How Might We</div>Help adults over 40 develop an intuitive awareness of their body's changing capacity &mdash; so they feel empowered to act early?</div>
-        </div>
-        <div class="card">
-          <div class="card-num">02</div>
-          <div class="card-problem">People believe exercise must be intense to "count" &mdash; leading to overthinking, guilt, and inaction.</div>
-          <div class="card-img"><img src="https://i.pinimg.com/originals/6d/c3/4b/6dc34b7d73381032ce6ec75bbcaec2d6.jpg" alt="Walking shoes detail"></div>
-          <div class="card-hmw"><div class="label">How Might We</div>Celebrate small, everyday movements as powerful acts that compound into long-term vitality?</div>
-        </div>
-        <div class="card">
-          <div class="card-num">03</div>
-          <div class="card-problem">Physical decline doesn't just affect the individual &mdash; it ripples outward, burdening families and eroding dignity.</div>
-          <div class="card-img"><img src="https://i.pinimg.com/originals/00/f5/53/00f553892ae5bfd6aa50f91006f11321.jpg" alt="Holding elderly hand"></div>
-          <div class="card-hmw"><div class="label">How Might We</div>Connect the act of moving your body to a deeper sense of independence, dignity, and care for the people around you?</div>
-        </div>
-      </div>
-      <div class="page-num">5 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 06 — HYPOTHESIS 1 -->
-  <div class="slide-container s06 s-hypo" data-slide="5">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
-      <div class="content">
-        <div class="label">Hypothesis 1 &mdash; Body Awareness</div>
-        <div class="hypo-num">01</div>
-        <div class="hypo-title">Making the invisible visible</div>
-        <div class="hypo-box">
-          <div class="hypo-text"><strong>We believe that if we</strong> make the gradual process of physical aging continuously visible and personally meaningful <strong>for</strong> adults over 40, <strong>then we will see</strong> earlier awareness of their body's decline and greater motivation to act before the cliff.</div>
-          <div class="metric-box">
-            <div class="metric-label">We will know this is true when we see</div>
-            <div class="metric-text">People begin to track and talk about their physical capacity (e.g. VO2max) as naturally as they check the weather.</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-num">6 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 07 — HYPOTHESIS 2 -->
-  <div class="slide-container s07 s-hypo" data-slide="6">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
-      <div class="content">
-        <div class="label">Hypothesis 2 &mdash; Small Movements, Big Ripple</div>
-        <div class="hypo-num">02</div>
-        <div class="hypo-title">Every small movement counts</div>
-        <div class="hypo-box">
-          <div class="hypo-text"><strong>We believe that if we</strong> lower the perceived threshold of "what counts as exercise" <strong>for</strong> people who believe only intense workouts matter, <strong>then we will see</strong> more consistent daily movement and less guilt-driven procrastination.</div>
-          <div class="metric-box">
-            <div class="metric-label">We will know this is true when we see</div>
-            <div class="metric-text">People celebrate small movements &mdash; a walk, a stretch, a few stairs &mdash; as meaningful contributions to their long-term vitality.</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-num">7 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 08 — HYPOTHESIS 3 -->
-  <div class="slide-container s08 s-hypo" data-slide="7">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
-      <div class="content">
-        <div class="label">Hypothesis 3 &mdash; Independence &amp; Dignity</div>
-        <div class="hypo-num">03</div>
-        <div class="hypo-title">Movement as an act of care</div>
-        <div class="hypo-box">
-          <div class="hypo-text"><strong>We believe that if we</strong> transform personal exercise into a visible act of care for the people around you <strong>for</strong> both individuals and their families, <strong>then we will see</strong> exercise motivation shift from self-discipline to relational bonding.</div>
-          <div class="metric-box">
-            <div class="metric-label">We will know this is true when we see</div>
-            <div class="metric-text">Movement becoming a form of connection &mdash; "I moved today" as a signal of love, not a fitness metric.</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-num">8 / 9</div>
-    </div></div>
-  </div>
-
-  <!-- SLIDE 09 — CLOSING -->
-  <div class="slide-container s09" data-slide="8">
-    <div class="scale-wrapper"><div class="slide">
-      <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
-      <div class="glow"></div>
-      <div class="content">
-        <div class="main-text">Aging is inevitable.<br>The cliff is not.</div>
-        <div class="sub-text">One ripple is all it takes to begin.</div>
-      </div>
-      <div class="course">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
-      <div class="author">Gordon Cheng</div>
-    </div></div>
-  </div>
-
-</div>
-
-<!-- NAV DOTS -->
-<div class="nav-hint show" id="navHint">
-  <div class="nav-dot active"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-  <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-  <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-</div>
-<div class="nav-arrow left" id="navLeft" onclick="go(-1)">&larr;</div>
-<div class="nav-arrow right show" id="navRight" onclick="go(1)">&rarr;</div>
+<!-- Music -->
+<button class="music-btn" id="musicBtn">&#9835;</button>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/wav">
+</audio>
 
 <script>
-const TOTAL = 9;
-let current = 0;
-const audio = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
-const slides = document.querySelectorAll('.slide-container');
-const dots = document.querySelectorAll('.nav-dot');
-const navLeft = document.getElementById('navLeft');
-const navRight = document.getElementById('navRight');
-let navTimeout;
+const frames = document.querySelectorAll('.slide-frame');
+const total = frames.length;
+let cur = 0;
+let mouseTimer;
 
-function fit() {
-  const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-  document.querySelectorAll('.scale-wrapper').forEach(w => w.style.setProperty('--s', s));
-}
-
-function layoutCover() {
-  const wrapper = slides[0].querySelector('.scale-wrapper');
-  const slide = slides[0].querySelector('.slide');
-  const R = document.getElementById('R');
-  if (!R || !slide) return;
-  const s = parseFloat(wrapper.style.getPropertyValue('--s')) || 1;
-  const slideRect = slide.getBoundingClientRect();
-  const rRect = R.getBoundingClientRect();
-  const cx = (rRect.left + rRect.width / 2 - slideRect.left) / s;
-  const cy = (rRect.top + rRect.height / 2 - slideRect.top) / s;
-  slides[0].querySelectorAll('.s01 .ripple').forEach(r => { r.style.left = cx + 'px'; r.style.top = cy + 'px'; });
-  const glow = slides[0].querySelector('.s01 .glow');
-  if (glow) { glow.style.left = cx + 'px'; glow.style.top = cy + 'px'; }
-  const bg = slides[0].querySelector('.s01 .bg');
-  if (bg) {
-    const pctX = (cx / 1920 * 100).toFixed(1);
-    const pctY = (cy / 1080 * 100).toFixed(1);
-    bg.style.background = 'radial-gradient(ellipse at '+pctX+'% '+pctY+'%, #0d2a3a 0%, #0f2028 20%, #1a1510 45%, #2a1810 70%, #301a0a 100%)';
-  }
-}
-
-function showNav() {
-  navLeft.classList.toggle('show', current > 0);
-  navRight.classList.toggle('show', current < TOTAL - 1);
-  clearTimeout(navTimeout);
-  navTimeout = setTimeout(() => {
-    navLeft.classList.remove('show');
-    navRight.classList.remove('show');
-  }, 3000);
+// Build dots
+const dotsEl = document.getElementById('dots');
+for (let i = 0; i < total; i++) {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
 }
 
 function goTo(idx) {
-  if (idx < 0 || idx >= TOTAL) return;
-  slides[current].classList.remove('active');
-  dots[current].classList.remove('active');
-  current = idx;
-  slides[current].classList.add('active');
-  dots[current].classList.add('active');
-  showNav();
+  if (idx < 0 || idx >= total || idx === cur) return;
+  frames[cur].classList.remove('active');
+  dotsEl.children[cur].classList.remove('active');
+  cur = idx;
+  frames[cur].classList.add('active');
+  dotsEl.children[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
 
-  // Auto-play music on slide 4 (index 3)
-  const isMusicSlide = slides[current].dataset.music === 'true';
-  if (isMusicSlide) {
-    audio.play().then(() => {
-      musicBtn.classList.add('playing');
-      musicBtn.innerHTML = '&#9646;&#9646;';
-    }).catch(() => {});
-  } else if (!audio.paused) {
-    audio.pause();
-    musicBtn.classList.remove('playing');
-    musicBtn.innerHTML = '&#9835;';
-  }
-
-  // Re-layout cover ripples when returning to slide 1
-  if (current === 0) requestAnimationFrame(layoutCover);
-}
-
-function go(dir) { goTo(current + dir); }
-
-function toggleMusic() {
-  if (audio.paused) {
-    audio.play();
-    musicBtn.classList.add('playing');
-    musicBtn.innerHTML = '&#9646;&#9646;';
-  } else {
-    audio.pause();
-    musicBtn.classList.remove('playing');
-    musicBtn.innerHTML = '&#9835;';
+  // Auto-play music on metaphor slide
+  if (cur === 3) {
+    const m = document.getElementById('bgMusic');
+    if (m.paused) { m.play().catch(() => {}); document.getElementById('musicBtn').classList.add('playing'); }
   }
 }
 
-// Keyboard navigation
+function next() { goTo(cur + 1); }
+function prev() { goTo(cur - 1); }
+
+// Counter init
+document.getElementById('counter').textContent = '1 / ' + total;
+
+// Keyboard
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
   if (e.key === 'Home') { e.preventDefault(); goTo(0); }
-  if (e.key === 'End') { e.preventDefault(); goTo(TOTAL - 1); }
+  if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
 });
 
-// Touch swipe support
-let touchStartX = 0;
-document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+// Arrow buttons
+document.getElementById('prevBtn').addEventListener('click', prev);
+document.getElementById('nextBtn').addEventListener('click', next);
+
+// Mouse move → show UI
+document.addEventListener('mousemove', () => {
+  document.body.classList.add('moving');
+  clearTimeout(mouseTimer);
+  mouseTimer = setTimeout(() => document.body.classList.remove('moving'), 2500);
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
 document.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].screenX - touchStartX;
-  if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 60) { dx < 0 ? next() : prev(); }
 });
 
-// Mouse movement shows nav
-document.addEventListener('mousemove', showNav);
-
-// Click dots to navigate
-dots.forEach((dot, i) => { dot.style.cursor = 'pointer'; dot.addEventListener('click', () => goTo(i)); });
-
-// Init
-window.addEventListener('DOMContentLoaded', () => { fit(); requestAnimationFrame(layoutCover); });
-window.addEventListener('resize', () => { fit(); if (current === 0) requestAnimationFrame(layoutCover); });
+// Music toggle
+const musicBtn = document.getElementById('musicBtn');
+const bgMusic = document.getElementById('bgMusic');
+musicBtn.addEventListener('click', () => {
+  if (bgMusic.paused) { bgMusic.play().catch(() => {}); musicBtn.classList.add('playing'); }
+  else { bgMusic.pause(); musicBtn.classList.remove('playing'); }
+});
 </script>
 </body>
 </html>

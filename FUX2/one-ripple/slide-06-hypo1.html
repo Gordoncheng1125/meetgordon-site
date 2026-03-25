@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 06 — Hypothesis 1</title>
+<style>
+  @font-face { font-family: 'Heart Rate'; src: url('HeartRate.ttf'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .scale-wrapper { width: 1920px; height: 1080px; transform: scale(var(--s)); transform-origin: center center; }
+  .slide { width: 1920px; height: 1080px; background: radial-gradient(ellipse at 30% 60%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); position: relative; overflow: hidden; }
+  /* Ripple deco */
+  .ripple { position: absolute; border-radius: 50%; top: 60%; left: 30%; transform: translate(-50%,-50%); }
+  .ripple:nth-child(1) { width: 100px; height: 100px; border: 2px solid rgba(196,166,122,0.30); }
+  .ripple:nth-child(2) { width: 260px; height: 260px; border: 1.5px solid rgba(196,166,122,0.18); }
+  .ripple:nth-child(3) { width: 460px; height: 460px; border: 1px solid rgba(196,166,122,0.10); }
+  .ripple:nth-child(4) { width: 720px; height: 720px; border: 1px solid rgba(196,166,122,0.05); }
+  .content { position: absolute; top: 50%; left: 100px; right: 100px; transform: translateY(-50%); z-index: 10; }
+  .label { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,166,122,0.5); margin-bottom: 16px; }
+  .hypo-num { font-family: 'Georgia', serif; font-size: 80px; color: #c4a67a; margin-bottom: 8px; line-height: 1; }
+  .hypo-title { font-family: 'Georgia', serif; font-size: 44px; color: rgba(255,255,255,0.9); margin-bottom: 40px; }
+  .hypo-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 36px 40px; max-width: 1200px; }
+  .hypo-text { font-family: 'Georgia', serif; font-size: 22px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 24px; }
+  .hypo-text strong { color: #c4a67a; }
+  .metric-box { background: rgba(196,166,122,0.08); border-left: 3px solid rgba(196,166,122,0.4); padding: 28px 36px; border-radius: 4px; }
+  .metric-label { font-family: 'Helvetica Neue', sans-serif; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,166,122,0.5); margin-bottom: 6px; }
+  .metric-text { font-family: 'Georgia', serif; font-size: 24px; color: rgba(255,255,255,0.6); line-height: 1.6; font-style: italic; }
+  .page-num { position: absolute; bottom: 30px; right: 80px; font-family: 'Helvetica Neue', sans-serif; font-size: 12px; color: rgba(255,255,255,0.12); z-index: 10; }
+</style>
+<script>
+  function fit() { const s = Math.min(window.innerWidth/1920, window.innerHeight/1080); document.querySelector('.scale-wrapper').style.setProperty('--s', s); }
+  window.addEventListener('resize', fit); window.addEventListener('DOMContentLoaded', fit);
+</script>
+</head>
+<body>
+<div class="scale-wrapper"><div class="slide">
+  <div class="ripple"></div><div class="ripple"></div><div class="ripple"></div><div class="ripple"></div>
+  <div class="content">
+    <div class="label">Hypothesis 1 &mdash; Body Awareness</div>
+    <div class="hypo-num">01</div>
+    <div class="hypo-title">Making the invisible visible</div>
+    <div class="hypo-box">
+      <div class="hypo-text"><strong>We believe that if we</strong> make the gradual process of physical aging continuously visible and personally meaningful <strong>for</strong> adults over 40, <strong>then we will see</strong> earlier awareness of their body's decline and greater motivation to act before the cliff.</div>
+      <div class="metric-box">
+        <div class="metric-label">We will know this is true when we see</div>
+        <div class="metric-text">People begin to track and talk about their physical capacity (e.g. VO2max) as naturally as they check the weather.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">6 / 12</div>
+</div></div>
+</body></html>

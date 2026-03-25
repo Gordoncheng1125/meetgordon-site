@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 08b — Demo: Movement as Care</title>
+<style>
+  @font-face { font-family: 'Heart Rate'; src: url('HeartRate.ttf'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+  .scale-wrapper { width: 1920px; height: 1080px; transform: scale(var(--s)); transform-origin: center center; }
+  .slide { width: 1920px; height: 1080px; background: #1a1510; position: relative; overflow: hidden; }
+  .label { position: absolute; top: 40px; left: 80px; font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,166,122,0.4); z-index: 10; }
+  .demo-area { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; gap: 40px; align-items: center; z-index: 10; }
+  .demo-area img { height: 860px; border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.5); object-fit: cover; }
+  .page-num { position: absolute; bottom: 30px; right: 80px; font-family: 'Helvetica Neue', sans-serif; font-size: 12px; color: rgba(255,255,255,0.12); z-index: 10; }
+</style>
+<script>
+  function fit() { const s = Math.min(window.innerWidth/1920, window.innerHeight/1080); document.querySelector('.scale-wrapper').style.setProperty('--s', s); }
+  window.addEventListener('resize', fit); window.addEventListener('DOMContentLoaded', fit);
+</script>
+</head>
+<body>
+<div class="scale-wrapper"><div class="slide">
+  <div class="label">Solution Concept &mdash; Family Bonding Notification</div>
+  <div class="demo-area">
+    <img src="demo-mockups/h3-bonding-v1.png" alt="Bonding notification v1">
+    <img src="demo-mockups/h3-bonding-v2.png" alt="Two phones bonding v2">
+  </div>
+  <div class="page-num">11 / 12</div>
+</div></div>
+</body></html>

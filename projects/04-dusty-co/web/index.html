@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Designing Warmth and Clarity | Gordon Cheng</title>
+    <meta name="keywords" content="Gordon Cheng, Service Design, Dusty & Co, Pottery Studio, SVA IxD, Co-design, User Research" />
+    <meta name="description" content="Service Design for Dusty & Co. Pottery Studio — Uncovering the Familiarity Paradox. SVA MFA Interaction Design, Fall 2025." />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      :root {
+        --primary: #000000;
+        --secondary: #333333;
+        --dark-blue: #272341;
+        --accent: #C4956A;
+        --warm-bg: #F5F0EB;
+        --light-grey: #f8f8f8;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--secondary);
+      }
+
+      /* ===== HERO ===== */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(rgba(44, 36, 24, 0.65), rgba(44, 36, 24, 0.75)),
+                    url('assets/dusty-studio-exterior.jpg') center/cover no-repeat;
+        color: #fff;
+        padding: 0 20px;
+      }
+      #hero h1 {
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+      }
+      #hero .hero-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        font-weight: 400;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      #hero .hero-badges {
+        font-size: 1.1rem;
+        opacity: 0.85;
+        margin-bottom: 2rem;
+      }
+      .cta-btn {
+        display: inline-block;
+        padding: 12px 36px;
+        border: 2px solid #fff;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+      .cta-btn:hover {
+        background: #fff;
+        color: var(--primary);
+      }
+
+      /* ===== SECTIONS ===== */
+      section { padding: 80px 0; }
+
+      .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--dark-blue);
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+      }
+      .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: var(--accent);
+        margin: 15px auto 0;
+      }
+
+      .dark-blue-text { color: var(--dark-blue); }
+
+      /* ===== ABOUT / OVERVIEW ===== */
+      #about { background: var(--warm-bg); }
+      .about-wrapper__info-text { margin-bottom: 1rem; }
+
+      .credential-label {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      /* ===== PROJECTS ===== */
+      #projects { background: #fff; }
+
+      .project-wrapper__text-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--dark-blue);
+        margin-bottom: 15px;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary);
+        display: block;
+      }
+      .stat-label {
+        font-size: 0.9rem;
+        color: #666;
+        display: block;
+        margin-bottom: 15px;
+      }
+
+      /* ===== BLOCKQUOTES ===== */
+      .pullquote {
+        font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+        font-style: italic;
+        color: var(--secondary);
+        border-left: 4px solid var(--accent);
+        padding-left: 30px;
+        margin: 0 auto;
+        max-width: 800px;
+        text-align: left;
+      }
+      .pullquote footer {
+        font-size: 0.95rem;
+        font-style: normal;
+        margin-top: 12px;
+        color: #888;
+      }
+
+      /* ===== FINDINGS CARDS ===== */
+      .finding-card {
+        background: var(--light-grey);
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+        border-top: 4px solid var(--accent);
+      }
+      .finding-card h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* ===== RECOMMENDATION CARDS ===== */
+      .rec-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 35px 30px;
+        height: 100%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        border-left: 5px solid var(--accent);
+        transition: transform 0.3s ease;
+      }
+      .rec-card:hover { transform: translateY(-4px); }
+      .rec-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--accent);
+        opacity: 0.4;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .rec-card h4 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 12px;
+      }
+      .rec-impact {
+        margin-top: 15px;
+        padding-top: 12px;
+        border-top: 1px solid #eee;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      /* ===== CONFLICT DIAGRAM ===== */
+      .conflict-box {
+        background: var(--light-grey);
+        border-radius: 12px;
+        padding: 40px 30px;
+        text-align: center;
+      }
+      .conflict-vs {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin: 20px 0;
+      }
+
+      /* ===== PROCESS ===== */
+      .process-step {
+        text-align: center;
+        padding: 20px;
+      }
+      .process-step-number {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+      }
+
+      /* ===== TAKEAWAYS ===== */
+      #takeaways { background: var(--warm-bg); }
+      .takeaway-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      }
+      .takeaway-highlight {
+        background: var(--light-grey);
+        padding: 20px;
+        border-left: 4px solid var(--primary);
+        border-radius: 0 8px 8px 0;
+        margin-top: 15px;
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: var(--dark-blue);
+        color: #fff;
+        padding: 40px 0;
+        text-align: center;
+      }
+      footer a { color: #fff; text-decoration: none; }
+      footer .social-links a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        margin: 0 5px;
+        transition: all 0.3s;
+      }
+      footer .social-links a:hover {
+        background: rgba(255,255,255,0.1);
+      }
+
+      /* ===== IMAGES ===== */
+      .section-img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+      .process-img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        height: 260px;
+      }
+      .gallery-img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        height: 280px;
+        transition: transform 0.3s ease;
+      }
+      .gallery-img:hover { transform: scale(1.02); }
+      #gallery .section-title::after { background: var(--accent); }
+      .rec-img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        height: 200px;
+        margin-bottom: 20px;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 768px) {
+        section { padding: 50px 0; }
+        .section-title { font-size: 1.6rem; margin-bottom: 30px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="top"></div>
+
+    <!-- ===== HERO ===== -->
+    <section id="hero">
+      <div class="container">
+        <h1>Designing Warmth and Clarity.</h1>
+        <p class="hero-subtitle">
+          Service Design for Dusty & Co. Pottery Studio
+        </p>
+        <p class="hero-badges">
+          SVA MFA IxD | Fall 2025 | The Familiarity Paradox
+        </p>
+        <p style="margin-top: 20px;">
+          <a class="cta-btn" href="#about">View Case Study</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== PROJECT OVERVIEW ===== -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">Project Overview</h2>
+        <div class="row align-items-center">
+          <div class="col-md-6 col-sm-12 mb-4">
+            <img src="assets/team-photo.png" alt="Team presenting research findings at Dusty & Co. studio" class="section-img" style="height: 350px;" />
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <p class="about-wrapper__info-text" style="font-size: 1.15rem; font-weight: 500;">
+              A service design project uncovering why newcomers felt lost in a space designed to feel like home — and how to fix it without losing the soul.
+            </p>
+            <p class="about-wrapper__info-text">
+              <span class="credential-label">Role:</span> Service Designer — Research, workshop facilitation, insight synthesis<br/>
+              <span class="credential-label">Client:</span> Dusty & Co. — Independent pottery studio, NoMad, Manhattan<br/>
+              <span class="credential-label">Team:</span> Gordon Cheng, Seren, Feifey<br/>
+              <span class="credential-label">Duration:</span> 8 weeks (Fall 2025)<br/>
+              <span class="credential-label">Methods:</span> Interviews, Shadowing, Affinity Mapping, Co-design Workshop
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== THE RESULTS ===== -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title dark-blue-text">The Results</h2>
+
+        <div class="row text-center mb-5">
+          <div class="col-md-3 col-6 mb-4">
+            <span class="stat-number">1</span>
+            <span class="stat-label">Core Insight Discovered</span>
+          </div>
+          <div class="col-md-3 col-6 mb-4">
+            <span class="stat-number">7</span>
+            <span class="stat-label">Stakeholder Interviews</span>
+          </div>
+          <div class="col-md-3 col-6 mb-4">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Design Recommendations</span>
+          </div>
+          <div class="col-md-3 col-6 mb-4">
+            <span class="stat-number">1</span>
+            <span class="stat-label">Phased Roadmap Delivered</span>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <p style="text-align: center; font-size: 1.1rem; color: #555;">
+              Discovered <strong>"The Familiarity Paradox"</strong> — the founders' deep familiarity with their space led them to remove the very guidance newcomers needed most.
+              <br/>Delivered three actionable interventions under a new design principle: <strong>"Soft Clarity."</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Pullquote #1 -->
+        <div class="row" style="margin: 60px 0;">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "I assume you already know something. So that's why I don't give you the clarity instruction. That's the whole point."
+              <footer>— Dusty & Co. Founder</footer>
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== THE CHALLENGE ===== -->
+        <h2 class="section-title dark-blue-text" style="margin-top: 80px;">The Challenge</h2>
+
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-5 col-sm-12 mb-4">
+            <p style="font-size: 1.05rem;">
+              Dusty & Co. is a community-driven ceramics studio in NoMad, Manhattan. It's not a tourist pottery-painting spot, and it's not a serious art school. It wants to be a <strong>"third space"</strong> — a warm, non-commercial creative community for corporate professionals seeking relaxation and social connection.
+            </p>
+            <p style="font-size: 1.05rem;">
+              The founders deliberately keep the space rough, relaxed, and personal — <strong>"like a friend's house."</strong>
+            </p>
+            <p style="font-size: 1.05rem;">
+              But the data told a different story.
+            </p>
+          </div>
+          <div class="col-lg-7 col-sm-12">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="finding-card">
+                  <h4>"Invisible" Onboarding</h4>
+                  <p>No digital confirmation, no physical wayfinding, confusion after arrival.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="finding-card">
+                  <h4>"Black Box" of Waiting</h4>
+                  <p>3-4 week firing period with almost no updates. Customers call repeatedly, creating anxiety and operational burden.</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="finding-card">
+                  <h4>Expectation Mismatch</h4>
+                  <p>TikTok makes pottery look easy and fast. Reality: difficult and slow. The Difficulty Gap, Result Gap, and Time Gap.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conflict Diagram -->
+        <div class="row justify-content-center" style="margin: 40px 0;">
+          <div class="col-lg-8">
+            <div class="conflict-box">
+              <div class="row">
+                <div class="col-5">
+                  <h4 style="color: var(--accent); font-weight: 700;">Founder</h4>
+                  <p>Low Structure<br/>Trust &middot; Intimacy<br/><strong>"Like a friend's house"</strong></p>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                  <span class="conflict-vs">VS</span>
+                </div>
+                <div class="col-5">
+                  <h4 style="color: var(--dark-blue); font-weight: 700;">Newcomer</h4>
+                  <p>Needs Guidance<br/>Confusion &middot; Exclusion<br/><strong>"I don't know the rules"</strong></p>
+                </div>
+              </div>
+              <p style="margin-top: 20px; font-weight: 600; color: var(--secondary);">
+                The studio is designing for "Insiders" but selling to "Outsiders."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pullquote #2 -->
+        <div class="row" style="margin: 60px 0;">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "Cuz your perspective is really commercialized, but we want to be more... like a friend coming here to have fun."
+              <footer>— Founder, during Co-design Workshop</footer>
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== THE SOLUTION ===== -->
+        <h2 class="section-title dark-blue-text" style="margin-top: 80px;">The Solution: "The Dusty Way"</h2>
+
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8 text-center">
+            <p style="font-size: 1.15rem;">
+              Through a co-design workshop with the founders and staff, we aligned on a new design principle:
+            </p>
+            <p style="font-size: 1.6rem; font-weight: 700; color: var(--primary); margin: 20px 0;">
+              "Soft Clarity"
+            </p>
+            <p style="font-size: 1.05rem; color: #555;">
+              Provide structure through human connection and engaging media — not bureaucratic rules.
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-12">
+            <div class="rec-card">
+              <img src="assets/workshop-rules.png" alt="Workshop ground rules cards" class="rec-img" />
+              <div class="rec-number">01</div>
+              <h4>The Ritual Commitment</h4>
+              <p>
+                A beautifully designed physical card presented at check-in. Not a legal contract — an <strong>emotional contract</strong>.
+              </p>
+              <p>Sets expectations about difficulty, time, and the nature of handmade pottery. Reframes "failure" as part of the creative process.</p>
+              <div class="rec-impact">
+                <strong>Impact:</strong> Immediate reduction in expectation mismatches (Weeks 1-2)
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="rec-card">
+              <img src="assets/dusty-storefront.jpg" alt="Dusty & Co pottery wheels" class="rec-img" />
+              <div class="rec-number">02</div>
+              <h4>Visual Vibe Guides</h4>
+              <p>
+                Short, aesthetic video loops sent via confirmation email/SMS, hosted on Instagram:
+              </p>
+              <p><strong>"How To Find Us"</strong> — wayfinding before arrival<br/>
+              <strong>"The 4-Week Journey of Clay"</strong> — what to expect about firing</p>
+              <div class="rec-impact">
+                <strong>Impact:</strong> Reduces confusion and preps students before arrival (Weeks 3-4)
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="rec-card">
+              <img src="assets/tracker-mockup.png" alt="Anti-anxiety progress tracker app mockup" class="rec-img" style="object-fit: contain; background: #f8f8f8;" />
+              <div class="rec-number">03</div>
+              <h4>Anti-Anxiety Progress Tracker</h4>
+              <p>
+                QR code landing page with human-centric language instead of generic status updates:
+              </p>
+              <p><em>"Your piece is drying safely. This takes time to prevent cracking. Check back in 2 weeks."</em></p>
+              <div class="rec-impact">
+                <strong>Impact:</strong> Long-term reduction in call volume (Month 2+)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== THE PROCESS ===== -->
+        <h2 class="section-title dark-blue-text" style="margin-top: 80px;">The Process</h2>
+
+        <div class="row mb-5">
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            <div class="process-step">
+              <div class="process-step-number">1</div>
+              <h4 style="font-size: 1.1rem; font-weight: 600;">Research</h4>
+              <p>7 stakeholder interviews (founders, instructor, front desk, customers) + end-to-end shadowing from booking to ceramic pickup.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            <div class="process-step">
+              <div class="process-step-number">2</div>
+              <h4 style="font-size: 1.1rem; font-weight: 600;">Synthesis</h4>
+              <p>Affinity mapping and journey mapping. Identified 3 key friction zones: Invisible Onboarding, Black Box of Waiting, Expectation Mismatch.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            <div class="process-step">
+              <div class="process-step-number">3</div>
+              <h4 style="font-size: 1.1rem; font-weight: 600;">Co-design Workshop</h4>
+              <p>2-hour session with founders + staff. HMW questions, Crazy 8s rapid ideation, Value vs. Complexity prioritization matrix.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            <div class="process-step">
+              <div class="process-step-number">4</div>
+              <h4 style="font-size: 1.1rem; font-weight: 600;">Recommendations</h4>
+              <p>3 phased interventions following "Soft Clarity" principle, delivered with implementation roadmap and brand-aligned design contract.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Process Images -->
+        <div class="row g-3 mb-5">
+          <div class="col-md-4">
+            <img src="assets/codesign-workshop.png" alt="Co-design workshop with sticky notes and affinity mapping" class="process-img" />
+            <p class="text-center mt-2" style="font-size: 0.85rem; color: #888;">Co-design workshop at Dusty & Co.</p>
+          </div>
+          <div class="col-md-4">
+            <img src="assets/workshop-wide.png" alt="Workshop participants collaborating" class="process-img" />
+            <p class="text-center mt-2" style="font-size: 0.85rem; color: #888;">Crazy 8s rapid ideation session</p>
+          </div>
+          <div class="col-md-4">
+            <img src="assets/value-complexity-matrix.png" alt="Value vs. Complexity prioritization matrix" class="process-img" />
+            <p class="text-center mt-2" style="font-size: 0.85rem; color: #888;">Value vs. Complexity prioritization</p>
+          </div>
+        </div>
+
+        <!-- Pullquote #3 -->
+        <div class="row" style="margin: 60px 0;">
+          <div class="col-12">
+            <blockquote class="pullquote">
+              "Everyone has a very low tolerance for frustration... because they didn't know beforehand that this thing is so difficult."
+              <footer>— Rongrong, Instructor at Dusty & Co.</footer>
+            </blockquote>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section id="gallery" style="background: var(--dark-blue); padding: 60px 0;">
+      <div class="container">
+        <h2 class="section-title" style="color: #fff;">Gallery</h2>
+        <div class="row g-3">
+          <div class="col-md-3 col-6">
+            <img src="assets/clay-work.png" alt="Founder working with clay" class="gallery-img" />
+          </div>
+          <div class="col-md-3 col-6">
+            <img src="assets/dusty-class-photo.jpg" alt="Hands on pottery wheel" class="gallery-img" />
+          </div>
+          <div class="col-md-3 col-6">
+            <img src="assets/workshop-interaction.png" alt="Workshop participants discussing" class="gallery-img" />
+          </div>
+          <div class="col-md-3 col-6">
+            <img src="assets/codesign-writing.png" alt="Team members writing during co-design" class="gallery-img" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAKEAWAYS ===== -->
+    <section id="takeaways">
+      <div class="container">
+        <h2 class="section-title">Takeaways</h2>
+        <div class="row g-4">
+          <div class="col-lg-6 col-sm-12">
+            <div class="takeaway-box">
+              <h3 class="project-wrapper__text-title">What Worked</h3>
+              <p>
+                <strong>"Start with the conflict, not the process"</strong> — Presenting the Familiarity Paradox as a narrative hook made the founders immediately receptive, even though findings challenged their assumptions.
+              </p>
+              <p>
+                <strong>Co-design as alignment tool</strong> — The workshop shifted the founders from defensive to collaborative.
+              </p>
+              <p>
+                <strong>"Invisible" interventions</strong> — Digital and emotional solutions that enhance experience without cluttering the physical space.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <div class="takeaway-box">
+              <h3 class="project-wrapper__text-title">What I Learned</h3>
+              <div class="takeaway-highlight">
+                <strong>"The best service design preserves what already works."</strong>
+              </div>
+              <p style="margin-top: 15px;">
+                Dusty & Co.'s non-commercial vibe is genuine and rare. The real design challenge was adding clarity while protecting the soul of the place.
+              </p>
+              <p style="font-weight: 500; color: var(--primary);">
+                Service design isn't about adding systems — it's about making the invisible visible, gently.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <div class="container">
+        <a href="#top" style="display:inline-block; margin-bottom: 20px;">
+          <i class="fa fa-angle-up fa-2x" style="color: #fff;"></i>
+        </a>
+        <div class="social-links" style="margin-bottom: 20px;">
+          <a href="#!"><i class="fa fa-linkedin fa-inverse"></i></a>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.15);" />
+        <p style="margin-top: 15px;">
+          &copy; 2026 Gordon Cheng | SVA MFA Interaction Design
+        </p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">
+          Built with the same framework as <a href="../../01-joycube/web/dist/index.html" style="text-decoration: underline;">JOYCUBE</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Smooth scroll -->
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    </script>
+  </body>
+</html>

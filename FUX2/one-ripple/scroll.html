@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Ripple | Gordon Cheng</title>
+<meta name="description" content="One Ripple — How exercise reshapes the aging body and the lives around it. A UX case study by Gordon Cheng, SVA IxD, Spring 2026.">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  @font-face {
+    font-family: 'Heart Rate';
+    src: url('HeartRate.ttf');
+  }
+
+  :root {
+    --teal: #4ecdc4;
+    --ochre: #c4a67a;
+    --deep-brown: #5c4e3c;
+    --dark-bg: #0a0a0a;
+    --warm-bg: #FAF3EB;
+    --warm-bg-alt: #F5EDE3;
+    --coral: #E87E6E;
+    --text: #444;
+    --text-light: #777;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text);
+    background: #fff;
+  }
+
+  h1, h2, h3, h4, .serif { font-family: 'Playfair Display', Georgia, serif; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(ellipse at 35% 45%, #0d2a3a 0%, #0f2028 20%, #1a1510 45%, #2a1810 70%, #301a0a 100%);
+    color: #fff;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ripple rings in hero */
+  .hero-ripple {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%; left: 35%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-ripple:nth-child(1) { width: 80px; height: 80px; border: 2px solid rgba(78, 205, 196, 0.4); box-shadow: 0 0 30px rgba(78, 205, 196, 0.08); }
+  .hero-ripple:nth-child(2) { width: 220px; height: 220px; border: 1.5px solid rgba(78, 205, 196, 0.25); }
+  .hero-ripple:nth-child(3) { width: 420px; height: 420px; border: 1px solid rgba(78, 205, 196, 0.15); }
+  .hero-ripple:nth-child(4) { width: 680px; height: 680px; border: 1px solid rgba(100, 190, 170, 0.08); }
+  .hero-ripple:nth-child(5) { width: 1000px; height: 1000px; border: 1px solid rgba(150, 170, 130, 0.05); }
+  .hero-ripple:nth-child(6) { width: 1400px; height: 1400px; border: 1px solid rgba(200, 150, 100, 0.03); }
+
+  .hero-glow {
+    position: absolute;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(78, 205, 196, 0.18) 0%, rgba(78, 205, 196, 0.04) 35%, transparent 65%);
+    top: 50%; left: 35%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-course {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.28);
+    margin-bottom: 28px;
+  }
+
+  #hero h1 {
+    font-family: 'Heart Rate', Georgia, serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    color: var(--teal);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 60px rgba(78, 205, 196, 0.2);
+    line-height: 1.1;
+    font-weight: normal;
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(220, 170, 110, 0.8);
+    font-style: italic;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-author {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 2px;
+    margin-top: 40px;
+  }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 80px 0; }
+  section.dark { background: var(--dark-bg); color: #fff; }
+  section.warm { background: var(--warm-bg); }
+  section.warm-alt { background: var(--warm-bg-alt); }
+  section.cream { background: #f4f0ea; }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .dark .section-label { color: rgba(196, 166, 122, 0.5); }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--deep-brown);
+    margin-bottom: 40px;
+    line-height: 1.3;
+  }
+  .dark .section-title { color: rgba(255, 255, 255, 0.9); }
+
+  .section-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    max-width: 750px;
+  }
+  .dark .section-intro { color: rgba(255, 255, 255, 0.55); }
+
+  /* ===== CARD GRID ===== */
+  .insight-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(92, 46, 46, 0.06);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .insight-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+    background: var(--warm-bg);
+    padding: 8px;
+    border-bottom: 1px solid rgba(92, 46, 46, 0.06);
+  }
+  .insight-card .card-body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card-tag {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(78, 205, 196, 0.8);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .insight-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--deep-brown);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .insight-card .card-desc {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    color: var(--coral);
+    font-style: italic;
+  }
+
+  /* ===== DATA HIGHLIGHT ===== */
+  .data-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(92, 46, 46, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .data-visual {
+    padding: 48px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(78, 205, 196, 0.06) 0%, transparent 70%);
+    flex: 1;
+  }
+  .age-burst { text-align: center; }
+  .age-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    color: var(--teal);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(78, 205, 196, 0.1);
+    font-weight: 900;
+  }
+  .age-label {
+    font-size: 0.8rem;
+    color: #9B7F7F;
+    margin-top: 8px;
+  }
+
+  /* ===== PROBLEM CARDS ===== */
+  .problem-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 36px 32px;
+    height: 100%;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  .problem-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--ochre);
+    margin-bottom: 12px;
+    line-height: 1;
+    font-weight: 700;
+  }
+  .problem-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--deep-brown);
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .hmw-box {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #8b7355;
+    font-style: italic;
+    line-height: 1.6;
+    padding: 20px 24px;
+    background: #faf7f2;
+    border-left: 3px solid var(--ochre);
+    border-radius: 4px;
+    margin-top: auto;
+  }
+  .hmw-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ===== HYPOTHESIS BLOCKS ===== */
+  .hypo-section { padding: 80px 0; }
+  .hypo-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    color: var(--ochre);
+    margin-bottom: 8px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .hypo-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 32px;
+    font-weight: 700;
+  }
+  .hypo-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 32px 36px;
+  }
+  .hypo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+  .hypo-text strong { color: var(--ochre); }
+  .metric-box {
+    background: rgba(196, 166, 122, 0.08);
+    border-left: 3px solid rgba(196, 166, 122, 0.4);
+    padding: 24px 32px;
+    border-radius: 4px;
+  }
+  .metric-label {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(196, 166, 122, 0.5);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .metric-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ===== DEMO MOCKUPS ===== */
+  .demo-section {
+    background: #1a1510;
+    padding: 60px 0 80px;
+  }
+  .demo-label {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(196, 166, 122, 0.4);
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .demo-row {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .demo-row img {
+    max-height: 580px;
+    border-radius: 16px;
+    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+    width: auto;
+  }
+  @media (max-width: 767px) {
+    .demo-row img {
+      max-height: 420px;
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+
+  /* ===== VISUAL LANGUAGE ===== */
+  .font-showcase {
+    background: #1a1714;
+    border-radius: 8px;
+    padding: 36px 40px;
+    color: var(--ochre);
+  }
+  .font-label-small {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    margin-bottom: 16px;
+  }
+  .font-big {
+    font-family: 'Heart Rate', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--ochre);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .font-alpha {
+    font-family: 'Heart Rate', serif;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    color: rgba(196, 166, 122, 0.4);
+    letter-spacing: 4px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .font-phrase {
+    font-family: 'Heart Rate', serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(196, 166, 122, 0.55);
+    letter-spacing: 2px;
+  }
+
+  .palette-row {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+  }
+  .palette-swatch {
+    flex: 1;
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+  }
+  .palette-swatch span {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.5px;
+  }
+  .palette-names {
+    display: flex;
+    background: #f4f0ea;
+  }
+  .palette-names span {
+    flex: 1;
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(92, 78, 60, 0.4);
+    padding: 6px 0;
+  }
+
+  .metaphor-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 28px 36px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+  }
+  .metaphor-card .quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: #5c4e3c;
+    font-style: italic;
+    line-height: 1.8;
+  }
+  .metaphor-card .attr {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-top: 10px;
+  }
+
+  /* ===== CLOSING ===== */
+  #closing {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 50%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%);
+    color: #fff;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .closing-ripple {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .closing-ripple:nth-child(1) { width: 60px; height: 60px; border: 2px solid rgba(196, 166, 122, 0.35); }
+  .closing-ripple:nth-child(2) { width: 160px; height: 160px; border: 1.5px solid rgba(196, 166, 122, 0.22); }
+  .closing-ripple:nth-child(3) { width: 300px; height: 300px; border: 1px solid rgba(196, 166, 122, 0.14); }
+  .closing-ripple:nth-child(4) { width: 480px; height: 480px; border: 1px solid rgba(196, 166, 122, 0.08); }
+  .closing-ripple:nth-child(5) { width: 700px; height: 700px; border: 1px solid rgba(196, 166, 122, 0.04); }
+  .closing-glow {
+    position: absolute;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 166, 122, 0.12) 0%, transparent 60%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .closing-content { position: relative; z-index: 10; max-width: 800px; }
+  .closing-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    color: var(--ochre);
+    line-height: 1.35;
+    margin-bottom: 24px;
+    text-shadow: 0 0 40px rgba(196, 166, 122, 0.1);
+    font-weight: 700;
+  }
+  .closing-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: rgba(255, 255, 255, 0.45);
+    font-style: italic;
+  }
+  .closing-meta {
+    margin-top: 48px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 2px;
+  }
+
+  /* ===== BACK LINK ===== */
+  .back-bar {
+    padding: 40px 0;
+    background: var(--dark-bg);
+    text-align: center;
+  }
+  .back-bar a {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .back-bar a:hover { color: var(--teal); }
+  .back-bar a svg {
+    width: 16px; height: 16px;
+    vertical-align: -2px;
+    margin-right: 6px;
+    fill: currentColor;
+  }
+
+  /* ===== PULLQUOTE ===== */
+  .pullquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    color: var(--deep-brown);
+    border-left: 3px solid var(--teal);
+    padding-left: 28px;
+    max-width: 700px;
+    line-height: 1.7;
+  }
+
+  /* ===== IMAGE BREAKOUTS ===== */
+  .full-bleed-img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ===== URGENCY IMAGE SECTION ===== */
+  .urgency-img-section {
+    padding: 0;
+  }
+  .urgency-img-section img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 767px) {
+    section { padding: 60px 0; }
+    .hypo-section { padding: 60px 0; }
+    .data-visual { flex-direction: column; gap: 30px; }
+  }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+<section id="hero">
+  <div class="hero-ripple"></div>
+  <div class="hero-ripple"></div>
+  <div class="hero-ripple"></div>
+  <div class="hero-ripple"></div>
+  <div class="hero-ripple"></div>
+  <div class="hero-ripple"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-course">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
+    <h1>One Ripple</h1>
+    <div class="hero-subtitle">How exercise reshapes the aging body &mdash;<br>and the lives around it</div>
+    <div class="hero-author">Gordon Cheng</div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     THE PROBLEM SPACE
+     ========================================================= -->
+<section class="warm">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="section-label">The Problem Space</div>
+        <h2 class="section-title">Why this matters now</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Stanford data -->
+      <div class="col-lg-4">
+        <div class="data-card">
+          <div class="data-visual">
+            <div class="age-burst">
+              <div class="age-number">44</div>
+              <div class="age-label">First molecular burst</div>
+            </div>
+            <div class="age-burst">
+              <div class="age-number">60</div>
+              <div class="age-label">Second molecular burst</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Stanford Medicine, 2024</div>
+            <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--deep-brown); line-height:1.4; margin-bottom:6px;">Aging isn't gradual &mdash; it hits in two sharp waves</h4>
+            <p class="card-desc" style="font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--coral); font-style:italic; margin:0;">81% of 135,000 molecules shift non-linearly. Both men and women.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ripple of impact -->
+      <div class="col-lg-4">
+        <div class="insight-card">
+          <img src="img-ripple-scope.png" alt="Self, Family, Society">
+          <div class="card-body">
+            <div class="card-tag">Ripple of Impact</div>
+            <h4>Self &rarr; Family &rarr; Society</h4>
+            <p class="card-desc">Decline doesn't just affect you &mdash; it radiates outward</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three stages -->
+      <div class="col-lg-4">
+        <div class="insight-card">
+          <img src="img-three-stages.png" alt="Three stages of loss">
+          <div class="card-body">
+            <div class="card-tag">Three Stages of Loss</div>
+            <h4>Passion &rarr; Dignity &rarr; Life itself</h4>
+            <p class="card-desc">The decline is not sudden. It is a slow erosion.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     INSIGHTS & PRINCIPLES
+     ========================================================= -->
+<section>
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="section-label">Insights &amp; Principles</div>
+        <h2 class="section-title">What we've learned</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="insight-card">
+          <img src="img-body-mind.png" alt="Body-Mind Gap">
+          <div class="card-body">
+            <div class="card-tag">Core Insight</div>
+            <h4>Exercise changes how you listen to your body</h4>
+            <p class="card-desc">The mind says "I can." The body says "not yet."</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="insight-card">
+          <img src="img-two-curves.png" alt="Two Curves">
+          <div class="card-body">
+            <div class="card-tag">User Map</div>
+            <h4>Two curves, two lives</h4>
+            <p class="card-desc">Active: gradual decline. Sedentary: the cliff.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="insight-card">
+          <img src="img-principles.png" alt="Design Principles">
+          <div class="card-body">
+            <div class="card-tag">Design Principles</div>
+            <h4>5 guardrails for design decisions</h4>
+            <p class="card-desc">Quality over length. Dignity is non-negotiable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pullquote -->
+    <div class="row mt-5 pt-4">
+      <div class="col-lg-8 mx-auto">
+        <blockquote class="pullquote">
+          50&ndash;70% of the decline is not aging. It is stillness.
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     VISUAL LANGUAGE
+     ========================================================= -->
+<section class="cream">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="section-label">Visual Language</div>
+        <h2 class="section-title" style="color: var(--deep-brown);">Mood &amp; Craft</h2>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+      <!-- Font showcase -->
+      <div class="col-lg-6">
+        <div class="font-showcase h-100">
+          <div class="font-label-small">Typeface &mdash; Heart Rate</div>
+          <div class="font-big">One Ripple</div>
+          <div class="font-alpha">A B C D E F G H I J K</div>
+          <div class="font-alpha">a b c d e f g h i j k</div>
+          <div class="font-phrase">Break the Aging Circle</div>
+        </div>
+      </div>
+
+      <!-- Palette + Metaphor -->
+      <div class="col-lg-6 d-flex flex-column gap-4">
+        <!-- Color palette -->
+        <div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#5c4e3c"><span>#5c4e3c</span></div>
+            <div class="palette-swatch" style="background:#8b7355"><span>#8b7355</span></div>
+            <div class="palette-swatch" style="background:#c4a67a"><span>#c4a67a</span></div>
+            <div class="palette-swatch" style="background:#dcc8a0"><span>#dcc8a0</span></div>
+          </div>
+          <div class="palette-names">
+            <span>espresso</span>
+            <span>bark</span>
+            <span>ochre</span>
+            <span>sand</span>
+          </div>
+        </div>
+
+        <!-- Metaphor quote -->
+        <div class="metaphor-card flex-grow-1 d-flex flex-column justify-content-center">
+          <div class="quote">One movement is one drop of water.<br>Its impact ripples outward &mdash; through your body, your family, your world.</div>
+          <div class="attr">Core Metaphor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     THREE PROBLEMS & HMW
+     ========================================================= -->
+<section>
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="section-label">Problem Decomposition</div>
+        <h2 class="section-title">Three Problems, Three Opportunities</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="problem-card">
+          <div class="problem-num">01</div>
+          <div class="problem-text">People can't sense their body aging until it's too late &mdash; the decline is invisible until the cliff.</div>
+          <div class="hmw-box">
+            <div class="hmw-label">How Might We</div>
+            Help adults over 40 develop an intuitive awareness of their body's changing capacity &mdash; so they feel empowered to act early?
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="problem-card">
+          <div class="problem-num">02</div>
+          <div class="problem-text">People believe exercise must be intense to "count" &mdash; leading to overthinking, guilt, and inaction.</div>
+          <div class="hmw-box">
+            <div class="hmw-label">How Might We</div>
+            Celebrate small, everyday movements as powerful acts that compound into long-term vitality?
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="problem-card">
+          <div class="problem-num">03</div>
+          <div class="problem-text">Physical decline doesn't just affect the individual &mdash; it ripples outward, burdening families and eroding dignity.</div>
+          <div class="hmw-box">
+            <div class="hmw-label">How Might We</div>
+            Connect the act of moving your body to a deeper sense of independence, dignity, and care for the people around you?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     HYPOTHESIS 1 — Body Awareness
+     ========================================================= -->
+<section class="dark hypo-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="section-label">Hypothesis 1 &mdash; Body Awareness</div>
+        <div class="hypo-num">01</div>
+        <h2 class="hypo-title">Making the invisible visible</h2>
+        <div class="hypo-box">
+          <p class="hypo-text"><strong>We believe that if we</strong> make the gradual process of physical aging continuously visible and personally meaningful <strong>for</strong> adults over 40, <strong>then we will see</strong> earlier awareness of their body's decline and greater motivation to act before the cliff.</p>
+          <div class="metric-box">
+            <div class="metric-label">We will know this is true when we see</div>
+            <p class="metric-text">People begin to track and talk about their physical capacity (e.g. VO2max) as naturally as they check the weather.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Demo: Body Awareness -->
+<section class="demo-section">
+  <div class="container">
+    <div class="demo-label">Solution Concept &mdash; Always-on Ripple Display</div>
+    <div class="demo-row">
+      <img src="demo-mockups/h1-ripple-v1.png" alt="Ambient ripple display v1">
+      <img src="demo-mockups/h1-ripple-v2.png" alt="Ambient ripple display v2">
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     HYPOTHESIS 2 — Small Movements
+     ========================================================= -->
+<section class="dark hypo-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="section-label">Hypothesis 2 &mdash; Small Movements, Big Ripple</div>
+        <div class="hypo-num">02</div>
+        <h2 class="hypo-title">Every small movement counts</h2>
+        <div class="hypo-box">
+          <p class="hypo-text"><strong>We believe that if we</strong> lower the perceived threshold of "what counts as exercise" <strong>for</strong> people who believe only intense workouts matter, <strong>then we will see</strong> more consistent daily movement and less guilt-driven procrastination.</p>
+          <div class="metric-box">
+            <div class="metric-label">We will know this is true when we see</div>
+            <p class="metric-text">People celebrate small movements &mdash; a walk, a stretch, a few stairs &mdash; as meaningful contributions to their long-term vitality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Demo: Small Movements -->
+<section class="demo-section">
+  <div class="container">
+    <div class="demo-label">Solution Concept &mdash; Micro-exercise App</div>
+    <div class="demo-row">
+      <img src="demo-mockups/h2-microapp-v1.png" alt="Micro-exercise app v1">
+      <img src="demo-mockups/h2-microapp-v2.png" alt="Morning stretch v2">
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     HYPOTHESIS 3 — Independence & Dignity
+     ========================================================= -->
+<section class="dark hypo-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="section-label">Hypothesis 3 &mdash; Independence &amp; Dignity</div>
+        <div class="hypo-num">03</div>
+        <h2 class="hypo-title">Movement as an act of care</h2>
+        <div class="hypo-box">
+          <p class="hypo-text"><strong>We believe that if we</strong> transform personal exercise into a visible act of care for the people around you <strong>for</strong> both individuals and their families, <strong>then we will see</strong> exercise motivation shift from self-discipline to relational bonding.</p>
+          <div class="metric-box">
+            <div class="metric-label">We will know this is true when we see</div>
+            <p class="metric-text">Movement becoming a form of connection &mdash; "I moved today" as a signal of love, not a fitness metric.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Demo: Movement as Care -->
+<section class="demo-section">
+  <div class="container">
+    <div class="demo-label">Solution Concept &mdash; Family Bonding Notification</div>
+    <div class="demo-row">
+      <img src="demo-mockups/h3-bonding-v1.png" alt="Bonding notification v1">
+      <img src="demo-mockups/h3-bonding-v2.png" alt="Two phones bonding v2">
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     CLOSING
+     ========================================================= -->
+<section id="closing">
+  <div class="closing-ripple"></div>
+  <div class="closing-ripple"></div>
+  <div class="closing-ripple"></div>
+  <div class="closing-ripple"></div>
+  <div class="closing-ripple"></div>
+  <div class="closing-glow"></div>
+
+  <div class="closing-content">
+    <div class="closing-main">Aging is inevitable.<br>The cliff is not.</div>
+    <div class="closing-sub">One ripple is all it takes to begin.</div>
+    <div class="closing-meta">SVA IxD &middot; Framing User Experiences &middot; Spring 2026 &middot; Gordon Cheng</div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     BACK LINK
+     ========================================================= -->
+<div class="back-bar">
+  <a href="../../index.html">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back to Portfolio
+  </a>
+</div>
+
+</body>
+</html>

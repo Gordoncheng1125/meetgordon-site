@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Slop &times; Health &times; Elderly &mdash; Case Study</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #EB3500;
+    --red-light: #FFF3EF;
+    --green: #3a8a5c;
+    --green-light: #eef7f1;
+    --blue: #5a7da0;
+    --dark: #1a1a1a;
+    --gray: #888;
+    --border: #e0ddd8;
+    --bg: #fafaf8;
+    --hero-bg: #0a0a0a;
+    --danger: #c0382b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--dark);
+    background: #fff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    background: var(--hero-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(235,53,0,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 40%, rgba(90,125,160,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero img {
+    width: min(560px, 80vw);
+    filter: drop-shadow(0 12px 40px rgba(0,0,0,0.4));
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+  .hero .subtitle {
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    color: rgba(255,255,255,0.5);
+    margin-top: 12px;
+    font-weight: 300;
+    position: relative;
+  }
+  .hero .meta {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 6px;
+    position: relative;
+  }
+  .hero .attr {
+    position: absolute;
+    bottom: 20px;
+    right: 32px;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.2);
+  }
+  .hero .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: float 2s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 100px 0;
+  }
+  .section.alt {
+    background: var(--bg);
+  }
+  .section.dark {
+    background: var(--dark);
+    color: #fff;
+  }
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 28px;
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--red);
+  }
+  .section-body {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #666;
+    max-width: 800px;
+  }
+  .section-body strong {
+    color: var(--dark);
+    font-weight: 600;
+  }
+
+  /* ===== FOCUS CARDS ===== */
+  .focus-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 24px;
+    border: 2px solid var(--border);
+    height: 100%;
+    transition: transform 0.2s;
+  }
+  .focus-card:hover {
+    transform: translateY(-2px);
+  }
+  .focus-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .focus-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .focus-card p strong {
+    color: var(--dark);
+  }
+  .focus-card.active {
+    border-color: var(--red);
+    background: var(--red-light);
+  }
+  .focus-card.active h3 {
+    color: var(--red);
+  }
+
+  /* ===== STAT BARS ===== */
+  .stat-row {
+    display: flex;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .stat-row.dark-row {
+    background: var(--dark);
+  }
+  .stat-row.warm-row {
+    background: #3a2a20;
+  }
+  .stat-cell {
+    flex: 1;
+    padding: 32px 16px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-cell:last-child {
+    border-right: none;
+  }
+  .stat-number {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: #f0a882;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .stat-sources {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #bbb;
+    margin-top: 16px;
+  }
+
+  /* ===== ECOSYSTEM MAP ===== */
+  .ecosystem-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0;
+  }
+  .ecosystem-wrap svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+  .value-exchange {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    border: 1.5px solid var(--border);
+    margin-top: 40px;
+  }
+  .value-exchange h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+  .ve-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  .ve-section-title:first-of-type {
+    margin-top: 0;
+  }
+  .ve-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+  .ve-list li {
+    font-size: 1rem;
+    color: #666;
+    padding: 3px 0;
+  }
+  .ve-list li.danger {
+    color: var(--danger);
+    font-weight: 600;
+  }
+  .ve-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+  }
+
+  /* ===== POWER MAP ===== */
+  .power-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ccc;
+  }
+  @media (max-width: 767px) {
+    .power-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .power-quad {
+    background: #fff;
+    padding: 28px;
+  }
+  .power-quad h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .power-quad.q1 h4 { color: var(--danger); }
+  .power-quad.q2 h4 { color: var(--red); }
+  .power-quad.q3 h4 { color: #999; }
+  .power-quad.q4 h4 { color: var(--green); }
+  .power-actor {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #f9f9f7;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .power-actor .actor-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .power-actor .actor-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+
+  /* ===== BOUNDARIES ===== */
+  .boundary-flow {
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .boundary-step {
+    flex: 1;
+    min-width: 160px;
+    text-align: center;
+    padding: 28px 14px;
+    border: 2px solid #ddd;
+    background: #f0efec;
+  }
+  .boundary-step:first-child {
+    border-radius: 14px 0 0 14px;
+  }
+  .boundary-step:last-child {
+    border-radius: 0 14px 14px 0;
+  }
+  .boundary-step .step-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .boundary-step h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .boundary-step p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .boundary-step.in-scope {
+    border-color: var(--red);
+    background: var(--red-light);
+  }
+  .boundary-step.in-scope h4 {
+    color: var(--red);
+  }
+  .boundary-step.primary-focus {
+    border-color: var(--red);
+    border-width: 3px;
+    background: #fde8e0;
+  }
+  .boundary-step.primary-focus h4 {
+    color: var(--red);
+  }
+  .boundary-step.out-scope h4 {
+    color: #999;
+  }
+  .boundary-label {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  /* ===== PLATFORM CARDS ===== */
+  .platform-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    border: 2px solid var(--border);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .platform-card.warning {
+    border-color: var(--red);
+  }
+  .platform-card.dashed {
+    border-style: dashed;
+    border-color: var(--red);
+  }
+  .platform-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .platform-tag {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .platform-tag.good { color: var(--green); }
+  .platform-tag.bad { color: var(--danger); }
+  .platform-tag.mid { color: var(--red); }
+  .platform-detail {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+    flex: 1;
+  }
+  .platform-detail .rd {
+    color: var(--danger);
+    font-weight: 500;
+  }
+  .platform-big {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 14px;
+    line-height: 1;
+  }
+  .platform-small {
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+  .alert-banner {
+    max-width: 800px;
+    margin: 32px auto 0;
+    text-align: center;
+    padding: 16px 24px;
+    background: #fff3f3;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  /* ===== BACK LINK ===== */
+  .back-section {
+    padding: 60px 0;
+    text-align: center;
+    background: var(--hero-bg);
+  }
+  .back-link {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .back-link:hover {
+    color: #fff;
+  }
+  .back-link span {
+    margin-right: 8px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 991px) {
+    .section { padding: 72px 0; }
+    .stat-row { flex-wrap: wrap; }
+    .stat-cell { flex: 1 1 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  }
+  @media (max-width: 575px) {
+    .section { padding: 56px 0; }
+    .stat-cell { flex: 1 1 100%; }
+    .boundary-step { min-width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <img src="ai-slop-cover.png" alt="AI Slop illustration">
+  <h1>AI Slop &times; Health<br><em>Misinformation &times; Elderly</em></h1>
+  <div class="subtitle">Ecosystem Map &mdash; Part 2</div>
+  <div class="meta">Gordon Cheng &bull; Week 11 &bull; Inclusive Design, SVA</div>
+  <div class="attr">Illustration: SearchStax, "AI Slop and Information Discovery" (2024)</div>
+  <div class="scroll-hint">&darr; Scroll</div>
+</section>
+
+<!-- ============================================================
+     FOREWORD
+     ============================================================ -->
+<section class="section" id="foreword">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="section-tag">Part 2 &mdash; Inclusive Design, SVA Spring 2026</div>
+        <h2 class="section-title">When AI Becomes the Doctor:<br><em>Health Misinformation &times; Elderly</em></h2>
+        <div class="section-body mb-5">
+          AI-generated health misinformation is flooding social media. <strong>Elderly Americans (65+)</strong> are the most vulnerable &mdash; and the least protected. We focus on <strong>healthcare</strong>, where consequences are irreversible.
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="focus-card active">
+              <h3>&#x1F3E5; Healthcare</h3>
+              <p>Fake health advice, AI "doctor" accounts, fraudulent drug promotion. <strong>Our focus.</strong></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="focus-card">
+              <h3>&#x1F4B0; Finance</h3>
+              <p>AI investment scams, fake advice targeting retirement savings.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="focus-card">
+              <h3>&#x1F4F1; Daily Life</h3>
+              <p>Fake news, deepfake voice calls, emotional manipulation.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DATA / SCALE OF THE PROBLEM
+     ============================================================ -->
+<section class="section alt" id="data">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="section-title" style="text-align:center;">The Scale of the Problem</h2>
+
+        <div class="stat-row dark-row">
+          <div class="stat-cell">
+            <div class="stat-number">74%</div>
+            <div class="stat-label">of 50+ distrust<br>AI health info</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">7%</div>
+            <div class="stat-label">of 65+ know what<br>a "deepfake" is</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">44%</div>
+            <div class="stat-label">of TikTok health videos<br>are non-factual</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">0</div>
+            <div class="stat-label">platforms have<br>elderly protections</div>
+          </div>
+        </div>
+
+        <div class="stat-row warm-row">
+          <div class="stat-cell">
+            <div class="stat-number">64%</div>
+            <div class="stat-label">of 65+ use YouTube<br>for health info</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">57%</div>
+            <div class="stat-label">of 65+ use<br>Facebook daily</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">7&times;</div>
+            <div class="stat-label">more likely to share<br>fake news (vs 18&ndash;29)</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-number">90+</div>
+            <div class="stat-label">fact-check orgs<br>dropped by Meta</div>
+          </div>
+        </div>
+
+        <p class="stat-sources">Michigan Medicine &bull; Nature Aging &bull; Pew 2025 &bull; Princeton / NYU &bull; Meta Transparency</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ECOSYSTEM MAP
+     ============================================================ -->
+<section class="section" id="ecosystem">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <h2 class="section-title" style="text-align:center;">Ecosystem Map</h2>
+        <p style="text-align:center;color:#999;margin-bottom:32px;">AI Health Misinformation &times; Elderly</p>
+
+        <div class="ecosystem-wrap">
+          <svg viewBox="0 0 1500 900" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:1200px;height:auto;">
+            <defs>
+              <marker id="ar" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#c0382b"/></marker>
+              <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#5a7da0"/></marker>
+              <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3a8a5c"/></marker>
+            </defs>
+
+            <!-- RINGS cx=620 cy=430 -->
+            <circle cx="620" cy="430" r="360" fill="none" stroke="#e8e5e0" stroke-width="1.5" stroke-dasharray="10 6"/>
+            <circle cx="620" cy="430" r="230" fill="none" stroke="#ddd" stroke-width="1.5" stroke-dasharray="8 5"/>
+            <circle cx="620" cy="430" r="115" fill="none" stroke="#ccc" stroke-width="2" stroke-dasharray="6 4"/>
+
+            <!-- === CONNECTIONS === -->
+            <!-- Elderly -> YouTube -->
+            <path d="M 570,400 Q 460,340 380,360" fill="none" stroke="#c0382b" stroke-width="2.5" stroke-dasharray="7 4" opacity=".7" marker-end="url(#ar)"/>
+            <text x="440" y="340" font-family="Inter" font-size="12" fill="#c0382b" opacity=".8">attention &amp; trust</text>
+            <!-- YouTube -> Elderly -->
+            <path d="M 380,395 Q 490,440 570,440" fill="none" stroke="#5a7da0" stroke-width="2" stroke-dasharray="7 4" opacity=".7" marker-end="url(#ab)"/>
+            <text x="440" y="450" font-family="Inter" font-size="12" fill="#5a7da0" opacity=".8">content &amp; validation</text>
+            <!-- Algorithm -> Elderly -->
+            <path d="M 500,220 Q 570,300 600,390" fill="none" stroke="#c0382b" stroke-width="2.5" opacity=".7" marker-end="url(#ar)"/>
+            <text x="490" y="310" font-family="Inter" font-size="12" fill="#c0382b" font-weight="600" stroke="#fff" stroke-width="3" paint-order="stroke">recommends more &#8635;</text>
+            <!-- YouTube -> Algorithm -->
+            <path d="M 360,330" fill="none" stroke="#c0382b" stroke-width="2" opacity=".6"/>
+            <!-- Elderly <-> Facebook -->
+            <path d="M 600,475 Q 530,530 440,570" fill="none" stroke="#c0382b" stroke-width="2" stroke-dasharray="7 4" opacity=".6" marker-end="url(#ar)"/>
+            <path d="M 440,600 Q 540,560 610,485" fill="none" stroke="#5a7da0" stroke-width="2" stroke-dasharray="7 4" opacity=".6" marker-end="url(#ab)"/>
+            <!-- Elderly -> WhatsApp -->
+            <path d="M 680,450 Q 790,500 880,520" fill="none" stroke="#c0382b" stroke-width="2.5" opacity=".7" marker-end="url(#ar)"/>
+            <text x="760" y="480" font-family="Inter" font-size="12" fill="#c0382b" font-weight="600">shares misinfo &#8594;</text>
+            <!-- WhatsApp -> Peers -->
+            <path d="M 880,560 Q 790,600 710,620" fill="none" stroke="#c0382b" stroke-width="2" opacity=".6" marker-end="url(#ar)"/>
+            <!-- Peers -> Elderly -->
+            <path d="M 660,610 Q 650,540 640,470" fill="none" stroke="#c0382b" stroke-width="2" stroke-dasharray="6 4" opacity=".6" marker-end="url(#ar)"/>
+            <text x="665" y="545" font-family="Inter" font-size="11" fill="#c0382b" opacity=".8">social proof &#8635;</text>
+            <!-- Elderly <-> TikTok -->
+            <path d="M 605,480 Q 570,600 530,710" fill="none" stroke="#c0382b" stroke-width="2" stroke-dasharray="7 4" opacity=".6" marker-end="url(#ar)"/>
+            <path d="M 530,695 Q 575,585 615,480" fill="none" stroke="#5a7da0" stroke-width="2" stroke-dasharray="7 4" opacity=".5" marker-end="url(#ab)"/>
+            <!-- Bad Actors -> YouTube -->
+            <path d="M 280,160 Q 310,260 345,340" fill="none" stroke="#c0382b" stroke-width="1.5" stroke-dasharray="5 4" opacity=".5" marker-end="url(#ar)"/>
+            <text x="260" y="240" font-family="Inter" font-size="12" fill="#c0382b" opacity=".7">AI content + ad $</text>
+            <!-- Supplement -> Facebook -->
+            <path d="M 250,590 Q 320,580 410,575" fill="none" stroke="#c0382b" stroke-width="1.5" stroke-dasharray="5 4" opacity=".5" marker-end="url(#ar)"/>
+            <!-- Family <-> Elderly -->
+            <path d="M 625,395 Q 625,345 625,310" fill="none" stroke="#3a8a5c" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7" marker-end="url(#ag)"/>
+            <!-- Elderly -> Doctor -->
+            <path d="M 670,410 Q 750,370 820,340" fill="none" stroke="#3a8a5c" stroke-width="2" stroke-dasharray="6 4" opacity=".6" marker-end="url(#ag)"/>
+            <text x="740" y="365" font-family="Inter" font-size="12" fill="#3a8a5c" opacity=".8">infrequent</text>
+            <!-- BROKEN X mark -->
+            <line x1="612" y1="345" x2="636" y2="365" stroke="#c0382b" stroke-width="4" opacity=".85"/>
+            <line x1="636" y1="345" x2="612" y2="365" stroke="#c0382b" stroke-width="4" opacity=".85"/>
+            <!-- News -> Elderly -->
+            <path d="M 980,640 Q 800,550 665,465" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" opacity=".5" marker-end="url(#ab)"/>
+            <text x="850" y="570" font-family="Inter" font-size="11" fill="#999" stroke="#fff" stroke-width="3" paint-order="stroke">declining trust</text>
+            <!-- Regulators -->
+            <path d="M 1060,180 Q 850,280 420,370" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 6" opacity=".25"/>
+
+            <!-- LOOP LABELS -->
+            <text x="80" y="290" font-family="Inter" font-size="15" font-weight="800" fill="#c0382b" stroke="#fff" stroke-width="4" paint-order="stroke">R1 Reinforce +</text>
+            <line x1="200" y1="285" x2="340" y2="310" stroke="#c0382b" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+
+            <text x="890" y="640" font-family="Inter" font-size="15" font-weight="800" fill="#c0382b" stroke="#fff" stroke-width="4" paint-order="stroke">R2 Reinforce +</text>
+            <line x1="890" y1="635" x2="770" y2="580" stroke="#c0382b" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+
+            <text x="670" y="245" font-family="Inter" font-size="14" font-weight="800" fill="#3a8a5c" stroke="#fff" stroke-width="4" paint-order="stroke">B1 Balance &minus;</text>
+            <line x1="670" y1="250" x2="640" y2="280" stroke="#3a8a5c" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+
+            <text x="300" y="340" font-family="Inter" font-size="14" font-weight="800" fill="#c0382b" stroke="#fff" stroke-width="4" paint-order="stroke">&#9888; BROKEN</text>
+            <line x1="380" y1="335" x2="610" y2="355" stroke="#c0382b" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+
+            <!-- === NODES === -->
+            <!-- CENTER: Elderly -->
+            <circle cx="620" cy="430" r="50" fill="#c0382b" stroke="#fff" stroke-width="5"/>
+            <text x="620" y="422" text-anchor="middle" font-size="32">&#x1F474;</text>
+            <text x="620" y="445" text-anchor="middle" font-family="Inter" font-size="11" fill="rgba(255,255,255,.9)" font-weight="700">65+</text>
+            <text x="620" y="502" text-anchor="middle" font-family="Inter" font-size="17" font-weight="700" fill="#1a1a1a">Elderly User</text>
+
+            <!-- TikTok -->
+            <circle cx="520" cy="730" r="36" fill="#5a7da0" stroke="#fff" stroke-width="4"/>
+            <text x="520" y="737" text-anchor="middle" font-size="22">&#x1F3B5;</text>
+            <text x="520" y="780" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#555">TikTok</text>
+            <text x="520" y="797" text-anchor="middle" font-family="Inter" font-size="12" fill="#999">~7% of 65+</text>
+
+            <!-- Family -->
+            <circle cx="620" cy="280" r="36" fill="#3a8a5c" stroke="#fff" stroke-width="4"/>
+            <text x="620" y="287" text-anchor="middle" font-size="22">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;</text>
+            <text x="676" y="278" font-family="Inter" font-size="15" font-weight="600" fill="#3a8a5c">Family</text>
+
+            <!-- Doctor -->
+            <circle cx="840" cy="330" r="36" fill="#3a8a5c" stroke="#fff" stroke-width="4"/>
+            <text x="840" y="337" text-anchor="middle" font-size="22">&#x1F468;&#x200D;&#x2695;&#xFE0F;</text>
+            <text x="840" y="382" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#3a8a5c">Doctor</text>
+
+            <!-- Peers -->
+            <circle cx="680" cy="625" r="36" fill="#3a8a5c" stroke="#fff" stroke-width="4"/>
+            <text x="680" y="632" text-anchor="middle" font-size="22">&#x1F465;</text>
+            <text x="680" y="678" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#3a8a5c">Peers</text>
+
+            <!-- YouTube -->
+            <circle cx="370" cy="370" r="38" fill="#5a7da0" stroke="#fff" stroke-width="4"/>
+            <text x="370" y="378" text-anchor="middle" font-size="22">&#x1F4FA;</text>
+            <text x="370" y="425" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#555">YouTube</text>
+            <text x="370" y="442" text-anchor="middle" font-family="Inter" font-size="12" fill="#999">64% of 65+</text>
+
+            <!-- Facebook -->
+            <circle cx="430" cy="585" r="38" fill="#5a7da0" stroke="#fff" stroke-width="4"/>
+            <text x="430" y="593" text-anchor="middle" font-size="22">&#x1F4D8;</text>
+            <text x="430" y="640" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#555">Facebook</text>
+            <text x="430" y="657" text-anchor="middle" font-family="Inter" font-size="12" fill="#999">57% of 65+</text>
+
+            <!-- WhatsApp -->
+            <circle cx="900" cy="530" r="38" fill="#5a7da0" stroke="#fff" stroke-width="4"/>
+            <text x="900" y="538" text-anchor="middle" font-size="22">&#x1F4AC;</text>
+            <text x="900" y="585" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#555">WhatsApp</text>
+            <text x="900" y="602" text-anchor="middle" font-family="Inter" font-size="12" fill="#999">Blind spot</text>
+
+            <!-- Algorithm -->
+            <circle cx="470" cy="200" r="38" fill="#c0382b" stroke="#fff" stroke-width="4"/>
+            <text x="470" y="208" text-anchor="middle" font-size="22">&#x1F916;</text>
+            <text x="470" y="170" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#c0382b">Algorithm</text>
+
+            <!-- Bad Actors -->
+            <circle cx="270" cy="140" r="36" fill="#c0382b" stroke="#fff" stroke-width="4"/>
+            <text x="270" y="148" text-anchor="middle" font-size="22">&#x1F3AD;</text>
+            <text x="270" y="192" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#c0382b">Bad Actors</text>
+
+            <!-- Supplements -->
+            <circle cx="240" cy="590" r="36" fill="#c0382b" stroke="#fff" stroke-width="4"/>
+            <text x="240" y="598" text-anchor="middle" font-size="22">&#x1F48A;</text>
+            <text x="240" y="642" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#c0382b">Supplements</text>
+
+            <!-- Regulators -->
+            <circle cx="1060" cy="155" r="36" fill="#999" stroke="#fff" stroke-width="4"/>
+            <text x="1060" y="163" text-anchor="middle" font-size="22">&#x1F3DB;&#xFE0F;</text>
+            <text x="1060" y="207" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#777">Regulators</text>
+
+            <!-- WHO / CDC -->
+            <circle cx="1060" cy="390" r="36" fill="#999" stroke="#fff" stroke-width="4"/>
+            <text x="1060" y="398" text-anchor="middle" font-size="22">&#x1F4CB;</text>
+            <text x="1060" y="442" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#777">WHO / CDC</text>
+
+            <!-- News Media -->
+            <circle cx="1000" cy="650" r="36" fill="#999" stroke="#fff" stroke-width="4"/>
+            <text x="1000" y="658" text-anchor="middle" font-size="22">&#x1F4F0;</text>
+            <text x="1000" y="702" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#777">News Media</text>
+          </svg>
+        </div>
+
+        <!-- Value Exchange panel (extracted from SVG overlay) -->
+        <div class="row justify-content-center mt-4">
+          <div class="col-lg-8">
+            <div class="value-exchange">
+              <h4>Value Exchange</h4>
+
+              <div class="ve-section-title">Elderly &rarr; System</div>
+              <ul class="ve-list">
+                <li>Attention &amp; time</li>
+                <li>Trust (unverified)</li>
+                <li>Behavioral data &amp; money</li>
+                <li class="danger">Spreading misinfo to peers</li>
+              </ul>
+
+              <hr class="ve-divider">
+
+              <div class="ve-section-title">System &rarr; Elderly</div>
+              <ul class="ve-list">
+                <li>Social connection &amp; comfort</li>
+                <li>Health "info" (uncontrolled)</li>
+                <li>Entertainment</li>
+                <li class="danger">Belief validation &rarr; R+ loop</li>
+              </ul>
+
+              <hr class="ve-divider">
+
+              <div class="ve-section-title" style="color:var(--danger);">&#9888; Broken</div>
+              <ul class="ve-list">
+                <li class="danger">Verification &mdash; severed</li>
+                <li class="danger">Family check &mdash; declining</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     POWER MAPPING
+     ============================================================ -->
+<section class="section alt" id="power">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="section-title" style="text-align:center;">Power Mapping</h2>
+
+        <div class="power-grid">
+          <div class="power-quad q1">
+            <h4>High Power / Low Interest</h4>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F4F1; Social Media Platforms</div>
+                <div class="actor-desc">Control algorithms. Goal: ad revenue. Retreating from moderation.</div>
+              </div>
+            </div>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F3AD; AI Content Farms</div>
+                <div class="actor-desc">Generate medical content at scale for profit.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="power-quad q2">
+            <h4>High Power / High Interest</h4>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F3DB;&#xFE0F; Regulators (FTC / FDA)</div>
+                <div class="actor-desc">Authority exists but enforcement lags. AI "info" &#8800; "advertising".</div>
+              </div>
+            </div>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F916; Algorithms</div>
+                <div class="actor-desc">Invisible but decisive. Optimize for engagement, not truth.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="power-quad q3">
+            <h4>Low Power / Low Interest</h4>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F4F0; News Media / &#x1F4CB; WHO / CDC</div>
+                <div class="actor-desc">Guidelines exist but no enforcement. Content doesn&rsquo;t reach elderly.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="power-quad q4">
+            <h4>Low Power / High Interest</h4>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F474; Elderly Users</div>
+                <div class="actor-desc">Most affected, least voice. Distrust AI (74%) but can&rsquo;t identify it (7%).</div>
+              </div>
+            </div>
+            <div class="power-actor">
+              <div>
+                <div class="actor-name">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467; Family &amp; &#x1F468;&#x200D;&#x2695;&#xFE0F; Doctors</div>
+                <div class="actor-desc">Influence declining. Quarterly visits can&rsquo;t compete with daily algorithms.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SYSTEM BOUNDARIES
+     ============================================================ -->
+<section class="section" id="boundaries">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="section-title" style="text-align:center;">System Boundaries</h2>
+
+        <div class="boundary-flow">
+          <div class="boundary-step out-scope">
+            <span class="step-icon">&#x1F916;</span>
+            <h4>AI Generation</h4>
+            <p>LLMs, deepfakes,<br>content farms</p>
+          </div>
+          <div class="boundary-step in-scope">
+            <span class="step-icon">&#x1F4E1;</span>
+            <h4>Distribution</h4>
+            <p>YouTube, Facebook,<br>WhatsApp algorithms</p>
+          </div>
+          <div class="boundary-step primary-focus">
+            <span class="step-icon">&#x1F474;</span>
+            <h4>Consumption</h4>
+            <p><strong>PRIMARY FOCUS</strong><br>How elderly encounter<br>&amp; trust AI health content</p>
+          </div>
+          <div class="boundary-step in-scope">
+            <span class="step-icon">&#x1F9E0;</span>
+            <h4>Decision Making</h4>
+            <p>Self-medication,<br>purchasing, sharing</p>
+          </div>
+          <div class="boundary-step in-scope">
+            <span class="step-icon">&#x26A0;&#xFE0F;</span>
+            <h4>Consequences</h4>
+            <p>Health harm,<br>eroded trust</p>
+          </div>
+          <div class="boundary-step out-scope">
+            <span class="step-icon">&#x1F3DB;&#xFE0F;</span>
+            <h4>Regulation</h4>
+            <p>FTC / FDA / FCC<br>policy &amp; enforcement</p>
+          </div>
+        </div>
+        <div class="boundary-label">&larr; &mdash;&mdash;&mdash;&mdash;&mdash; Our System Boundary &mdash;&mdash;&mdash;&mdash;&mdash; &rarr;</div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PLATFORM LANDSCAPE
+     ============================================================ -->
+<section class="section alt" id="platforms">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-11">
+        <h2 class="section-title" style="text-align:center;">Platform Landscape</h2>
+
+        <div class="row g-4">
+          <div class="col-lg col-md-6">
+            <div class="platform-card">
+              <h4>&#x1F4FA; YouTube</h4>
+              <div class="platform-tag good">Best protections</div>
+              <div class="platform-detail">
+                Health info panels<br>
+                AI disclosure required<br>
+                <span class="rd">Raised removal threshold</span>
+              </div>
+              <div class="platform-big" style="color:var(--green);">64%</div>
+              <div class="platform-small">of 65+ use</div>
+            </div>
+          </div>
+          <div class="col-lg col-md-6">
+            <div class="platform-card warning">
+              <h4>&#x1F4D8; Facebook</h4>
+              <div class="platform-tag bad">Biggest backslide</div>
+              <div class="platform-detail">
+                <span class="rd">Ended 90+ org fact-checking</span><br>
+                <span class="rd">Community Notes instead</span>
+              </div>
+              <div class="platform-big" style="color:#c0382b;">57%</div>
+              <div class="platform-small">of 65+ use</div>
+            </div>
+          </div>
+          <div class="col-lg col-md-6">
+            <div class="platform-card">
+              <h4>&#x1F3B5; TikTok</h4>
+              <div class="platform-tag mid">Most misinfo-dense</div>
+              <div class="platform-detail">
+                <span class="rd">25% = misinformation</span><br>
+                AI labels on 1.3B+ videos
+              </div>
+              <div class="platform-big" style="color:#999;">~7%</div>
+              <div class="platform-small">of 65+ (growing)</div>
+            </div>
+          </div>
+          <div class="col-lg col-md-6">
+            <div class="platform-card warning">
+              <h4>&#x1D54F; X (Twitter)</h4>
+              <div class="platform-tag bad">All policies gone</div>
+              <div class="platform-detail">
+                <span class="rd">COVID policy ended</span><br>
+                <span class="rd">Misinfo report removed</span>
+              </div>
+              <div class="platform-big" style="color:#999;">low</div>
+              <div class="platform-small">65+ adoption</div>
+            </div>
+          </div>
+          <div class="col-lg col-md-6">
+            <div class="platform-card dashed">
+              <h4>&#x1F4AC; WhatsApp</h4>
+              <div class="platform-tag mid">The blind spot</div>
+              <div class="platform-detail">
+                <span class="rd">E2E = zero moderation</span><br>
+                <span class="rd">Family groups amplify</span>
+              </div>
+              <div class="platform-big" style="color:var(--red);">~30%</div>
+              <div class="platform-small">of 50&ndash;64 (growing)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert-banner">Policy direction: LESS moderation &rarr; elderly more exposed than ever.</div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BACK TO PORTFOLIO
+     ============================================================ -->
+<footer class="back-section">
+  <a href="../../" class="back-link"><span>&larr;</span> Back to Portfolio</a>
+</footer>
+
+</body>
+</html>

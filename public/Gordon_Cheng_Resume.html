@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gordon Cheng — Resume</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  @page { size: letter; margin: 0.6in 0.65in; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: #1a1a1a; text-decoration: none; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1.5px solid #000; }
+  .header h1 { font-size: 18pt; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 4px; }
+  .header .contact { font-size: 8.5pt; color: #444; font-weight: 400; }
+  .header .contact a { color: #444; }
+
+  /* Sections */
+  .section { margin-bottom: 14px; }
+  .section-title {
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #000;
+    border-bottom: 0.75px solid #ccc;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+  }
+
+  /* Entries */
+  .entry { margin-bottom: 10px; }
+  .entry-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .entry-org { font-weight: 600; font-size: 9.5pt; }
+  .entry-role { font-style: italic; color: #333; }
+  .entry-date { font-size: 8.5pt; color: #555; white-space: nowrap; }
+  .entry-location { font-size: 8.5pt; color: #555; }
+
+  ul { padding-left: 14px; margin-top: 3px; }
+  li { margin-bottom: 2px; font-size: 9pt; }
+
+  /* Awards inline */
+  .award { font-weight: 500; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: 100px 1fr; gap: 3px 12px; font-size: 9pt; }
+  .skills-label { font-weight: 600; color: #333; }
+  .skills-value { color: #444; }
+
+  /* Two column for bottom */
+  .two-col { display: flex; gap: 40px; }
+  .two-col > div { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Chihhung (Gordon) Cheng</h1>
+  <div class="contact">
+    New York, USA &nbsp;|&nbsp; +1 (445) 225-9646 &nbsp;|&nbsp; <a href="mailto:hi@meetgordon.ai">hi@meetgordon.ai</a> &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/meetgordon/">linkedin.com/in/meetgordon</a> &nbsp;|&nbsp; <a href="https://meetgordon.ai">meetgordon.ai</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Education</div>
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">School of Visual Arts (SVA)</span> &nbsp;<span class="entry-role">MFA Interaction Design</span></div>
+      <div class="entry-date">Sep 2025 – May 2027</div>
+    </div>
+    <div class="entry-location">New York, NY</div>
+    <ul>
+      <li>Coursework: Smart Objects (physical computing), Framing User Experience, Service Design, Inclusive Design</li>
+      <li>Graduate Teaching Assistant — Interaction Design Studio</li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Peking University</span> &nbsp;<span class="entry-role">B.S. Clinical Medicine</span></div>
+      <div class="entry-date">Sep 2002 – Jul 2007</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Professional Experience</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Ogilvy China</span> &nbsp;<span class="entry-role">Freelance Creative Strategist</span></div>
+      <div class="entry-date">2025</div>
+    </div>
+    <ul>
+      <li>Developed brand TVC concept and campaign communication strategy for <strong>SAIC Audi E5</strong> electric vehicle launch via Ogilvy Shanghai</li>
+      <li>Created "Centenary × Panlong Ancient Road" brand film concept — <strong>10,153 launch orders in 30 minutes</strong>; 47,258 annual units (+23% YOY)</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Self-employed</span> &nbsp;<span class="entry-role">Content Strategy Consultant</span></div>
+      <div class="entry-date">Sep 2022 – Present</div>
+    </div>
+    <div class="entry-location">New York, NY</div>
+    <ul>
+      <li>Strategic consulting for global clients including <strong>Tencent</strong> and <strong>Hyundai</strong> — market research, content strategy, campaign design</li>
+      <li>Tencent Charity: 54.5M visits, USD 77,853 raised, +23% YOY donor engagement; scaled to 8 cities, 72 brand partners, 4,096 retail locations</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">ByteDance / TikTok</span> &nbsp;<span class="entry-role">Senior Brand Manager</span></div>
+      <div class="entry-date">May 2021 – Jul 2022</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Led product strategy and market positioning for Douyin's K12 education vertical; directed top-ranking campaign (7.22M visits)</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Interone, BBDO Group</span> &nbsp;<span class="entry-role">Creative Director — BMW</span></div>
+      <div class="entry-date">Jul 2019 – May 2021</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Created <strong>JOYCUBE for BMW × Universal Beijing</strong> — WeChat-integrated interactive facade; 16M annual visitors</li>
+      <li class="award">🏆 Great Wall Media Innovation Grand Prize (2022) · Muse Platinum Prize (2022) · Cannes Lions 2022 Entry</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Publicis Groupe</span> &nbsp;<span class="entry-role">Creative Director — Nestlé</span></div>
+      <div class="entry-date">Jan 2019 – Jun 2019</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Drove <strong>Nestlé SuperNan3</strong> from #9 to #7 market share (+3.83%) through consumer insight-driven positioning and multi-sensory experience centers</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">HAOMAI Beijing</span> &nbsp;<span class="entry-role">Creative Director — Alipay</span></div>
+      <div class="entry-date">Feb 2018 – Jan 2019</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Led <strong>Alipay "A Word Worth Gold"</strong> Spring Festival campaign — 100M+ views in 5 days; brand film feat. Zhang Guoli</li>
+      <li class="award">🏆 Tiger Roar Silver (2018) · China Ad Film Golden Lion Bronze (2019)</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Amber Communication</span> &nbsp;<span class="entry-role">Creative Director</span></div>
+      <div class="entry-date">Feb 2018 – Jan 2019</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Raised engagement +23% YOY for Sogou Health App and +17% for Zhihu through gamified WeChat campaigns informed by user behavior analysis</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">McCann Health China</span> &nbsp;<span class="entry-role">Creative Director</span></div>
+      <div class="entry-date">May 2016 – Jul 2017</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Helped Nestlé YIYANG achieve #1 market share in senior nutrition through consumer research-driven repositioning</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Dentsu ONE</span> &nbsp;<span class="entry-role">Creative Director — Acura / Honda</span></div>
+      <div class="entry-date">Apr 2015 – May 2016</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+    <ul>
+      <li>Repositioned <strong>Acura</strong> in China market: +53% brand awareness, +76% brand affinity in one year</li>
+      <li class="award">🏆 CDX won Sharp Technology Award + Best Exterior Design — China Auto Media Awards 2016</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-org">Ogilvy, WPP Group</span> &nbsp;<span class="entry-role">Group Head</span></div>
+      <div class="entry-date">Aug 2013 – Mar 2015</div>
+    </div>
+    <div class="entry-location">Beijing, China</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div class="skills-label">Design</div>
+    <div class="skills-value">Figma, Adobe Creative Suite, Blender, Arduino / physical computing, 3D printing</div>
+    <div class="skills-label">Strategy</div>
+    <div class="skills-value">Market & competitive analysis, consumer insight, brand positioning, user research, go-to-market strategy</div>
+    <div class="skills-label">AI & Tech</div>
+    <div class="skills-value">Claude AI, prompt engineering, AI-assisted design workflow, Python basics</div>
+    <div class="skills-label">Languages</div>
+    <div class="skills-value">Mandarin Chinese (native) · Hokkien (native) · English (fluent) · Japanese (basic)</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Selected Awards</div>
+  <ul>
+    <li>Great Wall Media Innovation Grand Prize — BMW JOYCUBE (2022)</li>
+    <li>Muse Creative Awards Platinum — BMW JOYCUBE (2022)</li>
+    <li>Cannes Lions Entry, Outdoor / Ambient & Experiential — BMW JOYCUBE (2022)</li>
+    <li>Tiger Roar Silver — Alipay "A Word Worth Gold" (2018)</li>
+    <li>China Ad Film Golden Lion Bronze — Alipay (2019)</li>
+    <li>China Auto Media Awards — Acura CDX (2016)</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">Additional</div>
+  <ul>
+    <li><strong>Marathon runner</strong> — 5 completed: Beijing, Philadelphia, Tokyo, Honolulu, New York</li>
+    <li><strong>Photography</strong> — 3 solo film photography exhibitions</li>
+    <li><strong>Licensed Medical Practitioner</strong> (China, 2008)</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gordon Cheng — Automotive × Interaction Design</title>
+  <title>Gordon Cheng — Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23050505'/><text x='50' y='68' font-family='system-ui' font-size='48' font-weight='700' fill='%23f0f0f0' text-anchor='middle'>GC</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -85,6 +85,27 @@
     }
     @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
+    /* ==================== SECTION DIVIDERS ==================== */
+    .section-divider {
+      padding: 6rem 3rem;
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+    }
+    .section-divider h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .section-divider p {
+      color: var(--dim);
+      font-size: 0.95rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
     /* ==================== PROJECTS — IMMERSIVE FULL-WIDTH ==================== */
     .projects-section {
       padding: 0;
@@ -146,107 +167,6 @@
     }
     .project-full:hover .view-case {
       color: #fff; border-color: #fff;
-    }
-
-    /* ==================== SVA DIVIDER & SCHOOL PROJECTS ==================== */
-    .sva-divider {
-      padding: 6rem 3rem;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-      text-align: center;
-    }
-    .sva-divider-inner {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .sva-logo {
-      height: 3rem;
-      margin-bottom: 1.5rem;
-      opacity: 0.7;
-    }
-    .sva-label {
-      display: block;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--dim);
-      font-weight: 600;
-    }
-    .sva-sub {
-      margin-top: 1rem;
-      font-size: 1rem;
-      color: #444;
-      font-weight: 300;
-      line-height: 1.6;
-    }
-
-    .sva-projects {
-      padding: 4rem 3rem 8rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .sva-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-    .sva-card {
-      border: 1px solid #1a1a1a;
-      border-radius: 8px;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      transition: border-color 0.3s;
-      display: block;
-    }
-    .sva-card:hover {
-      border-color: #333;
-    }
-    .sva-card-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      background: #111;
-    }
-    .sva-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.7);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
-    }
-    .sva-card:hover .sva-card-img img {
-      transform: scale(1.03);
-      filter: brightness(0.85);
-    }
-    .sva-card-img--placeholder {
-      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-    }
-    .sva-card-info {
-      padding: 1.5rem 2rem 2rem;
-    }
-    .sva-card-tag {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #555;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .sva-card-info h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .sva-card-info p {
-      font-size: 0.9rem;
-      color: var(--dim);
-      font-weight: 300;
-      line-height: 1.6;
-    }
-    .sva-card--coming {
-      opacity: 0.5;
-      pointer-events: none;
     }
 
     /* ==================== EXPLORATIONS — LIVING CONTAINER ==================== */
@@ -412,9 +332,6 @@
       .project-num { display: none; }
       .explorations { padding: 5rem 1.5rem; }
       .explorations-grid { grid-template-columns: 1fr; }
-      .sva-divider { padding: 4rem 1.5rem; }
-      .sva-projects { padding: 2rem 1.5rem 5rem; }
-      .sva-grid { grid-template-columns: 1fr; }
       .about { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
       footer { padding: 4rem 1.5rem; }
       footer .contact-links { flex-direction: column; gap: 1.5rem; }
@@ -428,8 +345,7 @@
     <a href="#">Gordon Cheng</a>
     <div class="links">
       <a href="#work">Work</a>
-      <a href="#sva">SVA</a>
-      <a href="#explorations">Explorations</a>
+      <a href="#explorations">Building Now</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
@@ -438,146 +354,161 @@
   <!-- HERO -->
   <section class="hero">
     <h1 class="hero-title">
-      Intuition is<br>
-      a luxury.<br>
-      I design<br>
-      for both.
+      From campaigns<br>
+      to code.<br>
+      Designing AI for<br>
+      an aging world.
     </h1>
     <p class="hero-sub">
-      10+ years shaping how BMW, Audi, and Honda drivers feel<br>
-      about their cars. Now at SVA New York, designing the<br>
-      experience inside.
+      A decade leading creative at Ogilvy, BBDO, ByteDance — learning what<br>
+      moves people. Now at SVA New York, using AI to design for aging populations.
     </p>
     <span class="scroll-hint">Scroll</span>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="projects-section" id="work">
+  <!-- ==================== THE CODE — SVA PROJECTS ==================== -->
+  <div class="section-divider" id="work">
+    <h2>The Code</h2>
+    <p>What happens when a Creative Director goes back to school.</p>
+  </div>
 
-    <!-- AUTOMOTIVE TRIO — Lead with the vertical -->
-    <a class="project-full" href="projects/01-joycube/web/dist/index.html">
-      <img src="public/projects/joycube.jpg" alt="JOYCUBE by BMW — modular retail experience space at Universal Beijing Resort">
+  <section class="projects-section">
+
+    <a class="project-full" href="projects/05-drink-like-david/web/index.html">
+      <img src="public/projects/david.jpg" alt="Drink Like David — 3D-printed David sculpture coaster with LED glow">
       <span class="project-num">01</span>
+      <div class="project-info">
+        <div class="client">Physical Computing — SVA</div>
+        <h2>Drink<br>Like David</h2>
+        <p>A 3D-printed David that dims when you forget to drink water. Passive-aggressive, but it works.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+    <a class="project-full" href="projects/04-dusty-co/web/index.html">
+      <img src="public/projects/dusty.jpg" alt="Dusty & Co pottery studio storefront in Manhattan" loading="lazy">
+      <span class="project-num">02</span>
+      <div class="project-info">
+        <div class="client">Service Design — SVA</div>
+        <h2>Designing Warmth<br>for a Pottery Studio</h2>
+        <p>The regulars loved this pottery studio so much, they accidentally made it terrifying for newcomers. We fixed the hospitality without killing the vibe.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+    <a class="project-full" href="FUX2/one-ripple/scroll.html">
+      <img src="public/projects/one-ripple.jpg" alt="One Ripple — health behavior design for aging adults" loading="lazy">
+      <span class="project-num">03</span>
+      <div class="project-info">
+        <div class="client">Health × Aging — SVA</div>
+        <h2>One Ripple:<br>Move to Live Longer</h2>
+        <p>50–70% of age-related physical decline is just sitting still. We designed a system that makes one small movement matter.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+    <a class="project-full" href="projects/ai-slop-elderly/scroll.html">
+      <img src="public/projects/ai-slop.jpg" alt="AI Slop × Health × Elderly — ecosystem map of AI-generated misinformation" loading="lazy">
+      <span class="project-num">04</span>
+      <div class="project-info">
+        <div class="client">AI × Aging Research — SVA</div>
+        <h2>When AI Lies<br>to Your Grandma</h2>
+        <p>An AI hallucinated a medical degree and Facebook sent it to your grandmother. We mapped who profits, who gets hurt, and where to intervene.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- ==================== THE CAMPAIGNS — PROFESSIONAL WORK ==================== -->
+  <div class="section-divider">
+    <h2>The Campaigns</h2>
+    <p>Ten years of creative direction. Real clients, real budgets, real numbers.</p>
+  </div>
+
+  <section class="projects-section">
+
+    <a class="project-full" href="projects/01-joycube/web/dist/index.html">
+      <img src="public/projects/joycube.jpg" alt="JOYCUBE by BMW — modular retail experience space at Universal Beijing Resort" loading="lazy">
+      <span class="project-num">05</span>
       <div class="project-info">
         <div class="client">BMW</div>
         <h2>Reimagine BMW<br>as a Playground</h2>
-        <p>Created China's first theme park immersive brand experience space — from naming and spatial positioning to the interactive BLIND BOX concept. 16M annual visitors.</p>
+        <p>BMW wanted a showroom at Universal Beijing Resort. We built them a playground instead. Cannes Lions shortlisted. 16M visitors a year.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+    <a class="project-full" href="projects/03-alipay-word-worth-gold/web/index.html">
+      <img src="public/projects/alipay.jpg" alt="Alipay A Word Worth Gold — grand calligraphy hall with hanging scrolls" loading="lazy">
+      <span class="project-num">06</span>
+      <div class="project-info">
+        <div class="client">Alipay</div>
+        <h2>Every Emotion Hides<br>in a Chinese Character</h2>
+        <p>We turned a payment app into a poetry platform. 100M+ users in five days. People will open a financial app for feelings.</p>
         <span class="view-case">View Case Study</span>
       </div>
     </a>
 
     <a class="project-full" href="projects/02-audi-e5/web/index.html">
       <img src="public/projects/audi.jpg" alt="AUDI E5 Sportback on Panlong Ancient Road serpentine switchbacks" loading="lazy">
-      <span class="project-num">02</span>
+      <span class="project-num">07</span>
       <div class="project-info">
         <div class="client">Audi</div>
         <h2>Two Stories No One<br>Knew How to Tell</h2>
-        <p>An integrated campaign that turned an ancient road into Audi's electric story — 10,153 launch orders in 30 minutes.</p>
-        <span class="view-case">View Case Study</span>
-      </div>
-    </a>
-
-    <a class="project-full" href="projects/06-acura-repositioning/web/dist/index.html">
-      <img src="public/projects/acura.jpg" alt="Acura NSX supercar in red — China brand repositioning campaign" loading="lazy">
-      <span class="project-num">03</span>
-      <div class="project-info">
-        <div class="client">Acura / Honda</div>
-        <h2>Making a Luxury Brand<br>Feel Like Home</h2>
-        <p>Repositioned Acura from a niche Japanese import into approachable luxury — +53% awareness, +76% brand affinity in one year.</p>
-        <span class="view-case">View Case Study</span>
-      </div>
-    </a>
-
-    <!-- DIGITAL & SCALE — Proof of broader capability -->
-    <a class="project-full" href="projects/03-alipay-word-worth-gold/web/index.html">
-      <img src="public/projects/alipay.jpg" alt="Alipay A Word Worth Gold — grand calligraphy hall with hanging scrolls" loading="lazy">
-      <span class="project-num">04</span>
-      <div class="project-info">
-        <div class="client">Alipay</div>
-        <h2>Every Emotion Hides<br>in a Chinese Character</h2>
-        <p>A digital red envelope that turned a payment app into a poetry platform — 100M+ users in 5 days.</p>
+        <p>A new electric car. A 2,000-year-old mountain road. Nobody thought these belonged together. 10,153 orders in 30 minutes said otherwise.</p>
         <span class="view-case">View Case Study</span>
       </div>
     </a>
 
     <a class="project-full" href="projects/06-nestle-supernan3/web/index.html">
       <img src="public/projects/nestle.jpg" alt="Nestlé SuperNan3 brand film still — mother and baby intimacy" loading="lazy">
-      <span class="project-num">05</span>
+      <span class="project-num">08</span>
       <div class="project-info">
         <div class="client">Nestlé</div>
         <h2>Do You Feel<br>What I Feel</h2>
-        <p>A brand campaign that made Chinese mothers feel infant sensitivity — lifting market share from #9 to #7.</p>
+        <p>We asked mothers to close their eyes and feel what their babies feel. Market share went from #9 to #7. Empathy sells better than features.</p>
+        <span class="view-case">View Case Study</span>
+      </div>
+    </a>
+
+    <a class="project-full" href="projects/06-acura-repositioning/web/dist/index.html">
+      <img src="public/projects/acura.jpg" alt="Acura NSX supercar in red — China brand repositioning campaign" loading="lazy">
+      <span class="project-num">09</span>
+      <div class="project-info">
+        <div class="client">Acura</div>
+        <h2>Making a Luxury Brand<br>Feel Like Home</h2>
+        <p>Acura was a niche Japanese import that nobody in China understood. One year later: +53% awareness, +76% brand affinity. Turns out, luxury doesn't have to feel distant.</p>
         <span class="view-case">View Case Study</span>
       </div>
     </a>
 
   </section>
 
-  <!-- SVA DIVIDER -->
-  <section class="sva-divider" id="sva">
-    <div class="sva-divider-inner">
-      <img src="public/sva-logo.svg" alt="School of Visual Arts" class="sva-logo">
-      <span class="sva-label">MFA Interaction Design — New York, 2025–2027</span>
-      <p class="sva-sub">Where creative direction meets physical computing, AI, and human-centered design.</p>
-    </div>
-  </section>
-
-  <!-- SVA SCHOOL PROJECTS -->
-  <section class="sva-projects">
-    <div class="sva-grid">
-
-      <a class="sva-card" href="projects/05-drink-like-david/web/index.html">
-        <div class="sva-card-img">
-          <img src="public/projects/david.jpg" alt="Drink Like David — 3D-printed smart coaster" loading="lazy">
-        </div>
-        <div class="sva-card-info">
-          <div class="sva-card-tag">Smart Objects</div>
-          <h3>Drink Like David</h3>
-          <p>A 6-inch Michelangelo's David sits on your desk, glows like a nightclub, and bosses you into drinking water. He's your new productivity coach. Renaissance accountability partner. Zero screens, strong opinions.</p>
-        </div>
-      </a>
-
-      <a class="sva-card" href="projects/04-dusty-co/web/index.html">
-        <div class="sva-card-img">
-          <img src="public/projects/dusty.jpg" alt="Dusty & Co — service design for a pottery studio" loading="lazy">
-        </div>
-        <div class="sva-card-info">
-          <div class="sva-card-tag">Service Design</div>
-          <h3>Dusty & Co</h3>
-          <p>Service design for a Manhattan pottery studio — stakeholder interviews, co-design workshops, journey mapping, and a phased implementation roadmap.</p>
-        </div>
-      </a>
-
-      <div class="sva-card">
-        <div class="sva-card-img sva-card-img--placeholder"></div>
-        <div class="sva-card-info">
-          <div class="sva-card-tag">Framing User Experience</div>
-          <h3>Move to Live</h3>
-          <p>Aging is inevitable. The cliff is not. A UX research framework that reframes physical decline as a design problem — dignity over efficiency, intervene at 44 not 64.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- EXPLORATIONS -->
+  <!-- WHAT I'M BUILDING NOW -->
   <section class="explorations" id="explorations">
     <div class="explorations-header">
-      <h2>Explorations</h2>
-      <p>Where I'm heading next — research and experiments at the intersection of AI, automotive, and interaction design.</p>
+      <h2>What I'm Building Now</h2>
+      <p>SVA MFA Interaction Design — where a decade of human insight meets AI-powered making.</p>
     </div>
     <div class="explorations-grid">
       <div class="exploration-card">
         <div class="tag">Research Direction</div>
-        <h3>AI-Powered Automotive HMI</h3>
-        <p>Exploring how AI voice assistants, predictive personalization, and multimodal interaction will reshape the in-car experience — from conversational cockpits to context-aware interfaces.</p>
-        <div class="status">Ongoing</div>
+        <h3>AI + Aging</h3>
+        <p>Mapping how AI impacts older adults — from misinformation ecosystems to smart home interventions. Finding where design makes the biggest difference.</p>
+        <div class="status">Systems-Based Approaches — SVA</div>
       </div>
       <div class="exploration-card">
-        <div class="tag">Coming Soon</div>
-        <h3>Connected Vehicle UX</h3>
-        <p>Designing seamless experiences across touchscreen, voice, gesture, and mobile — for the software-defined vehicle era where every surface is an interface.</p>
-        <div class="status">In progress</div>
+        <div class="tag">Core Skill</div>
+        <h3>AI-Powered Prototyping</h3>
+        <p>Using Claude Code to go from idea to working prototype in hours. Building workflows, teaching peers, and redefining what one designer can ship.</p>
+        <div class="status">Active Practice</div>
+      </div>
+      <div class="exploration-card">
+        <div class="tag">Design Practice</div>
+        <h3>Service Design</h3>
+        <p>Stakeholder interviews, co-design workshops, journey maps. From pottery studios to healthcare — designing the invisible systems that shape experience.</p>
+        <div class="status">SVA Coursework</div>
       </div>
     </div>
   </section>
@@ -585,19 +516,20 @@
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="about-left">
-      <h2>Automotive<br>Brand &times;<br>Interaction<br>Design</h2>
-      <p>A decade leading creative for BMW, Audi, and Honda at the world's top agencies — from brand strategy to immersive spatial experiences. Now at SVA New York, bringing interaction design and AI to the future of mobility.</p>
+      <h2>Human<br>Insight &times;<br>AI<br>Prototyping</h2>
+      <p>Ten years understanding what makes people act — at Ogilvy, BBDO, ByteDance. Now at SVA New York, where that human insight meets AI-powered making. I design for populations that technology has overlooked.</p>
       <div class="agency-logos">
-        <span>Dentsu</span>
-        <span>BBDO</span>
         <span>Ogilvy</span>
-        <span>Publicis</span>
+        <span>Dentsu</span>
         <span>McCann</span>
+        <span>Publicis</span>
+        <span>BBDO</span>
         <span>ByteDance</span>
       </div>
     </div>
     <div>
       <ul class="timeline">
+        <li><span class="yr">2026</span><div><div class="title">AI + Aging Research</div><div class="org">SVA — Claude Code / Service Design / SBA</div></div></li>
         <li><span class="yr">2025</span><div><div class="title">MFA Interaction Design</div><div class="org">School of Visual Arts, New York</div></div></li>
         <li><span class="yr">2022</span><div><div class="title">Senior Creative</div><div class="org">ByteDance / TikTok</div></div></li>
         <li><span class="yr">2021</span><div><div class="title">Creative Director</div><div class="org">BBDO Beijing</div></div></li>
@@ -614,7 +546,7 @@
     <h2>Let's talk.</h2>
     <div class="contact-links">
       <a href="mailto:popblue125@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/gordoncheng-ixd/" target="_blank">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/meetgordon/" target="_blank">LinkedIn</a>
       <a href="https://www.instagram.com/gordoncheng.design/" target="_blank">Instagram</a>
     </div>
     <div class="copy">Gordon Cheng &copy; 2026</div>

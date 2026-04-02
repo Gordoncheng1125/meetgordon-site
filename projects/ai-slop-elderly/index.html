@@ -3,495 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Slop × Health × Elderly — Ecosystem Map + Interview</title>
+<title>AI Slop × Health × Elderly</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
   *{margin:0;padding:0;box-sizing:border-box;}
   html{background:#111;overflow:hidden;width:100vw;height:100vh;}
-  body{font-family:'Inter',sans-serif;background:#111;color:#333;overflow:hidden;}
-  #stage{width:1920px;height:1080px;position:absolute;top:50%;left:50%;transform-origin:center center;background:#fff;overflow:hidden;}
-  .slide{width:1920px;height:1080px;position:absolute;top:0;left:0;opacity:0;pointer-events:none;transition:opacity .45s ease;overflow:hidden;}
+  body{font-family:'Lora',Georgia,serif;background:#111;color:#1a1a1a;overflow:hidden;}
+  #stage{width:1920px;height:1080px;position:absolute;top:50%;left:50%;transform-origin:center center;background:#f8f6f1;overflow:hidden;}
+  .slide{width:1920px;height:1080px;position:absolute;top:0;left:0;opacity:0;pointer-events:none;transition:opacity .4s;overflow:hidden;}
   .slide.active{opacity:1;pointer-events:all;}
 
-  :root{--serif:'Playfair Display',Georgia,'Times New Roman',serif;--sans:'Inter',-apple-system,sans-serif;--ink:#1a1a1a;--gray:#6b6b6b;--light:#a0a0a0;--rule:#d4d4d4;--bg:#fcfbf9;--warm:#f7f5f0;--accent:#c41e1e;}
+  :root{--ink:#1a1a1a;--gray:#555;--light:#999;--rule:#333;--ruleL:#ccc;--paper:#f8f6f1;--cream:#f0ece4;}
 
   .dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:200;}
   .dots .d{width:8px;height:8px;border-radius:50%;background:#555;cursor:pointer;transition:.2s;}
-  .dots .d.on{background:#fff;width:24px;border-radius:4px;}
-  .arr{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:20px;color:#fff;z-index:200;transition:.2s;font-family:var(--serif);}
-  .arr:hover{background:rgba(255,255,255,.25);}
-  .arr.l{left:20px;} .arr.rt{right:20px;}
-  .cnt{position:fixed;top:24px;right:36px;font-size:13px;color:rgba(255,255,255,.4);z-index:200;font-family:var(--sans);}
-  .footer{position:absolute;bottom:32px;left:80px;font-size:13px;color:var(--light);font-family:var(--sans);letter-spacing:.5px;}
-  .footer-r{position:absolute;bottom:32px;right:80px;font-size:13px;color:var(--light);font-family:var(--sans);}
+  .dots .d.on{background:#fff;width:20px;border-radius:4px;}
+  .arr{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);cursor:pointer;font-size:18px;color:#aaa;z-index:200;transition:.2s;}
+  .arr:hover{background:rgba(255,255,255,.2);color:#fff;}
+  .arr.l{left:16px;} .arr.rt{right:16px;}
+  .cnt{position:fixed;top:24px;right:36px;font-size:12px;color:rgba(255,255,255,.3);z-index:200;font-family:'Inter',sans-serif;}
 
-  /* ============ COVER ============ */
-  .cover{background:var(--ink);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-  .cover .kicker{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:32px;}
-  .cover h1{font-family:var(--serif);font-size:72px;font-weight:900;line-height:1.1;max-width:1200px;}
-  .cover h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.65);}
-  .cover .byline{font-family:var(--sans);font-size:16px;color:rgba(255,255,255,.35);margin-top:28px;letter-spacing:.5px;}
-  .cover .rule{width:60px;height:2px;background:var(--accent);margin:24px auto 0;}
+  /* ---- Newspaper elements ---- */
+  .mast{text-align:center;padding:24px 80px 0;}
+  .mast .topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:4px double var(--rule);padding-bottom:10px;}
+  .mast .date{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);}
+  .mast .nameplate{font-family:'UnifrakturMaguntia',cursive;font-size:72px;color:var(--ink);line-height:1;}
+  .mast .edition{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);}
+  .mast .subnav{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);padding:8px 0;border-bottom:1px solid var(--rule);}
 
-  /* ============ EDITORIAL (text-heavy) ============ */
-  .ed{padding:100px 240px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;}
-  .ed .kicker{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--light);margin-bottom:16px;}
-  .ed h2{font-family:var(--serif);font-size:54px;font-weight:900;line-height:1.15;color:var(--ink);margin-bottom:32px;max-width:1100px;}
-  .ed h2 em{font-style:italic;font-weight:400;}
-  .ed .lead{font-family:var(--serif);font-size:26px;line-height:1.7;color:var(--gray);max-width:1000px;}
-  .ed .lead strong{color:var(--ink);font-weight:700;}
-  .ed .hrule{width:100%;max-width:1000px;height:1px;background:var(--rule);margin:32px 0;}
+  .headline{font-family:'Playfair Display',serif;color:var(--ink);line-height:1.1;}
+  .deck{font-family:'Lora',Georgia,serif;font-style:italic;color:var(--gray);line-height:1.5;}
+  .byline{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--light);}
+  .col-text{font-family:'Lora',Georgia,serif;font-size:17px;line-height:1.75;color:var(--ink);text-align:justify;column-gap:28px;column-rule:1px solid var(--ruleL);}
+  .section-head{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--light);border-top:3px solid var(--ink);padding-top:6px;margin-bottom:12px;}
+  .section-head.red{border-color:#c41e1e;color:#c41e1e;}
+  .pullquote{font-family:'Playfair Display',serif;font-size:30px;font-style:italic;line-height:1.45;color:var(--ink);border-top:3px solid var(--ink);border-bottom:1px solid var(--ruleL);padding:20px 0;margin:0;}
+  .pullquote .attr{font-family:'Inter',sans-serif;font-size:12px;font-style:normal;letter-spacing:1px;text-transform:uppercase;color:var(--light);margin-top:10px;}
+  .col-rule{width:1px;background:var(--ruleL);align-self:stretch;}
+  .thick-rule{height:4px;background:var(--ink);}
+  .thin-rule{height:1px;background:var(--ruleL);}
+  .double-rule{height:4px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);}
+  .pagenum{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Lora',serif;font-size:13px;color:var(--light);}
+  .folio{position:absolute;bottom:20px;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--light);}
+  .folio.l{left:80px;} .folio.r{right:80px;}
 
-  /* ============ SPLIT (text + sidebar) ============ */
-  .split{padding:80px;background:var(--bg);display:flex;gap:0;}
-  .split-main{flex:1;padding:20px 80px 20px 80px;display:flex;flex-direction:column;justify-content:center;}
-  .split-side{flex:0 0 700px;padding:40px 60px;background:var(--warm);border-left:1px solid var(--rule);display:flex;flex-direction:column;gap:24px;justify-content:center;}
-  .split-main .kicker{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--light);margin-bottom:16px;}
-  .split-main h2{font-family:var(--serif);font-size:50px;font-weight:900;line-height:1.15;color:var(--ink);margin-bottom:24px;}
-  .split-main h2 em{font-style:italic;font-weight:400;}
-  .split-main .body{font-family:var(--serif);font-size:22px;line-height:1.8;color:var(--gray);}
-  .split-main .body strong{color:var(--ink);}
+  /* Data boxes */
+  .stat{text-align:center;padding:16px 10px;}
+  .stat .n{font-family:'Playfair Display',serif;font-size:54px;font-weight:900;color:var(--ink);}
+  .stat .l{font-family:'Inter',sans-serif;font-size:13px;color:var(--gray);margin-top:4px;line-height:1.4;}
 
-  .scard{padding:24px 0;border-bottom:1px solid var(--rule);}
-  .scard:last-child{border-bottom:none;}
-  .scard h4{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:10px;}
-  .scard p{font-family:var(--serif);font-size:20px;line-height:1.7;color:var(--ink);}
-  .scard .note{font-family:var(--sans);font-size:15px;color:var(--gray);margin-top:6px;}
-
-  /* ============ DATA BAR ============ */
-  .dbar{display:flex;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
-  .dbar .dc{flex:1;padding:40px 20px;text-align:center;border-right:1px solid var(--rule);}
-  .dbar .dc:last-child{border-right:none;}
-  .dbar .dc .n{font-family:var(--serif);font-size:56px;font-weight:900;color:var(--ink);}
-  .dbar .dc .l{font-family:var(--sans);font-size:15px;color:var(--gray);margin-top:8px;line-height:1.4;}
-
-  /* ============ PULL QUOTE ============ */
-  .pq{padding:0 80px;margin:32px 0;}
-  .pq blockquote{font-family:var(--serif);font-size:32px;font-style:italic;line-height:1.6;color:var(--ink);border-left:3px solid var(--accent);padding-left:32px;max-width:1000px;}
-  .pq .attr{font-family:var(--sans);font-size:14px;color:var(--light);margin-top:12px;padding-left:35px;}
-
-  /* ============ GRID (findings) ============ */
-  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);max-width:1600px;margin:0 auto;}
-  .fgrid .fc{background:var(--bg);padding:48px 52px;}
-  .fgrid .fc h3{font-family:var(--serif);font-size:28px;font-weight:700;line-height:1.3;color:var(--ink);margin-bottom:14px;}
-  .fgrid .fc p{font-family:var(--serif);font-size:20px;line-height:1.7;color:var(--gray);}
-  .fgrid .fc .qt{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--light);margin-top:16px;padding-left:20px;border-left:2px solid var(--rule);}
-
-  /* ============ TWO-COL comparison ============ */
-  .comp{display:flex;background:var(--bg);}
-  .comp-col{flex:1;padding:80px 80px;display:flex;flex-direction:column;justify-content:center;}
-  .comp-col.dark{background:var(--ink);color:#fff;}
-  .comp-col h3{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;}
-  .comp-col.dark h3{color:rgba(255,255,255,.4);}
-  .comp-col .flow{font-family:var(--serif);font-size:26px;line-height:2;color:var(--gray);}
-  .comp-col.dark .flow{color:rgba(255,255,255,.6);}
-  .comp-col .flow strong{color:var(--ink);font-weight:700;}
-  .comp-col.dark .flow strong{color:#fff;}
-  .comp-col .flow em{font-style:normal;font-weight:700;color:var(--accent);}
-  .comp-col.dark .flow em{color:#e8a08a;}
-  .comp-col .takeaway{font-family:var(--sans);font-size:18px;line-height:1.6;margin-top:36px;padding-top:24px;border-top:1px solid var(--rule);}
-  .comp-col.dark .takeaway{color:rgba(255,255,255,.5);border-top-color:rgba(255,255,255,.15);}
-
-  /* ============ QUESTIONS GRID ============ */
-  .qgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);max-width:1700px;margin:0 auto;}
-  .qgrid .qc{background:var(--bg);padding:40px 44px;}
-  .qgrid .qc.span2{grid-column:span 2;}
-  .qgrid .qc .cat{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--light);margin-bottom:14px;}
-  .qgrid .qc .cat.red{color:var(--accent);}
-  .qgrid .qc p{font-family:var(--serif);font-size:22px;line-height:1.7;color:var(--ink);}
-  .qgrid .qc p .qn{font-family:var(--sans);font-weight:700;font-size:16px;color:var(--light);margin-right:6px;}
-  .qgrid .qc p .qn.red{color:var(--accent);}
-
-  /* ============ ECOSYSTEM SVG ============ */
-  .eco{padding:0;background:var(--bg);}
-
-  /* ============ POWER GRID ============ */
-  .pgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--rule);width:1500px;height:640px;margin:0 auto;overflow:hidden;}
-  .pq2{background:var(--bg);padding:36px 40px;}
-  .pq2 h4{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;color:var(--light);}
-  .pq2.q1 h4{color:var(--accent);} .pq2.q2 h4{color:var(--ink);}
-  .pa{padding:12px 0;border-bottom:1px solid #eee;}
-  .pa:last-child{border-bottom:none;}
-  .pa .nm{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--ink);}
-  .pa .ds{font-family:var(--sans);font-size:15px;color:var(--gray);margin-top:4px;}
-
-  /* ============ BOUNDARY FLOW ============ */
-  .sf{display:flex;max-width:1600px;margin:0 auto;}
-  .ss{flex:1;text-align:center;padding:36px 16px;border-right:1px solid var(--rule);background:var(--bg);}
-  .ss:last-child{border-right:none;}
-  .ss.fo{background:var(--warm);border:2px solid var(--ink);}
-  .ss h4{font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:10px 0 8px;color:var(--ink);}
-  .ss.fo h4{color:var(--accent);}
-  .ss p{font-family:var(--serif);font-size:16px;color:var(--gray);line-height:1.5;}
-  .ss .si{font-size:32px;}
-
-  /* ============ PLATFORM CARDS ============ */
-  .p5{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);max-width:1700px;margin:0 auto;}
-  .p5c{background:var(--bg);padding:32px 24px;}
-  .p5c h4{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:6px;color:var(--ink);}
-  .p5c .pt{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
-  .p5c .pt.good{color:#3a8a5c;} .p5c .pt.bad{color:var(--accent);} .p5c .pt.mid{color:var(--gray);}
-  .p5c .detail{font-family:var(--serif);font-size:17px;color:var(--gray);line-height:1.7;}
-  .p5c .detail .rd{color:var(--accent);font-weight:600;}
-  .p5c .big{font-family:var(--serif);font-size:42px;font-weight:900;margin-top:16px;color:var(--ink);}
-  .p5c .sm{font-family:var(--sans);font-size:13px;color:var(--light);}
+  /* Grid helpers */
+  .cols{display:flex;gap:0;}
+  .pad{padding:0 80px;}
 </style>
 </head>
 <body>
 <div id="stage">
 
-<!-- ====== PART 1: ECOSYSTEM MAP ====== -->
+<!-- ========== S0: FRONT PAGE ========== -->
+<div class="slide active" style="background:var(--paper);">
+  <div class="mast">
+    <div class="topbar">
+      <div class="date">April 2, 2026</div>
+      <div class="nameplate">The Inclusive Design Times</div>
+      <div class="edition">SVA Edition</div>
+    </div>
+    <div class="subnav">Ecosystem &middot; Data &middot; Power &middot; Platforms &middot; Interview &middot; Analysis</div>
+  </div>
 
-<!-- S0: COVER -->
-<div class="slide cover active">
-  <div class="kicker">Inclusive Design &middot; SVA MFA Interaction Design</div>
-  <h1>AI Slop, Health Misinformation,<br><em>and the People It Hurts Most</em></h1>
-  <div class="rule"></div>
-  <div class="byline">Gordon Cheng &middot; Spring 2026</div>
+  <div style="padding:20px 80px 0;">
+    <div class="cols" style="gap:28px;">
+      <div style="flex:1.4;">
+        <h1 class="headline" style="font-size:58px;margin-bottom:14px;">AI Slop Is Flooding<br>Health Content Online.</h1>
+        <div class="deck" style="font-size:22px;margin-bottom:12px;">Older Americans are the most exposed &mdash; and the least equipped to tell what's real.</div>
+        <div class="byline" style="margin-bottom:16px;">By Gordon Cheng &middot; Inclusive Design, SVA Spring 2026</div>
+        <div class="thin-rule" style="margin-bottom:16px;"></div>
+        <div class="col-text" style="column-count:2;font-size:16px;">
+          AI-generated health misinformation is flooding social media at an unprecedented rate. Deepfake doctors, fabricated clinical studies, and synthetic testimonials are being used to sell supplements to people who can't tell the difference. The most vulnerable group &mdash; Americans over 65 &mdash; is also the one with the fewest protections. No platform has age-specific safeguards. The regulatory framework was built for a world of human-authored content. And the trend across every major platform is toward less moderation, not more.
+        </div>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:1;">
+        <div class="section-head">By the numbers</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ruleL);margin-bottom:16px;">
+          <div class="stat" style="background:var(--paper);"><div class="n">74%</div><div class="l">of 50+ distrust AI health info</div></div>
+          <div class="stat" style="background:var(--paper);"><div class="n">7%</div><div class="l">of 65+ know what a deepfake is</div></div>
+          <div class="stat" style="background:var(--paper);"><div class="n">7&times;</div><div class="l">more likely to share fake news</div></div>
+          <div class="stat" style="background:var(--paper);"><div class="n">0</div><div class="l">platforms with elderly protections</div></div>
+        </div>
+        <div class="thin-rule" style="margin-bottom:14px;"></div>
+        <div class="section-head">Platform usage, 65+</div>
+        <div style="display:flex;gap:0;text-align:center;border:1px solid var(--ruleL);">
+          <div style="flex:1;padding:14px 6px;border-right:1px solid var(--ruleL);"><div style="font-family:'Playfair Display';font-size:32px;font-weight:900;">64%</div><div style="font-family:'Inter';font-size:11px;color:var(--gray);margin-top:2px;">YouTube</div></div>
+          <div style="flex:1;padding:14px 6px;border-right:1px solid var(--ruleL);"><div style="font-family:'Playfair Display';font-size:32px;font-weight:900;">57%</div><div style="font-family:'Inter';font-size:11px;color:var(--gray);margin-top:2px;">Facebook</div></div>
+          <div style="flex:1;padding:14px 6px;border-right:1px solid var(--ruleL);"><div style="font-family:'Playfair Display';font-size:32px;font-weight:900;">~30%</div><div style="font-family:'Inter';font-size:11px;color:var(--gray);margin-top:2px;">WhatsApp</div></div>
+          <div style="flex:1;padding:14px 6px;"><div style="font-family:'Playfair Display';font-size:32px;font-weight:900;">~7%</div><div style="font-family:'Inter';font-size:11px;color:var(--gray);margin-top:2px;">TikTok</div></div>
+        </div>
+        <div style="font-family:'Inter';font-size:10px;color:var(--light);margin-top:8px;">Sources: Pew 2025, Michigan Medicine, Nature Aging, Princeton/NYU</div>
+      </div>
+    </div>
+  </div>
+  <div class="pagenum">1</div>
 </div>
 
-<!-- S1: FOREWORD -->
-<div class="slide ed">
-  <div class="kicker">Part 2 &mdash; The Problem</div>
-  <h2>When AI Becomes <em>the Doctor</em></h2>
-  <div class="lead">
-    AI-generated health misinformation is flooding social media. <strong>Older Americans (65+)</strong> are the most exposed and the least equipped to tell what's real. We're looking at <strong>healthcare</strong>, where bad information doesn't just mislead &mdash; it can cause real harm.
+<!-- ========== S1: ECOSYSTEM MAP ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Ecosystem Map</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
+    </div>
   </div>
-  <div class="hrule"></div>
-  <div style="display:flex;gap:80px;margin-top:8px;">
-    <div><div style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Our Focus</div><div style="font-family:var(--serif);font-size:20px;color:var(--ink);">Healthcare &mdash; fake health advice, AI doctor accounts, supplement fraud</div></div>
-    <div><div style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:8px;">Also Relevant</div><div style="font-family:var(--serif);font-size:20px;color:var(--gray);">Financial scams targeting retirement savings, deepfake voice calls</div></div>
+  <div style="text-align:center;padding:8px 0 0;">
+    <h2 class="headline" style="font-size:36px;">Ecosystem Map: AI Health Misinformation &times; Elderly</h2>
   </div>
-  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
-</div>
-
-<!-- S2: DATA -->
-<div class="slide" style="padding:80px 100px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;">
-  <div style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--light);text-align:center;margin-bottom:16px;">By the numbers</div>
-  <h2 style="font-family:var(--serif);font-size:48px;font-weight:900;text-align:center;color:var(--ink);margin-bottom:40px;">The Scale of the Problem</h2>
-  <div class="dbar">
-    <div class="dc"><div class="n">74%</div><div class="l">of 50+ distrust<br>AI health info</div></div>
-    <div class="dc"><div class="n">7%</div><div class="l">of 65+ know what<br>a "deepfake" is</div></div>
-    <div class="dc"><div class="n">44%</div><div class="l">of TikTok health videos<br>are non-factual</div></div>
-    <div class="dc"><div class="n">0</div><div class="l">platforms have<br>elderly-specific protections</div></div>
-  </div>
-  <div style="height:24px;"></div>
-  <div class="dbar">
-    <div class="dc"><div class="n">64%</div><div class="l">of 65+ use YouTube<br>for health info</div></div>
-    <div class="dc"><div class="n">57%</div><div class="l">of 65+ use<br>Facebook daily</div></div>
-    <div class="dc"><div class="n">7&times;</div><div class="l">more likely to share<br>fake news (vs 18-29)</div></div>
-    <div class="dc"><div class="n">90+</div><div class="l">fact-check orgs<br>dropped by Meta</div></div>
-  </div>
-  <p style="text-align:center;font-family:var(--sans);font-size:13px;color:var(--light);margin-top:20px;">Michigan Medicine &middot; Nature Aging &middot; Pew 2025 &middot; Princeton/NYU &middot; Meta Transparency</p>
-</div>
-
-<!-- S3: ECOSYSTEM MAP -->
-<div class="slide eco" style="padding:0;background:var(--bg);">
-  <div style="position:absolute;top:18px;left:50%;transform:translateX(-50%);text-align:center;z-index:5;">
-    <h2 style="font-family:var(--serif);font-size:40px;font-weight:900;color:var(--ink);">Ecosystem Map</h2>
-    <div style="font-family:var(--sans);font-size:14px;color:var(--light);">AI Health Misinformation &times; Elderly</div>
-  </div>
-  <svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px;position:absolute;top:0;left:0;">
+  <svg viewBox="0 0 1920 980" style="width:1920px;height:980px;position:absolute;top:100px;left:0;">
     <defs>
-      <marker id="ar" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#c41e1e"/></marker>
-      <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#5a7da0"/></marker>
-      <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3a8a5c"/></marker>
+      <marker id="ar" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c41e1e"/></marker>
+      <marker id="ab" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#666"/></marker>
+      <marker id="ag" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3a8a5c"/></marker>
     </defs>
-    <circle cx="780" cy="540" r="440" fill="none" stroke="#e0ddd8" stroke-width="1" stroke-dasharray="8 5"/>
-    <circle cx="780" cy="540" r="280" fill="none" stroke="#d4d4d4" stroke-width="1" stroke-dasharray="6 4"/>
-    <circle cx="780" cy="540" r="140" fill="none" stroke="#c0c0c0" stroke-width="1.5" stroke-dasharray="5 3"/>
-    <path d="M 720,510 Q 600,450 510,470" fill="none" stroke="#c41e1e" stroke-width="2" stroke-dasharray="6 3" opacity=".6" marker-end="url(#ar)"/>
-    <text x="580" y="450" font-family="Inter" font-size="13" fill="#c41e1e" opacity=".7">attention &amp; trust</text>
-    <path d="M 510,505 Q 630,560 720,550" fill="none" stroke="#5a7da0" stroke-width="1.5" stroke-dasharray="6 3" opacity=".6" marker-end="url(#ab)"/>
-    <text x="580" y="565" font-family="Inter" font-size="13" fill="#5a7da0" opacity=".7">content &amp; validation</text>
-    <path d="M 640,280 Q 720,380 750,490" fill="none" stroke="#c41e1e" stroke-width="2" opacity=".6" marker-end="url(#ar)"/>
-    <text x="640" y="395" font-family="Inter" font-size="13" fill="#c41e1e" font-weight="600" stroke="var(--bg)" stroke-width="4" paint-order="stroke">recommends more ↻</text>
-    <path d="M 490,440 Q 510,350 580,280" fill="none" stroke="#c41e1e" stroke-width="1.5" opacity=".5" marker-end="url(#ar)"/>
-    <path d="M 750,590 Q 670,650 580,700" fill="none" stroke="#c41e1e" stroke-width="1.5" stroke-dasharray="6 3" opacity=".5" marker-end="url(#ar)"/>
-    <path d="M 580,730 Q 680,690 760,600" fill="none" stroke="#5a7da0" stroke-width="1.5" stroke-dasharray="6 3" opacity=".5" marker-end="url(#ab)"/>
-    <path d="M 840,565 Q 960,610 1090,640" fill="none" stroke="#c41e1e" stroke-width="2" opacity=".6" marker-end="url(#ar)"/>
-    <text x="940" y="600" font-family="Inter" font-size="13" fill="#c41e1e" font-weight="600">shares misinfo →</text>
-    <path d="M 1090,690 Q 990,740 880,760" fill="none" stroke="#c41e1e" stroke-width="1.5" opacity=".5" marker-end="url(#ar)"/>
-    <path d="M 820,740 Q 810,660 800,580" fill="none" stroke="#c41e1e" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#ar)"/>
-    <text x="815" y="670" font-family="Inter" font-size="12" fill="#c41e1e" opacity=".7">social proof ↻</text>
-    <path d="M 760,600 Q 720,740 680,860" fill="none" stroke="#c41e1e" stroke-width="1.5" stroke-dasharray="6 3" opacity=".5" marker-end="url(#ar)"/>
-    <path d="M 680,840 Q 730,720 770,600" fill="none" stroke="#5a7da0" stroke-width="1.5" stroke-dasharray="6 3" opacity=".4" marker-end="url(#ab)"/>
-    <path d="M 660,840 Q 580,600 590,290" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".4" marker-end="url(#ar)"/>
-    <path d="M 300,220 Q 440,540 640,840" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".3" marker-end="url(#ar)"/>
-    <path d="M 380,210 Q 420,330 470,440" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".4" marker-end="url(#ar)"/>
-    <text x="370" y="310" font-family="Inter" font-size="13" fill="#c41e1e" opacity=".6">AI content + ad $</text>
-    <path d="M 340,720 Q 430,710 540,705" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".4" marker-end="url(#ar)"/>
-    <path d="M 780,500 Q 780,440 780,400" fill="none" stroke="#3a8a5c" stroke-width="2" stroke-dasharray="5 3" opacity=".6" marker-end="url(#ag)"/>
-    <path d="M 830,510 Q 930,460 1010,430" fill="none" stroke="#3a8a5c" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#ag)"/>
-    <text x="920" y="455" font-family="Inter" font-size="13" fill="#3a8a5c" opacity=".7">infrequent</text>
-    <line x1="768" y1="440" x2="792" y2="460" stroke="#c41e1e" stroke-width="3.5" opacity=".8"/>
-    <line x1="792" y1="440" x2="768" y2="460" stroke="#c41e1e" stroke-width="3.5" opacity=".8"/>
-    <path d="M 1200,780 Q 1000,680 820,580" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="5 3" opacity=".4" marker-end="url(#ab)"/>
-    <text x="1040" y="700" font-family="Inter" font-size="12" fill="#999" stroke="var(--bg)" stroke-width="4" paint-order="stroke">declining trust</text>
-    <path d="M 1190,790 Q 900,780 560,740" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 4" opacity=".25"/>
-    <path d="M 1200,810 Q 1100,750 1080,680" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 4" opacity=".25"/>
-    <path d="M 1280,230 Q 1050,350 550,470" fill="none" stroke="#999" stroke-width=".8" stroke-dasharray="3 5" opacity=".2"/>
-    <text x="120" y="370" font-family="Inter" font-size="16" font-weight="700" fill="#c41e1e" stroke="var(--bg)" stroke-width="5" paint-order="stroke">R1 Reinforce +</text>
-    <line x1="260" y1="365" x2="460" y2="400" stroke="#c41e1e" stroke-width=".8" stroke-dasharray="3 3" opacity=".4"/>
-    <text x="1100" y="780" font-family="Inter" font-size="16" font-weight="700" fill="#c41e1e" stroke="var(--bg)" stroke-width="5" paint-order="stroke">R2 Reinforce +</text>
-    <line x1="1100" y1="775" x2="960" y2="710" stroke="#c41e1e" stroke-width=".8" stroke-dasharray="3 3" opacity=".4"/>
-    <text x="830" y="310" font-family="Inter" font-size="15" font-weight="700" fill="#3a8a5c" stroke="var(--bg)" stroke-width="5" paint-order="stroke">B1 Balance −</text>
-    <line x1="830" y1="315" x2="800" y2="360" stroke="#3a8a5c" stroke-width=".8" stroke-dasharray="3 3" opacity=".4"/>
-    <text x="400" y="430" font-family="Inter" font-size="15" font-weight="700" fill="#c41e1e" stroke="var(--bg)" stroke-width="5" paint-order="stroke">BROKEN</text>
-    <line x1="480" y1="425" x2="768" y2="450" stroke="#c41e1e" stroke-width=".8" stroke-dasharray="3 3" opacity=".4"/>
-    <!-- NODES -->
-    <circle cx="780" cy="540" r="56" fill="var(--ink)" stroke="var(--bg)" stroke-width="4"/>
-    <text x="780" y="534" text-anchor="middle" font-family="Inter" font-size="14" fill="rgba(255,255,255,.6)" font-weight="600">ELDERLY</text>
-    <text x="780" y="554" text-anchor="middle" font-family="Inter" font-size="13" fill="rgba(255,255,255,.45)">65+</text>
-    <circle cx="660" cy="880" r="40" fill="#5a7da0" stroke="var(--bg)" stroke-width="3"/>
-    <text x="660" y="885" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">TikTok</text>
-    <text x="660" y="935" text-anchor="middle" font-family="Inter" font-size="13" fill="var(--light)">~7% of 65+</text>
-    <circle cx="780" cy="370" r="40" fill="#3a8a5c" stroke="var(--bg)" stroke-width="3"/>
-    <text x="780" y="375" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">Family</text>
-    <circle cx="1040" cy="420" r="40" fill="#3a8a5c" stroke="var(--bg)" stroke-width="3"/>
-    <text x="1040" y="425" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">Doctor</text>
-    <circle cx="840" cy="760" r="40" fill="#3a8a5c" stroke="var(--bg)" stroke-width="3"/>
-    <text x="840" y="765" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">Peers</text>
-    <circle cx="490" cy="475" r="42" fill="#5a7da0" stroke="var(--bg)" stroke-width="3"/>
-    <text x="490" y="480" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">YouTube</text>
-    <text x="490" y="533" text-anchor="middle" font-family="Inter" font-size="13" fill="var(--light)">64% of 65+</text>
-    <circle cx="560" cy="715" r="42" fill="#5a7da0" stroke="var(--bg)" stroke-width="3"/>
-    <text x="560" y="720" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">Facebook</text>
-    <text x="560" y="773" text-anchor="middle" font-family="Inter" font-size="13" fill="var(--light)">57% of 65+</text>
-    <circle cx="1110" cy="655" r="42" fill="#5a7da0" stroke="var(--bg)" stroke-width="3"/>
-    <text x="1110" y="660" text-anchor="middle" font-family="Inter" font-size="12" fill="#fff" font-weight="600">WhatsApp</text>
-    <text x="1110" y="713" text-anchor="middle" font-family="Inter" font-size="13" fill="var(--light)">Blind spot</text>
-    <circle cx="600" cy="260" r="42" fill="#c41e1e" stroke="var(--bg)" stroke-width="3"/>
-    <text x="600" y="265" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Algorithm</text>
-    <circle cx="360" cy="180" r="40" fill="#c41e1e" stroke="var(--bg)" stroke-width="3"/>
-    <text x="360" y="175" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Bad</text>
-    <text x="360" y="190" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Actors</text>
-    <circle cx="320" cy="725" r="40" fill="#c41e1e" stroke="var(--bg)" stroke-width="3"/>
-    <text x="320" y="720" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Supple-</text>
-    <text x="320" y="735" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">ments</text>
-    <circle cx="1290" cy="200" r="40" fill="#999" stroke="var(--bg)" stroke-width="3"/>
-    <text x="1290" y="195" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Regu-</text>
-    <text x="1290" y="210" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">lators</text>
-    <circle cx="1290" cy="490" r="40" fill="#999" stroke="var(--bg)" stroke-width="3"/>
-    <text x="1290" y="488" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">WHO</text>
-    <text x="1290" y="502" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">CDC</text>
-    <circle cx="1230" cy="800" r="40" fill="#999" stroke="var(--bg)" stroke-width="3"/>
-    <text x="1230" y="798" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">News</text>
-    <text x="1230" y="812" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Media</text>
-    <!-- Value Exchange Panel -->
-    <rect x="1440" y="100" width="450" height="470" rx="0" fill="var(--bg)" fill-opacity=".9" stroke="var(--rule)" stroke-width="1"/>
-    <text x="1470" y="140" font-family="Playfair Display" font-size="22" font-weight="700" fill="var(--ink)">Value Exchange</text>
-    <text x="1470" y="178" font-family="Inter" font-size="12" font-weight="600" letter-spacing="2" fill="var(--light)">ELDERLY → SYSTEM</text>
-    <text x="1470" y="206" font-family="Georgia" font-size="16" fill="var(--gray)">Attention &amp; time</text>
-    <text x="1470" y="230" font-family="Georgia" font-size="16" fill="var(--gray)">Trust (unverified)</text>
-    <text x="1470" y="254" font-family="Georgia" font-size="16" fill="var(--gray)">Behavioral data &amp; money</text>
-    <text x="1470" y="278" font-family="Georgia" font-size="16" fill="#c41e1e" font-weight="600">Spreading misinfo to peers</text>
-    <line x1="1470" y1="298" x2="1860" y2="298" stroke="var(--rule)"/>
-    <text x="1470" y="326" font-family="Inter" font-size="12" font-weight="600" letter-spacing="2" fill="var(--light)">SYSTEM → ELDERLY</text>
-    <text x="1470" y="354" font-family="Georgia" font-size="16" fill="var(--gray)">Social connection &amp; comfort</text>
-    <text x="1470" y="378" font-family="Georgia" font-size="16" fill="var(--gray)">Health "info" (uncontrolled)</text>
-    <text x="1470" y="402" font-family="Georgia" font-size="16" fill="var(--gray)">Entertainment</text>
-    <text x="1470" y="426" font-family="Georgia" font-size="16" fill="#c41e1e" font-weight="600">Belief validation → R+ loop</text>
-    <line x1="1470" y1="446" x2="1860" y2="446" stroke="var(--rule)"/>
-    <text x="1470" y="478" font-family="Inter" font-size="12" font-weight="600" letter-spacing="2" fill="#c41e1e">BROKEN</text>
-    <text x="1470" y="506" font-family="Georgia" font-size="16" fill="#c41e1e">Verification — severed</text>
-    <text x="1470" y="530" font-family="Georgia" font-size="16" fill="#c41e1e">Family check — declining</text>
+    <circle cx="780" cy="440" r="400" fill="none" stroke="#ddd" stroke-width=".8" stroke-dasharray="6 4"/>
+    <circle cx="780" cy="440" r="250" fill="none" stroke="#ccc" stroke-width=".8" stroke-dasharray="5 3"/>
+    <circle cx="780" cy="440" r="120" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4 3"/>
+    <!-- connections -->
+    <path d="M 720,410 Q 600,360 510,380" fill="none" stroke="#c41e1e" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#ar)"/>
+    <path d="M 510,410 Q 630,460 720,450" fill="none" stroke="#666" stroke-width="1.2" stroke-dasharray="5 3" opacity=".5" marker-end="url(#ab)"/>
+    <path d="M 640,210 Q 720,310 750,400" fill="none" stroke="#c41e1e" stroke-width="1.5" opacity=".5" marker-end="url(#ar)"/>
+    <path d="M 490,350 Q 510,280 580,220" fill="none" stroke="#c41e1e" stroke-width="1.2" opacity=".4" marker-end="url(#ar)"/>
+    <path d="M 750,490 Q 670,540 580,580" fill="none" stroke="#c41e1e" stroke-width="1.2" stroke-dasharray="5 3" opacity=".4" marker-end="url(#ar)"/>
+    <path d="M 580,610 Q 680,580 760,500" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="5 3" opacity=".4" marker-end="url(#ab)"/>
+    <path d="M 840,465 Q 960,510 1090,540" fill="none" stroke="#c41e1e" stroke-width="1.5" opacity=".5" marker-end="url(#ar)"/>
+    <text x="940" y="500" font-family="Inter" font-size="11" fill="#c41e1e" opacity=".6">shares misinfo</text>
+    <path d="M 1090,580 Q 990,620 880,640" fill="none" stroke="#c41e1e" stroke-width="1.2" opacity=".4" marker-end="url(#ar)"/>
+    <path d="M 820,630 Q 810,560 800,480" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".4" marker-end="url(#ar)"/>
+    <path d="M 760,500 Q 720,620 680,740" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="5 3" opacity=".4" marker-end="url(#ar)"/>
+    <path d="M 380,150 Q 420,270 470,350" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".35" marker-end="url(#ar)"/>
+    <path d="M 340,610 Q 430,600 540,595" fill="none" stroke="#c41e1e" stroke-width="1" stroke-dasharray="4 3" opacity=".35" marker-end="url(#ar)"/>
+    <path d="M 780,400 Q 780,350 780,310" fill="none" stroke="#3a8a5c" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5" marker-end="url(#ag)"/>
+    <path d="M 830,410 Q 920,370 1000,340" fill="none" stroke="#3a8a5c" stroke-width="1.2" stroke-dasharray="4 3" opacity=".4" marker-end="url(#ag)"/>
+    <line x1="768" y1="345" x2="792" y2="365" stroke="#c41e1e" stroke-width="3" opacity=".7"/>
+    <line x1="792" y1="345" x2="768" y2="365" stroke="#c41e1e" stroke-width="3" opacity=".7"/>
+    <!-- labels -->
+    <text x="140" y="300" font-family="Inter" font-size="13" font-weight="700" fill="#c41e1e">R1 Reinforce +</text>
+    <text x="1080" y="680" font-family="Inter" font-size="13" font-weight="700" fill="#c41e1e">R2 Reinforce +</text>
+    <text x="830" y="250" font-family="Inter" font-size="13" font-weight="700" fill="#3a8a5c">B1 Balance −</text>
+    <text x="670" y="350" font-family="Inter" font-size="13" font-weight="700" fill="#c41e1e">BROKEN</text>
+    <!-- nodes -->
+    <circle cx="780" cy="440" r="50" fill="var(--ink)" stroke="var(--paper)" stroke-width="3"/>
+    <text x="780" y="436" text-anchor="middle" font-family="Inter" font-size="13" fill="#fff" font-weight="600">ELDERLY</text>
+    <text x="780" y="453" text-anchor="middle" font-family="Inter" font-size="11" fill="rgba(255,255,255,.5)">65+</text>
+    <circle cx="490" cy="385" r="38" fill="#555" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="490" y="389" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">YouTube</text>
+    <circle cx="560" cy="600" r="38" fill="#555" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="560" y="604" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Facebook</text>
+    <circle cx="1110" cy="555" r="38" fill="#555" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="1110" y="559" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">WhatsApp</text>
+    <circle cx="660" cy="760" r="36" fill="#555" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="660" y="764" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">TikTok</text>
+    <circle cx="600" cy="200" r="38" fill="#c41e1e" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="600" y="204" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Algorithm</text>
+    <circle cx="360" cy="140" r="36" fill="#c41e1e" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="360" y="136" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Bad</text>
+    <text x="360" y="150" text-anchor="middle" font-family="Inter" font-size="10" fill="#fff" font-weight="600">Actors</text>
+    <circle cx="320" cy="610" r="36" fill="#c41e1e" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="320" y="607" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">Supple-</text>
+    <text x="320" y="620" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">ments</text>
+    <circle cx="780" cy="290" r="36" fill="#3a8a5c" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="780" y="294" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Family</text>
+    <circle cx="1030" cy="340" r="36" fill="#3a8a5c" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="1030" y="344" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Doctor</text>
+    <circle cx="850" cy="640" r="36" fill="#3a8a5c" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="850" y="644" text-anchor="middle" font-family="Inter" font-size="11" fill="#fff" font-weight="600">Peers</text>
+    <circle cx="1280" cy="160" r="34" fill="#999" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="1280" y="157" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">Regu-</text>
+    <text x="1280" y="170" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">lators</text>
+    <circle cx="1280" cy="390" r="34" fill="#999" stroke="var(--paper)" stroke-width="2.5"/>
+    <text x="1280" y="387" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">WHO</text>
+    <text x="1280" y="400" text-anchor="middle" font-family="Inter" font-size="9" fill="#fff" font-weight="600">CDC</text>
+    <!-- Legend panel -->
+    <rect x="1420" y="80" width="460" height="400" fill="var(--paper)" stroke="var(--ruleL)" stroke-width="1"/>
+    <text x="1445" y="115" font-family="Playfair Display" font-size="20" font-weight="700" fill="var(--ink)">Value Exchange</text>
+    <line x1="1445" y1="125" x2="1855" y2="125" stroke="var(--ruleL)"/>
+    <text x="1445" y="150" font-family="Inter" font-size="10" font-weight="600" letter-spacing="2" fill="var(--light)">ELDERLY &#8594; SYSTEM</text>
+    <text x="1445" y="172" font-family="Lora" font-size="14" fill="var(--gray)">Attention, trust (unverified), data, money</text>
+    <text x="1445" y="194" font-family="Lora" font-size="14" fill="#c41e1e">Spreading misinfo to peers</text>
+    <line x1="1445" y1="212" x2="1855" y2="212" stroke="var(--ruleL)"/>
+    <text x="1445" y="234" font-family="Inter" font-size="10" font-weight="600" letter-spacing="2" fill="var(--light)">SYSTEM &#8594; ELDERLY</text>
+    <text x="1445" y="256" font-family="Lora" font-size="14" fill="var(--gray)">Connection, health "info," entertainment</text>
+    <text x="1445" y="278" font-family="Lora" font-size="14" fill="#c41e1e">Belief validation &#8594; reinforcing loop</text>
+    <line x1="1445" y1="296" x2="1855" y2="296" stroke="var(--ruleL)"/>
+    <text x="1445" y="318" font-family="Inter" font-size="10" font-weight="600" letter-spacing="2" fill="#c41e1e">BROKEN</text>
+    <text x="1445" y="340" font-family="Lora" font-size="14" fill="#c41e1e">Verification &#8212; severed</text>
+    <text x="1445" y="362" font-family="Lora" font-size="14" fill="#c41e1e">Family check &#8212; declining</text>
   </svg>
+  <div class="pagenum">2</div>
 </div>
 
-<!-- S4: POWER MAPPING -->
-<div class="slide" style="padding:50px 80px;background:var(--bg);">
-  <h2 style="font-family:var(--serif);font-size:44px;font-weight:900;text-align:center;color:var(--ink);margin-bottom:28px;">Power Mapping</h2>
-  <div class="pgrid">
-    <div class="pq2 q1"><h4>High Power / Low Interest</h4>
-      <div class="pa"><div><div class="nm">Social Media Platforms</div><div class="ds">Control algorithms. Goal: ad revenue. Retreating from moderation.</div></div></div>
-      <div class="pa"><div><div class="nm">AI Content Farms</div><div class="ds">Generate medical content at scale for profit.</div></div></div>
-    </div>
-    <div class="pq2 q2"><h4>High Power / High Interest</h4>
-      <div class="pa"><div><div class="nm">Regulators (FTC/FDA)</div><div class="ds">Authority exists but enforcement lags. AI "info" ≠ "advertising".</div></div></div>
-      <div class="pa"><div><div class="nm">Algorithms</div><div class="ds">Invisible but decisive. Optimize for engagement, not truth.</div></div></div>
-    </div>
-    <div class="pq2"><h4>Low Power / Low Interest</h4>
-      <div class="pa"><div><div class="nm">News Media / WHO / CDC</div><div class="ds">Guidelines exist but no enforcement. Content doesn't reach elderly.</div></div></div>
-    </div>
-    <div class="pq2"><h4>Low Power / High Interest</h4>
-      <div class="pa"><div><div class="nm">Elderly Users</div><div class="ds">Most affected, least voice. Distrust AI (74%) but can't identify it (7%).</div></div></div>
-      <div class="pa"><div><div class="nm">Family &amp; Doctors</div><div class="ds">Influence declining. Quarterly visits can't compete with daily algorithms.</div></div></div>
+<!-- ========== S2: POWER + BOUNDARIES ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Analysis</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
     </div>
   </div>
-</div>
+  <div style="padding:16px 80px 0;">
+    <div class="cols" style="gap:28px;">
+      <div style="flex:1;">
+        <h2 class="headline" style="font-size:36px;margin-bottom:14px;">Power Mapping</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ruleL);">
+          <div style="background:var(--paper);padding:20px;">
+            <div class="section-head red">High Power / Low Interest</div>
+            <div style="font-family:'Lora';font-size:16px;line-height:1.7;">
+              <strong>Social Media Platforms</strong> &mdash; Control algorithms. Goal: ad revenue. Retreating from moderation.<br>
+              <strong>AI Content Farms</strong> &mdash; Generate medical content at scale for profit.
+            </div>
+          </div>
+          <div style="background:var(--paper);padding:20px;">
+            <div class="section-head">High Power / High Interest</div>
+            <div style="font-family:'Lora';font-size:16px;line-height:1.7;">
+              <strong>Regulators (FTC/FDA)</strong> &mdash; Authority exists but enforcement lags.<br>
+              <strong>Algorithms</strong> &mdash; Invisible but decisive. Optimize for engagement, not truth.
+            </div>
+          </div>
+          <div style="background:var(--paper);padding:20px;">
+            <div class="section-head">Low Power / Low Interest</div>
+            <div style="font-family:'Lora';font-size:16px;line-height:1.7;">
+              <strong>News Media / WHO / CDC</strong> &mdash; Guidelines exist but content doesn't reach elderly.
+            </div>
+          </div>
+          <div style="background:var(--paper);padding:20px;">
+            <div class="section-head">Low Power / High Interest</div>
+            <div style="font-family:'Lora';font-size:16px;line-height:1.7;">
+              <strong>Elderly Users</strong> &mdash; Most affected, least voice. Distrust AI (74%) but can't identify it (7%).<br>
+              <strong>Family &amp; Doctors</strong> &mdash; Quarterly visits can't compete with daily algorithms.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:0.8;">
+        <h2 class="headline" style="font-size:36px;margin-bottom:14px;">System Boundaries</h2>
+        <div style="font-family:'Lora';font-size:15px;line-height:1.7;color:var(--gray);margin-bottom:16px;">The full chain from AI generation to health consequences. Our research focuses on <strong style="color:var(--ink);">consumption</strong> and <strong style="color:var(--ink);">decision making</strong>.</div>
+        <div style="border:1px solid var(--ruleL);">
+          <div style="display:flex;text-align:center;">
+            <div style="flex:1;padding:16px 8px;border-right:1px solid var(--ruleL);font-family:'Inter';font-size:12px;color:var(--light);">AI<br>Generation</div>
+            <div style="flex:1;padding:16px 8px;border-right:1px solid var(--ruleL);font-family:'Inter';font-size:12px;color:var(--gray);">Distribution</div>
+            <div style="flex:1;padding:16px 8px;border-right:1px solid var(--ruleL);font-family:'Inter';font-size:12px;font-weight:700;color:var(--ink);background:var(--cream);">Consumption</div>
+            <div style="flex:1;padding:16px 8px;border-right:1px solid var(--ruleL);font-family:'Inter';font-size:12px;font-weight:700;color:var(--ink);background:var(--cream);">Decision</div>
+            <div style="flex:1;padding:16px 8px;border-right:1px solid var(--ruleL);font-family:'Inter';font-size:12px;color:var(--gray);">Consequences</div>
+            <div style="flex:1;padding:16px 8px;font-family:'Inter';font-size:12px;color:var(--light);">Regulation</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c41e1e;margin-top:8px;">&larr; Our focus &rarr;</div>
 
-<!-- S5: SYSTEM BOUNDARIES -->
-<div class="slide" style="padding:80px 80px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;">
-  <h2 style="font-family:var(--serif);font-size:44px;font-weight:900;text-align:center;color:var(--ink);margin-bottom:40px;">System Boundaries</h2>
-  <div class="sf">
-    <div class="ss"><div class="si">&#x1F916;</div><h4>AI Generation</h4><p>LLMs, deepfakes,<br>content farms</p></div>
-    <div class="ss"><div class="si">&#x1F4E1;</div><h4>Distribution</h4><p>YouTube, Facebook,<br>WhatsApp algorithms</p></div>
-    <div class="ss fo"><div class="si">&#x1F9D3;</div><h4>Consumption</h4><p><strong>PRIMARY FOCUS</strong><br>How elderly encounter<br>&amp; trust AI health content</p></div>
-    <div class="ss"><div class="si">&#x1F9E0;</div><h4>Decision Making</h4><p>Self-medication,<br>purchasing, sharing</p></div>
-    <div class="ss"><div class="si">&#x26A0;&#xFE0F;</div><h4>Consequences</h4><p>Health harm,<br>eroded trust</p></div>
-    <div class="ss"><div class="si">&#x1F3DB;&#xFE0F;</div><h4>Regulation</h4><p>FTC / FDA / FCC<br>policy &amp; enforcement</p></div>
-  </div>
-  <div style="text-align:center;margin-top:24px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);">&larr; Our System Boundary &rarr;</div>
-</div>
-
-<!-- S6: PLATFORM LANDSCAPE -->
-<div class="slide" style="padding:50px 80px;background:var(--bg);">
-  <h2 style="font-family:var(--serif);font-size:44px;font-weight:900;text-align:center;color:var(--ink);margin-bottom:32px;">Platform Landscape</h2>
-  <div class="p5">
-    <div class="p5c"><h4>YouTube</h4><div class="pt good">Best protections</div><div class="detail">Health info panels<br>AI disclosure required<br><span class="rd">Raised removal threshold</span></div><div class="big" style="color:#3a8a5c;">64%</div><div class="sm">of 65+ use</div></div>
-    <div class="p5c"><h4>Facebook</h4><div class="pt bad">Biggest backslide</div><div class="detail"><span class="rd">Ended 90+ org fact-checking</span><br><span class="rd">Community Notes instead</span></div><div class="big" style="color:var(--accent);">57%</div><div class="sm">of 65+ use</div></div>
-    <div class="p5c"><h4>TikTok</h4><div class="pt mid">Most misinfo-dense</div><div class="detail"><span class="rd">25% = misinformation</span><br>AI labels on 1.3B+ videos</div><div class="big">~7%</div><div class="sm">of 65+ (growing)</div></div>
-    <div class="p5c"><h4>X (Twitter)</h4><div class="pt bad">All policies gone</div><div class="detail"><span class="rd">COVID policy ended</span><br><span class="rd">Misinfo report removed</span></div><div class="big" style="color:var(--light);">low</div><div class="sm">65+ adoption</div></div>
-    <div class="p5c"><h4>WhatsApp</h4><div class="pt mid">The blind spot</div><div class="detail"><span class="rd">E2E = zero moderation</span><br><span class="rd">Family groups amplify</span></div><div class="big" style="color:var(--accent);">~30%</div><div class="sm">of 50-64 (growing)</div></div>
-  </div>
-  <div style="margin:24px auto 0;max-width:1200px;text-align:center;padding:16px;background:var(--warm);border:1px solid var(--rule);font-family:var(--serif);font-size:19px;color:var(--ink);">Policy direction: <em>less</em> moderation. Elderly are more exposed than ever.</div>
-</div>
-
-<!-- ====== TRANSITION: FEEDBACK ====== -->
-
-<!-- S7: LAST WEEK'S FEEDBACK -->
-<div class="slide ed" style="background:var(--warm);">
-  <div class="kicker">Feedback from last week</div>
-  <h2>Two things to <em>act on</em></h2>
-  <div class="hrule"></div>
-  <div style="display:flex;gap:100px;margin-top:24px;max-width:1400px;">
-    <div style="flex:1;">
-      <div style="font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">1. Narrow the scope</div>
-      <div style="font-family:var(--serif);font-size:26px;line-height:1.7;color:var(--ink);">
-        AI slop is broad. Focus on something specific and traceable: <strong>health supplement advertising</strong>. Fake doctor videos, bogus before-and-after photos, AI-generated testimonials &mdash; all pushing pills.
+        <div class="thin-rule" style="margin:24px 0 16px;"></div>
+        <h2 class="headline" style="font-size:28px;margin-bottom:12px;">Platform Landscape</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ruleL);font-family:'Lora';font-size:15px;">
+          <div style="background:var(--paper);padding:14px;"><strong>YouTube</strong> (64% of 65+)<br><span style="color:var(--gray);">Best protections. Raised removal threshold.</span></div>
+          <div style="background:var(--paper);padding:14px;"><strong style="color:#c41e1e;">Facebook</strong> (57% of 65+)<br><span style="color:#c41e1e;">Ended 90+ org fact-checking. Biggest backslide.</span></div>
+          <div style="background:var(--paper);padding:14px;"><strong>TikTok</strong> (~7% of 65+)<br><span style="color:var(--gray);">25% = misinformation. Most dense.</span></div>
+          <div style="background:var(--paper);padding:14px;"><strong>WhatsApp</strong> (~30% of 50-64)<br><span style="color:#c41e1e;">E2E = zero moderation. Blind spot.</span></div>
+        </div>
       </div>
     </div>
-    <div style="flex:1;">
-      <div style="font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">2. Test the broken loop</div>
-      <div style="font-family:var(--serif);font-size:26px;line-height:1.7;color:var(--ink);">
-        The ecosystem map assumes the trust loop &mdash; family, doctors &mdash; is broken. But is it? Go talk to actual families. Find out if children really can't see what their parents consume online, and whether they even try to intervene.
+  </div>
+  <div class="pagenum">3</div>
+</div>
+
+<!-- ========== S3: FEEDBACK TRANSITION ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Editorial</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
+    </div>
+  </div>
+  <div style="padding:40px 240px;display:flex;flex-direction:column;justify-content:center;flex:1;">
+    <div class="section-head">Feedback from last week</div>
+    <h2 class="headline" style="font-size:52px;margin-bottom:32px;">Two Things to Act On</h2>
+    <div class="cols" style="gap:60px;">
+      <div style="flex:1;border-top:3px solid var(--ink);padding-top:20px;">
+        <h3 style="font-family:'Playfair Display';font-size:28px;font-weight:700;margin-bottom:14px;">Narrow the scope.</h3>
+        <p style="font-family:'Lora';font-size:20px;line-height:1.8;color:var(--gray);">
+          AI slop is broad. Focus on something specific and traceable: <strong style="color:var(--ink);">health supplement advertising</strong>. Fake doctor videos, bogus before-and-after photos, AI-generated testimonials &mdash; all pushing pills.
+        </p>
+      </div>
+      <div style="flex:1;border-top:3px solid var(--ink);padding-top:20px;">
+        <h3 style="font-family:'Playfair Display';font-size:28px;font-weight:700;margin-bottom:14px;">Test the broken loop.</h3>
+        <p style="font-family:'Lora';font-size:20px;line-height:1.8;color:var(--gray);">
+          The ecosystem map assumes the trust loop &mdash; family, doctors &mdash; is broken. But is it? Go talk to actual families. Find out if children really can't see what their parents consume online, and whether they even try to intervene.
+        </p>
+      </div>
+    </div>
+    <div class="thin-rule" style="margin:40px 0 20px;"></div>
+    <p style="font-family:'Playfair Display';font-size:24px;font-style:italic;color:var(--gray);">So I designed an interview guide and talked to someone.</p>
+  </div>
+  <div class="pagenum">4</div>
+</div>
+
+<!-- ========== S4: INTERVIEW PROFILE ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Interview #01</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
+    </div>
+  </div>
+  <div style="padding:20px 80px 0;">
+    <div class="cols" style="gap:28px;">
+      <div style="flex:1;">
+        <div class="section-head">Interviewee</div>
+        <h2 class="headline" style="font-size:48px;margin-bottom:8px;">Fiona, UX Designer</h2>
+        <div class="deck" style="font-size:20px;margin-bottom:16px;">Seattle-based. Parents both 58, living in Beijing.</div>
+        <div class="byline" style="margin-bottom:20px;">22 min &middot; Remote &middot; April 2, 2026</div>
+        <div class="thin-rule" style="margin-bottom:20px;"></div>
+        <div class="col-text" style="column-count:2;font-size:16px;">
+          Fiona's father does freelance cultural work. Her mother isn't working. Both have a lot of free time, but the family doesn't really talk about health with each other. Fiona's words: "We live fairly separate lives." She's a UX designer, but when it comes to her parents' online behavior, she admits she doesn't know much. What they watch, what they click, what they believe &mdash; she mostly can't see any of it.
+        </div>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:0.9;">
+        <div class="section-head">Father</div>
+        <p style="font-family:'Lora';font-size:18px;line-height:1.8;color:var(--ink);margin-bottom:8px;">Only uses <strong>WeChat + Douyin</strong>. Can't figure out new apps. Orders food through WeChat mini-programs because that's all he knows.</p>
+        <p style="font-family:'Lora';font-size:18px;line-height:1.8;color:var(--gray);">Forwards conspiracy theories and classical poetry. Into Buddhism/Daoism. Won't exercise, won't get check-ups.</p>
+        <div class="pullquote" style="font-size:22px;margin:16px 0;padding:14px 0;">
+          "The body ages naturally."
+        </div>
+
+        <div class="section-head" style="margin-top:8px;">Mother</div>
+        <p style="font-family:'Lora';font-size:18px;line-height:1.8;color:var(--ink);margin-bottom:8px;">Uses <strong>WeChat, Toutiao, Xiaohongshu, Alipay</strong>, and games. Refuses short video apps but reads Toutiao news daily &mdash; mixed quality.</p>
+        <p style="font-family:'Lora';font-size:18px;line-height:1.8;color:var(--gray);">Buys vitamins and calcium supplements. Where'd she hear about them? Fiona doesn't know. Thinks US products are better.</p>
       </div>
     </div>
   </div>
-  <div style="font-family:var(--serif);font-size:22px;color:var(--gray);margin-top:48px;font-style:italic;max-width:1200px;">So I designed an interview guide and talked to someone.</div>
-  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
+  <div class="pagenum">5</div>
 </div>
 
-<!-- ====== PART 2: INTERVIEW #01 ====== -->
-
-<!-- S8: INTERVIEW COVER -->
-<div class="slide cover">
-  <div class="kicker">Interview #01 &middot; April 2, 2026</div>
-  <h1>Talking to the Kids<br><em>About Their Parents Online</em></h1>
-  <div class="rule"></div>
-  <div class="byline">Fiona (pseudonym) &middot; 22 min &middot; remote</div>
+<!-- ========== S5: INTERVIEW QUESTIONS ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Interview Guide</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
+    </div>
+  </div>
+  <div style="padding:16px 80px 0;">
+    <h2 class="headline" style="font-size:36px;margin-bottom:20px;">What I Asked</h2>
+    <div class="cols" style="gap:28px;">
+      <div style="flex:1;">
+        <div class="section-head">Background</div>
+        <p style="font-family:'Lora';font-size:19px;line-height:1.8;color:var(--ink);margin-bottom:20px;">
+          <strong>1.</strong> Tell me about your parents &mdash; age, where they live, working or retired?<br>
+          <strong>2.</strong> What devices and apps do they use? How comfortable are they with tech?
+        </p>
+        <div class="section-head">Health Info Behavior</div>
+        <p style="font-family:'Lora';font-size:19px;line-height:1.8;color:var(--ink);margin-bottom:20px;">
+          <strong>3.</strong> When they have a health concern, where do they look first?<br>
+          <strong>4.</strong> Have you seen them watching health videos or reading health articles online?
+        </p>
+        <div class="section-head">Family Dynamics</div>
+        <p style="font-family:'Lora';font-size:19px;line-height:1.8;color:var(--ink);">
+          <strong>8.</strong> When you catch them believing something off, what do you do? How do they react?<br>
+          <strong>9.</strong> Do you feel responsible for filtering what they see? What makes it hard?
+        </p>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:1;">
+        <div class="section-head red">Misleading Content</div>
+        <p style="font-family:'Lora';font-size:19px;line-height:1.8;color:var(--ink);margin-bottom:20px;">
+          <strong style="color:#c41e1e;">5.</strong> Have they ever shared a health tip that turned out to be wrong?<br>
+          <strong style="color:#c41e1e;">6.</strong> Have they bought supplements they found through social media or ads?<br>
+          <strong style="color:#c41e1e;">7.</strong> Could they tell the difference between a real doctor and an AI-generated one?
+        </p>
+        <div class="section-head">Design Prompt</div>
+        <p style="font-family:'Lora';font-size:19px;line-height:1.8;color:var(--ink);margin-bottom:24px;">
+          <strong>10.</strong> If you could build one tool to protect your parents from bad health content online, what would it do?
+        </p>
+        <div class="pullquote" style="font-size:22px;">
+          These 10 questions were designed around a 20-minute interview. Questions 5&ndash;7 are the core &mdash; everything else builds context or opens design space.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagenum">6</div>
 </div>
 
-<!-- S8: PROFILE -->
-<div class="slide split">
-  <div class="split-main">
-    <div class="kicker">Interviewee</div>
-    <h2>Fiona, <em>UX Designer in Seattle</em></h2>
-    <div class="body">
-      Parents both <strong>58</strong>, living in <strong>Beijing</strong>. Father does freelance cultural work. Mother isn't working.<br><br>
-      They don't really talk about health with each other.<br>
-      Fiona's words: <em>"We live fairly separate lives."</em>
+<!-- ========== S6: FINDINGS ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Findings</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
     </div>
   </div>
-  <div class="split-side">
-    <div class="scard">
-      <h4>Father</h4>
-      <p>Only uses WeChat + Douyin. Can't figure out new apps. Orders food through WeChat mini-programs because that's all he knows.</p>
-      <p style="margin-top:8px;">Forwards conspiracy theories and classical poetry. Into Buddhism/Daoism. Won't exercise, won't get check-ups.</p>
-      <div class="note">"The body ages naturally."</div>
-    </div>
-    <div class="scard">
-      <h4>Mother</h4>
-      <p>WeChat, Toutiao, Xiaohongshu, Alipay, games. Refuses short video apps but reads Toutiao news daily.</p>
-      <p style="margin-top:8px;">Buys vitamins and calcium supplements. Where'd she hear about them? Fiona doesn't know. Thinks US products are better.</p>
+  <div style="padding:16px 80px 0;">
+    <h2 class="headline" style="font-size:42px;margin-bottom:24px;">What Came Up</h2>
+    <div class="cols" style="gap:28px;">
+      <div style="flex:1;">
+        <div style="border-top:3px solid var(--ink);padding-top:16px;margin-bottom:24px;">
+          <h3 style="font-family:'Playfair Display';font-size:24px;font-weight:700;margin-bottom:10px;">Fiona can't see where her mom gets health info</h3>
+          <p style="font-family:'Lora';font-size:17px;line-height:1.8;color:var(--gray);">Her mother buys supplements, but Fiona has no idea which app or article led to it.</p>
+          <div class="pullquote" style="font-size:20px;margin-top:12px;padding:12px 0;">"It's definitely media-influenced, but I don't know where she saw it."</div>
+        </div>
+        <div style="border-top:1px solid var(--ruleL);padding-top:16px;">
+          <h3 style="font-family:'Playfair Display';font-size:24px;font-weight:700;margin-bottom:10px;">The parents are vulnerable in opposite ways</h3>
+          <p style="font-family:'Lora';font-size:17px;line-height:1.8;color:var(--gray);">Father sees very little online, but can't tell what's real. Mother sees a lot, but the sources are all over the place.</p>
+        </div>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:1;">
+        <div style="border-top:3px solid var(--ink);padding-top:16px;margin-bottom:24px;">
+          <h3 style="font-family:'Playfair Display';font-size:24px;font-weight:700;margin-bottom:10px;">Not a typical family for this study</h3>
+          <p style="font-family:'Lora';font-size:17px;line-height:1.8;color:var(--gray);">They don't forward health tips. Don't buy miracle cures. Fiona actually has to drag them to the doctor.</p>
+          <div class="pullquote" style="font-size:20px;margin-top:12px;padding:12px 0;">"My parents are outliers. They don't even do health check-ups."</div>
+        </div>
+        <div style="border-top:1px solid var(--ruleL);padding-top:16px;">
+          <h3 style="font-family:'Playfair Display';font-size:24px;font-weight:700;margin-bottom:10px;">But the father would probably fall for AI content</h3>
+          <p style="font-family:'Lora';font-size:17px;line-height:1.8;color:var(--gray);">He shares conspiracy posts. He's behind on all tech. His friend group passes around AI-generated videos already.</p>
+          <div class="pullquote" style="font-size:20px;margin-top:12px;padding:12px 0;">"His persona is the type who would believe AI content."</div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
+  <div class="pagenum">7</div>
 </div>
 
-<!-- S9: QUESTIONS -->
-<div class="slide" style="padding:50px 80px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;">
-  <h2 style="font-family:var(--serif);font-size:44px;font-weight:900;color:var(--ink);margin-bottom:32px;">What I asked</h2>
-  <div class="qgrid">
-    <div class="qc">
-      <div class="cat">Background</div>
-      <p><span class="qn">1.</span> Tell me about your parents &mdash; age, where they live, working or retired?</p>
-      <p style="margin-top:12px;"><span class="qn">2.</span> What devices and apps do they use? How comfortable are they with tech?</p>
-    </div>
-    <div class="qc">
-      <div class="cat">Health info behavior</div>
-      <p><span class="qn">3.</span> When they have a health concern, where do they look first?</p>
-      <p style="margin-top:12px;"><span class="qn">4.</span> Have you seen them watching health videos or reading health articles online?</p>
-    </div>
-    <div class="qc">
-      <div class="cat red">Misleading content</div>
-      <p><span class="qn red">5.</span> Have they shared a health tip that turned out to be wrong?</p>
-      <p style="margin-top:12px;"><span class="qn red">6.</span> Have they bought supplements from social media ads?</p>
-      <p style="margin-top:12px;"><span class="qn red">7.</span> Could they tell a real doctor from an AI-generated one?</p>
-    </div>
-    <div class="qc span2">
-      <div class="cat">Family dynamics</div>
-      <p><span class="qn">8.</span> When you catch them believing something off, what do you do? How do they react?</p>
-      <p style="margin-top:12px;"><span class="qn">9.</span> Do you feel responsible for filtering what they see? What makes it hard?</p>
-    </div>
-    <div class="qc">
-      <div class="cat">Design prompt</div>
-      <p><span class="qn">10.</span> If you could build one tool to protect your parents from bad health content online, what would it do?</p>
+<!-- ========== S7: CHINA vs US ========== -->
+<div class="slide" style="background:var(--paper);">
+  <div style="padding:16px 80px 0;">
+    <div class="double-rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">The Inclusive Design Times</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">Opinion</div>
+      <div style="font-family:'Inter';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);">April 2, 2026</div>
     </div>
   </div>
-  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
-</div>
-
-<!-- S10: KEY FINDINGS -->
-<div class="slide" style="padding:60px 80px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;">
-  <h2 style="font-family:var(--serif);font-size:44px;font-weight:900;text-align:center;color:var(--ink);margin-bottom:40px;">What came up</h2>
-  <div class="fgrid">
-    <div class="fc">
-      <h3>Fiona can't see where her mom gets health info</h3>
-      <p>Her mother buys supplements, but Fiona has no idea which app or article led to it.</p>
-      <div class="qt">"It's definitely media-influenced, but I don't know where she saw it."</div>
+  <div style="padding:20px 160px 0;">
+    <div class="section-head red">Surprise from the interview</div>
+    <h2 class="headline" style="font-size:48px;margin-bottom:28px;">Why AI Slop Is a Bigger Deal<br>in the U.S. Than in China</h2>
+    <div class="cols" style="gap:60px;">
+      <div style="flex:1;border-top:3px solid var(--ink);padding-top:20px;">
+        <h3 style="font-family:'Inter';font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--light);margin-bottom:16px;">United States</h3>
+        <p style="font-family:'Lora';font-size:22px;line-height:1.9;color:var(--ink);">
+          Labor is expensive.<br>
+          Fake content used to be costly to produce at scale.<br>
+          AI <strong>cut that cost to near zero</strong>.<br><br>
+          <em>AI is a new problem here.</em>
+        </p>
+      </div>
+      <div class="col-rule"></div>
+      <div style="flex:1;border-top:3px solid var(--ink);padding-top:20px;">
+        <h3 style="font-family:'Inter';font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--light);margin-bottom:16px;">China</h3>
+        <p style="font-family:'Lora';font-size:22px;line-height:1.9;color:var(--ink);">
+          Labor is cheap.<br>
+          Content farms were already everywhere, run by people.<br>
+          AI actually costs <strong>more than hiring someone</strong>.<br><br>
+          <em>AI doesn't change much.</em>
+        </p>
+      </div>
     </div>
-    <div class="fc">
-      <h3>The parents are vulnerable in opposite ways</h3>
-      <p>Father sees very little online, but can't tell what's real. Mother sees a lot, but the sources are all over the place.</p>
-    </div>
-    <div class="fc">
-      <h3>Not a typical family for this study</h3>
-      <p>They don't forward health tips. Don't buy miracle cures. Fiona actually has to drag them to the doctor.</p>
-      <div class="qt">"My parents are outliers. They don't even do health check-ups."</div>
-    </div>
-    <div class="fc">
-      <h3>But the father would probably fall for AI content</h3>
-      <p>He shares conspiracy posts. He's behind on all tech. His friend group passes around AI-generated videos already.</p>
-      <div class="qt">"His persona is the type who would believe AI content."</div>
+    <div class="thin-rule" style="margin:32px 0 20px;"></div>
+    <div class="pullquote" style="font-size:26px;max-width:1200px;">
+      AI slop hits hardest in places where fake content was too expensive to mass-produce before. That's the U.S. Our research focus makes sense &mdash; but it's not a universal story.
     </div>
   </div>
-  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
-</div>
-
-<!-- S11: CHINA vs US -->
-<div class="slide comp">
-  <div class="comp-col">
-    <h3>United States</h3>
-    <div class="flow">
-      Labor is expensive.<br>
-      Fake content used to be costly to produce at scale.<br>
-      AI <strong>cut that cost to near zero</strong>.<br><br>
-      <em>AI is a new problem here.</em>
-    </div>
-    <div class="takeaway" style="color:var(--gray);">AI slop hits hardest where fake content was too expensive to mass-produce before. That's the US.</div>
-  </div>
-  <div class="comp-col dark">
-    <h3>China</h3>
-    <div class="flow">
-      Labor is cheap.<br>
-      Content farms were already everywhere, run by people.<br>
-      AI actually costs <strong>more than hiring someone</strong>.<br><br>
-      <em>AI doesn't change much.</em>
-    </div>
-    <div class="takeaway">Our US-focused research makes sense. But we should say this out loud &mdash; it's not a universal story.</div>
-  </div>
+  <div class="pagenum">8</div>
 </div>
 
 </div><!-- /stage -->

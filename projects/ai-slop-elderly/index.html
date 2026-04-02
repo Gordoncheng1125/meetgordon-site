@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Slop × Health × Elderly — Ecosystem Map</title>
+<title>AI Slop × Health × Elderly — Ecosystem Map + Interview</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -93,6 +93,61 @@
   .pc .big{font-size:40px;font-weight:800;margin-top:16px;}
   .pc .sm{font-size:14px;color:#aaa;}
   .alert{margin:24px auto 0;max-width:1200px;text-align:center;padding:16px;background:#fff3f3;border-radius:10px;font-size:20px;color:#c0382b;font-weight:600;}
+
+  /* Interview slides */
+  .prof{padding:80px 120px;background:var(--bg);display:flex;gap:70px;align-items:center;}
+  .prof-left{flex:0 0 620px;}
+  .prof-left .tag{font-size:16px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-bottom:16px;}
+  .prof-left h2{font-size:52px;font-weight:800;line-height:1.2;margin-bottom:28px;}
+  .prof-left h2 em{font-style:normal;color:var(--r);}
+  .prof-left .desc{font-size:24px;line-height:1.8;color:#555;}
+  .prof-left .desc strong{color:var(--dk);}
+  .prof-right{flex:1;display:flex;flex-direction:column;gap:28px;}
+  .pcard{background:#fff;border-radius:16px;padding:32px 36px;border:2px solid var(--bd);}
+  .pcard.dad{border-left:6px solid var(--b);}
+  .pcard.mom{border-left:6px solid var(--r);}
+  .pcard h4{font-size:26px;font-weight:700;margin-bottom:12px;}
+  .pcard.dad h4{color:var(--b);}
+  .pcard.mom h4{color:var(--r);}
+  .pcard ul{list-style:none;padding:0;}
+  .pcard li{font-size:21px;color:#555;line-height:1.8;padding-left:24px;position:relative;}
+  .pcard li::before{content:"";position:absolute;left:0;top:13px;width:10px;height:10px;border-radius:50%;}
+  .pcard.dad li::before{background:var(--b);}
+  .pcard.mom li::before{background:var(--r);}
+
+  .find{padding:70px 100px;background:var(--bg);}
+  .find h2{font-size:52px;font-weight:800;text-align:center;margin-bottom:48px;}
+  .find h2 em{font-style:normal;color:var(--r);}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1700px;margin:0 auto;}
+  .fc{background:#fff;border-radius:16px;padding:36px 40px;border:2px solid var(--bd);position:relative;overflow:hidden;}
+  .fc::before{content:"";position:absolute;top:0;left:0;width:7px;height:100%;background:var(--bd);}
+  .fc.key::before{background:var(--r);}
+  .fc.grn::before{background:var(--g);}
+  .fc.blu::before{background:var(--b);}
+  .fc h3{font-size:28px;font-weight:700;color:var(--dk);margin-bottom:12px;}
+  .fc p{font-size:22px;color:#666;line-height:1.65;}
+  .fc p strong{color:var(--dk);}
+  .fc .qt{font-style:italic;color:#999;border-left:4px solid var(--bd);padding-left:16px;margin-top:14px;font-size:20px;}
+  .fc.key .qt{border-color:var(--r);color:#888;}
+
+  .ins{padding:80px 120px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;}
+  .ins .tag{font-size:16px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--r);margin-bottom:20px;}
+  .ins h2{font-size:52px;font-weight:800;line-height:1.25;margin-bottom:44px;max-width:1400px;}
+  .ins h2 em{font-style:normal;color:var(--r);}
+  .ins-comp{display:flex;gap:36px;margin-bottom:40px;}
+  .ins-box{flex:1;border-radius:16px;padding:40px;position:relative;}
+  .ins-box.us{background:var(--rl);border:2px solid var(--r);}
+  .ins-box.cn{background:#f0f4f8;border:2px solid var(--b);}
+  .ins-box h3{font-size:30px;font-weight:700;margin-bottom:20px;}
+  .ins-box.us h3{color:var(--r);}
+  .ins-box.cn h3{color:var(--b);}
+  .ins-box .flow{font-size:24px;line-height:2;color:#555;}
+  .ins-box .flow strong{color:var(--dk);}
+  .ins-box .flow em{font-style:normal;font-weight:700;}
+  .ins-box.us .flow em{color:var(--r);}
+  .ins-box.cn .flow em{color:var(--b);}
+  .ins-take{background:var(--dk);color:#fff;border-radius:14px;padding:28px 40px;font-size:24px;line-height:1.6;}
+  .ins-take strong{color:#f0a882;}
 </style>
 </head>
 <body>
@@ -374,6 +429,165 @@
     <div class="pc bl"><h4>💬 WhatsApp</h4><div class="pt mid">The blind spot</div><div class="detail"><span class="rd">E2E = zero moderation</span><br><span class="rd">Family groups amplify</span></div><div class="big" style="color:var(--r);">~30%</div><div class="sm">of 50-64 (growing)</div></div>
   </div>
   <div class="alert">Policy direction: LESS moderation → elderly more exposed than ever.</div>
+</div>
+
+<!-- ====== INTERVIEW #01 ====== -->
+
+<!-- S7: INTERVIEW COVER -->
+<div class="slide cover">
+  <svg class="wave" viewBox="0 0 1920 1080"><path d="M0,200Q480,150,960,200T1920,200"/><path d="M0,400Q480,350,960,400T1920,400"/><path d="M0,600Q480,550,960,600T1920,600"/><path d="M0,800Q480,750,960,800T1920,800"/></svg>
+  <div style="display:inline-block;background:var(--r);color:#fff;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:40px;margin-bottom:32px;">Interview #01</div>
+  <h1 style="font-size:68px;font-weight:900;text-align:center;line-height:1.15;">Talking to <em>the Kids</em><br>About Their Parents Online</h1>
+  <div class="sub" style="font-size:28px;color:#888;margin-top:16px;">AI Slop &times; Health Supplements &times; Older Adults</div>
+  <div style="font-size:18px;color:#aaa;margin-top:8px;">Gordon Cheng &bull; Week 12 &bull; Inclusive Design, SVA</div>
+  <div style="position:absolute;bottom:28px;right:60px;font-size:13px;color:#ccc;">Fiona (pseudonym) &bull; April 2, 2026 &bull; 22 min</div>
+</div>
+
+<!-- S8: PROFILE -->
+<div class="slide prof">
+  <div class="prof-left">
+    <div class="tag">Interviewee</div>
+    <h2>Fiona,<br><em>UX Designer in Seattle</em></h2>
+    <div class="desc">
+      Parents both <strong>58</strong>, living in <strong>Beijing</strong>.<br>
+      Father does freelance cultural work.<br>
+      Mother isn't working.<br><br>
+      They don't really talk about health with each other. Fiona's words: "We live fairly separate lives."
+    </div>
+  </div>
+  <div class="prof-right">
+    <div class="pcard dad">
+      <h4>Father: only uses WeChat + Douyin</h4>
+      <ul>
+        <li>Can't figure out new apps. Orders food through WeChat mini-programs because that's all he knows</li>
+        <li>Forwards conspiracy theories and classical poetry</li>
+        <li>Into Buddhism/Daoism. Won't exercise, won't get check-ups. "The body ages naturally"</li>
+      </ul>
+    </div>
+    <div class="pcard mom">
+      <h4>Mother: uses everything, trusts a lot of it</h4>
+      <ul>
+        <li>WeChat, Toutiao, Xiaohongshu, Alipay, games</li>
+        <li>Refuses short video apps, but reads Toutiao news daily (mixed quality)</li>
+        <li>Buys vitamins and calcium supplements. Where'd she hear about them? Fiona doesn't know</li>
+        <li>Thinks US products are better. Asks Fiona to bring them back</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
+</div>
+
+<!-- S9: QUESTIONS -->
+<div class="slide" style="padding:50px 90px;background:var(--bg);display:flex;flex-direction:column;justify-content:center;">
+  <h2 style="font-size:48px;font-weight:800;margin-bottom:32px;">What I <em style="font-style:normal;color:var(--r);">asked</em></h2>
+  <div style="display:flex;gap:24px;max-width:1760px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:16px;">
+      <div style="background:var(--r);color:#fff;padding:16px 24px;border-radius:10px;font-size:20px;font-weight:700;letter-spacing:1px;">BACKGROUND</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 30px;border:2px solid var(--bd);flex:1;">
+        <p style="font-size:26px;color:#444;line-height:1.65;margin:0;">
+          <strong style="color:var(--dk);">1.</strong> Tell me about your parents &mdash; age, where they live, working or retired?<br><br>
+          <strong style="color:var(--dk);">2.</strong> What devices and apps do they use? How comfortable are they with tech?
+        </p>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:16px;">
+      <div style="background:var(--b);color:#fff;padding:16px 24px;border-radius:10px;font-size:20px;font-weight:700;letter-spacing:1px;">HEALTH INFO BEHAVIOR</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 30px;border:2px solid var(--bd);flex:1;">
+        <p style="font-size:26px;color:#444;line-height:1.65;margin:0;">
+          <strong style="color:var(--dk);">3.</strong> When they have a health concern, where do they look first?<br><br>
+          <strong style="color:var(--dk);">4.</strong> Have you seen them watching health videos or reading health articles online?
+        </p>
+      </div>
+    </div>
+    <div style="flex:1.2;display:flex;flex-direction:column;gap:16px;">
+      <div style="background:#c0382b;color:#fff;padding:16px 24px;border-radius:10px;font-size:20px;font-weight:700;letter-spacing:1px;">MISLEADING CONTENT</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 30px;border:2px solid var(--r);flex:1;">
+        <p style="font-size:26px;color:#444;line-height:1.65;margin:0;">
+          <strong style="color:var(--r);">5.</strong> Have they shared a health tip that turned out to be wrong?<br><br>
+          <strong style="color:var(--r);">6.</strong> Have they bought supplements from social media ads?<br><br>
+          <strong style="color:var(--r);">7.</strong> Could they tell a real doctor from an AI-generated one?
+        </p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:24px;max-width:1760px;margin-top:20px;">
+    <div style="flex:1.2;display:flex;flex-direction:column;gap:16px;">
+      <div style="background:var(--g);color:#fff;padding:16px 24px;border-radius:10px;font-size:20px;font-weight:700;letter-spacing:1px;">FAMILY DYNAMICS</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 30px;border:2px solid var(--bd);flex:1;">
+        <p style="font-size:26px;color:#444;line-height:1.65;margin:0;">
+          <strong style="color:var(--dk);">8.</strong> When you catch them believing something off, what do you do? How do they react?<br><br>
+          <strong style="color:var(--dk);">9.</strong> Do you feel responsible for filtering what they see? What makes it hard?
+        </p>
+      </div>
+    </div>
+    <div style="flex:0.8;display:flex;flex-direction:column;gap:16px;">
+      <div style="background:var(--dk);color:#fff;padding:16px 24px;border-radius:10px;font-size:20px;font-weight:700;letter-spacing:1px;">DESIGN PROMPT</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 30px;border:2px solid var(--bd);flex:1;">
+        <p style="font-size:26px;color:#444;line-height:1.65;margin:0;">
+          <strong style="color:var(--dk);">10.</strong> If you could build one tool to protect your parents from bad health content online, what would it do?
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
+</div>
+
+<!-- S10: KEY FINDINGS -->
+<div class="slide find">
+  <h2>What <em>came up</em></h2>
+  <div class="fgrid">
+    <div class="fc key">
+      <h3>Fiona can't see where her mom gets health info</h3>
+      <p>Her mother buys supplements, but Fiona has no idea which app or article led to it.</p>
+      <div class="qt">"It's definitely media-influenced, but I don't know where she saw it."</div>
+    </div>
+    <div class="fc blu">
+      <h3>The parents are vulnerable in opposite ways</h3>
+      <p>Father sees very little online, but can't tell what's real.<br>
+      Mother sees a lot, but the sources are all over the place.</p>
+    </div>
+    <div class="fc grn">
+      <h3>Not a typical family for this study</h3>
+      <p>They don't forward health tips. Don't buy miracle cures. Fiona actually has to drag them to the doctor.</p>
+      <div class="qt">"My parents are outliers. They don't even do health check-ups."</div>
+    </div>
+    <div class="fc key">
+      <h3>But the father would probably fall for AI content</h3>
+      <p>He shares conspiracy posts. He's behind on all tech. His friend group passes around AI-generated videos already.</p>
+      <div class="qt">"His persona is the type who would believe AI content."</div>
+    </div>
+  </div>
+  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
+</div>
+
+<!-- S11: CHINA vs US -->
+<div class="slide ins">
+  <div class="tag">Surprise from the interview</div>
+  <h2>Why AI slop is <em>a bigger deal in the US</em><br>than in China</h2>
+  <div class="ins-comp">
+    <div class="ins-box us">
+      <h3>United States</h3>
+      <div class="flow">
+        Labor is expensive<br>
+        Fake content used to be costly to produce at scale<br>
+        AI <strong>cut that cost to near zero</strong><br>
+        <em>&rarr; AI is a new problem</em>
+      </div>
+    </div>
+    <div class="ins-box cn">
+      <h3>China</h3>
+      <div class="flow">
+        Labor is cheap<br>
+        Content farms were already everywhere, run by people<br>
+        AI actually costs <strong>more than hiring someone</strong><br>
+        <em>&rarr; AI doesn't change much</em>
+      </div>
+    </div>
+  </div>
+  <div class="ins-take">
+    <strong>So what?</strong> AI slop hits hardest in places where fake content was too expensive to mass-produce before. That's the US. Our research focus makes sense, but we should say this out loud.
+  </div>
+  <div class="footer">Inclusive Design &mdash; SVA MFA Interaction Design</div>
 </div>
 
 </div><!-- /stage -->

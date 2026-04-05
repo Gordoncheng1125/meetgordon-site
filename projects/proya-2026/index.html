@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>珀莱雅 2026 母亲节 · 繁花 · 各自盛放</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:#1a1a2e; }
+
+/* === Slide Container === */
+.deck { width:100%; height:100%; position:relative; }
+.slide {
+  width:100%; height:100%;
+  position:absolute; top:0; left:0;
+  display:none; flex-direction:column;
+  justify-content:center; align-items:center;
+  padding:60px 80px;
+  opacity:0; transition: opacity 0.5s ease;
+}
+.slide.active { display:flex; opacity:1; }
+
+/* === Navigation === */
+.nav {
+  position:fixed; bottom:24px; right:40px; z-index:100;
+  display:flex; gap:12px; align-items:center;
+  font-family:'Inter',sans-serif; font-size:13px; color:rgba(255,255,255,0.5);
+}
+.nav button {
+  width:36px; height:36px; border-radius:50%;
+  border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.6); cursor:pointer;
+  font-size:16px; display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.nav button:hover { background:rgba(255,255,255,0.15); color:#fff; }
+.page-indicator {
+  position:fixed; bottom:28px; left:40px; z-index:100;
+  font-family:'Inter',sans-serif; font-size:12px; color:rgba(255,255,255,0.3);
+  letter-spacing:1px;
+}
+
+/* === Slide Types === */
+
+/* 品牌天蓝 */
+.slide-skyblue {
+  background: linear-gradient(160deg, #D4E6F8 0%, #A8C8E8 30%, #7BA7D4 60%, #6B9AC8 100%);
+  color: #2A3A50;
+}
+.slide-skyblue::after {
+  content:''; position:absolute; top:0; left:0; width:100%; height:100%;
+  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.2) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+/* 繁花水彩 */
+.slide-watercolor {
+  background: linear-gradient(150deg, #F8F0F5 0%, #EDE3F0 30%, #E0D6EB 60%, #F5EEF8 100%);
+  color: #4A3660;
+}
+
+/* 文案诗意页 */
+.slide-poem {
+  background: #F8F6F2;
+  text-align:center;
+}
+
+/* 数据深色页 */
+.slide-data {
+  background: linear-gradient(160deg, #2A3A50 0%, #1E2D40 100%);
+  color: #D4E6F8;
+}
+
+/* 章节过场 */
+.slide-transition {
+  background: linear-gradient(135deg, #A8C8E8 0%, #9B8EC4 100%);
+}
+
+/* === Typography === */
+h1 {
+  font-family:'Noto Serif SC', serif;
+  font-weight:300; font-size:48px;
+  letter-spacing:3px; line-height:1.4;
+  position:relative; z-index:1;
+}
+h2 {
+  font-family:'Noto Serif SC', serif;
+  font-weight:400; font-size:30px;
+  letter-spacing:2px; line-height:1.5;
+  position:relative; z-index:1;
+}
+h3 {
+  font-family:'Noto Sans SC', sans-serif;
+  font-weight:500; font-size:20px;
+  line-height:1.5; position:relative; z-index:1;
+}
+p, li {
+  font-family:'Noto Sans SC', sans-serif;
+  font-weight:400; font-size:15px;
+  line-height:1.8; position:relative; z-index:1;
+}
+.subtitle {
+  font-family:'Noto Sans SC', sans-serif;
+  font-weight:300; font-size:16px;
+  letter-spacing:2px; color:#5A8AB8;
+}
+.poem-line {
+  font-family:'Noto Serif SC', serif;
+  font-weight:300; font-size:18px;
+  line-height:2.2; letter-spacing:3px;
+  color:#3A3A4A;
+}
+/* SV页表格放大 */
+.sv-detail td { font-size:14px; line-height:1.7; }
+.sv-detail td:nth-child(3) { color:#4A3660; }
+.stat {
+  font-family:'Playfair Display', serif;
+  font-size:48px; color:#7BA7D4;
+}
+.tag {
+  display:inline-block; padding:4px 14px;
+  border-radius:20px; font-size:12px;
+  background:rgba(123,167,212,0.15);
+  color:#5A8AB8; border:1px solid rgba(123,167,212,0.25);
+  font-family:'Inter',sans-serif;
+}
+.highlight { color:#5A8AB8; font-weight:500; }
+.bold { font-weight:500; }
+.small { font-size:12px; color:#8898AA; }
+.flower-dot {
+  width:8px; height:8px; border-radius:50%;
+  display:inline-block; margin:0 3px;
+}
+.flower-dot.pink { background:#E8A0B8; }
+.flower-dot.purple { background:#9B8EC4; }
+.flower-dot.blue { background:#80B8D8; }
+.flower-dot.warm { background:#D4C0A0; }
+
+/* === Layout Helpers === */
+.content { max-width:960px; width:100%; position:relative; z-index:1; }
+.content-wide { max-width:1100px; width:100%; position:relative; z-index:1; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+.card {
+  background:rgba(255,255,255,0.85);
+  border-radius:16px; padding:24px;
+  box-shadow:0 4px 20px rgba(90,138,184,0.1);
+}
+.card-dark {
+  background:rgba(255,255,255,0.06);
+  border-radius:16px; padding:24px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+table { width:100%; border-collapse:collapse; font-size:14px; position:relative; z-index:1; }
+th { text-align:left; padding:10px 12px; font-weight:500; border-bottom:2px solid rgba(90,138,184,0.2); }
+td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
+.slide-data th { border-bottom-color:rgba(168,200,232,0.2); }
+.slide-data td { border-bottom-color:rgba(168,200,232,0.08); }
+.spacer { height:24px; }
+.spacer-sm { height:12px; }
+.center { text-align:center; }
+.mt { margin-top:20px; }
+.mb { margin-bottom:20px; }
+
+/* SV table */
+.sv-table { font-size:13px; }
+.sv-table th { font-size:12px; padding:8px 10px; }
+.sv-table td { padding:8px 10px; vertical-align:top; }
+.sv-table td:first-child { width:70px; font-family:'Inter',sans-serif; font-weight:500; color:#5A8AB8; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- P1 封面 -->
+<div class="slide slide-skyblue active" data-page="1">
+  <div class="content center">
+    <p class="subtitle" style="margin-bottom:40px; font-size:14px;">Y26 PROYA Mother's Day Campaign</p>
+    <h1 style="font-size:52px; margin-bottom:16px;">珀莱雅 2026 母亲节</h1>
+    <h2 style="font-weight:300; font-size:22px; color:#4A5568; margin-bottom:48px;">创意策略与物料提案</h2>
+    <div style="display:flex; gap:8px; justify-content:center; margin-bottom:48px;">
+      <span class="flower-dot pink"></span>
+      <span class="flower-dot purple"></span>
+      <span class="flower-dot blue"></span>
+      <span class="flower-dot warm"></span>
+      <span class="flower-dot pink"></span>
+    </div>
+    <h2 style="font-size:36px; letter-spacing:8px; color:#2A3A50;">繁花 · 各自盛放</h2>
+    <p style="margin-top:60px; font-size:13px; color:#8898AA; letter-spacing:1px;">2026.04.07</p>
+  </div>
+</div>
+
+<!-- P2 礼遇洞察 — 三个发现 -->
+<div class="slide slide-data" data-page="2">
+  <div class="content-wide">
+    <h2 style="color:#A8C8E8; margin-bottom:8px;">礼遇洞察</h2>
+    <h3 style="color:#D4E6F8; font-family:'Noto Serif SC',serif; font-weight:300; font-size:26px; margin-bottom:36px;">母亲节美妆礼赠，我们看到了三件事</h3>
+    <div class="three-col">
+      <div class="card-dark">
+        <h3 style="color:#7BA7D4; margin-bottom:12px;">发现一</h3>
+        <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">礼赠是美妆确定性增量</p>
+        <p style="color:#8898AA;">礼物经济 <span class="stat" style="font-size:28px;">1.38</span> 万亿</p>
+        <p style="color:#8898AA;">美妆礼赠约 <span style="color:#7BA7D4; font-weight:500;">500 亿</span>，连续两年跑赢大盘</p>
+        <p style="color:#8898AA;">护肤品礼赠价值 = 彩妆的 <span style="color:#7BA7D4; font-weight:500;">7 倍</span></p>
+        <div class="spacer"></div>
+        <p style="color:#D4E6F8; font-size:14px; font-weight:500;">自用是存量，礼赠是增量。<br>珀莱雅不缺「好用」的认知，<br>缺的是「好送」的理由。</p>
+      </div>
+      <div class="card-dark">
+        <h3 style="color:#E8A0B8; margin-bottom:12px;">发现二</h3>
+        <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">爱很浓，表达很薄</p>
+        <p style="color:#8898AA;"><span style="color:#E8A0B8; font-weight:500;">47.57%</span> 清楚母亲的爱好</p>
+        <p style="color:#8898AA;">反过来读：超过半数承认自己<span style="color:#E8A0B8;">并不确定</span></p>
+        <div class="spacer-sm"></div>
+        <p style="color:#8898AA;">下单犹豫不是「哪个划算」，而是「她会喜欢吗」「会不会觉得我说她老了」</p>
+        <div class="spacer"></div>
+        <p style="color:#D4E6F8; font-size:14px; font-weight:500;">最大的障碍不是不了解产品，<br>是不确定自己够了解妈妈。</p>
+      </div>
+      <div class="card-dark">
+        <h3 style="color:#9B8EC4; margin-bottom:12px;">发现三</h3>
+        <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">母亲节正在变轻</p>
+        <p style="color:#8898AA;">小红书最火话题不是 #感恩母爱</p>
+        <p style="color:#8898AA;">而是 <span style="color:#9B8EC4; font-weight:500;">#妈妈的留白</span></p>
+        <p style="color:#8898AA;">浏览量 <span style="color:#9B8EC4; font-weight:500;">5,625 万</span></p>
+        <div class="spacer"></div>
+        <p style="color:#D4E6F8; font-size:14px; font-weight:500;">好的礼物不是填满，是留白。<br>给她一个「可以为自己」的空间。</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:16px; color:rgba(168,200,232,0.4);">数据来源：[1]艾媒咨询 [2]界面新闻 [3][4]珀莱雅年报/半年报 [5]艾媒咨询2025 [6]数英/SocialBeta</p>
+  </div>
+</div>
+
+<!-- P3 珀莱雅的位置 -->
+<div class="slide slide-data" data-page="3">
+  <div class="content-wide">
+    <h2 style="color:#A8C8E8; margin-bottom:8px;">礼遇洞察</h2>
+    <h3 style="color:#D4E6F8; font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:32px;">所有品牌都在回答「送什么」，只有珀莱雅有资格回答「为什么送」</h3>
+    <div class="two-col">
+      <div>
+        <h3 style="color:#7BA7D4; margin-bottom:16px;">2025 母亲节竞争格局</h3>
+        <table>
+          <tr><th style="color:#A8C8E8;">品牌</th><th style="color:#A8C8E8;">在做什么</th><th style="color:#A8C8E8;">本质</th></tr>
+          <tr><td style="color:#D4E6F8;">巴黎欧莱雅</td><td style="color:#8898AA;">MAMA GAP DAY 线下快闪</td><td style="color:#7BA7D4;">体验+话题</td></tr>
+          <tr><td style="color:#D4E6F8;">OLAY</td><td style="color:#8898AA;">限定立体爱心礼盒</td><td style="color:#7BA7D4;">包装升级</td></tr>
+          <tr><td style="color:#D4E6F8;">韩束</td><td style="color:#8898AA;">代言人升级 + 红蛮腰礼盒</td><td style="color:#7BA7D4;">流量收割</td></tr>
+          <tr><td style="color:#D4E6F8;">兰蔻</td><td style="color:#8898AA;">citywalk「走花路」</td><td style="color:#7BA7D4;">重资产体验</td></tr>
+          <tr><td style="color:#D4E6F8;">薇诺娜/可复美</td><td style="color:#8898AA;">几乎缺席</td><td style="color:#8898AA;">—</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3 style="color:#E8A0B8; margin-bottom:16px;">珀莱雅的不可替代性</h3>
+        <p style="color:#8898AA; margin-bottom:16px;">六年议题资产：性别不是边界线 → 仅妈妈可见 → 世上不止妈妈好 → 妈怎么做听她的</p>
+        <p style="color:#D4E6F8; font-weight:500; margin-bottom:16px;">唯一一个消费者会主动期待「今年母亲节你说了什么」的美妆品牌。</p>
+        <p style="color:#8898AA; margin-bottom:24px;">2025 已有验证：「心意成花送给妈妈」小红书曝光 <span style="color:#E8A0B8; font-weight:500;">1.7 亿</span></p>
+        <div style="border-top:1px solid rgba(168,200,232,0.15); padding-top:20px;">
+          <p style="color:#D4E6F8; font-size:15px; line-height:2;">从「替妈妈说话」到「为妈妈送出美好」。<br>从「好用」到「好送」。<br><span style="color:#7BA7D4; font-weight:500;">每多定义一种妈妈，就多打开一个人群入口。</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P4 人群洞察 -->
+<div class="slide slide-skyblue" data-page="4">
+  <div class="content">
+    <h2 style="margin-bottom:8px;">人群洞察</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:26px; margin-bottom:40px; color:#2A3A50;">她们都在找同一个东西</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="card">
+        <span class="tag" style="margin-bottom:12px; display:inline-block;">新锐白领 · 300-500元</span>
+        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 8px;">送妈妈</p>
+        <p style="color:#4A5568; font-style:italic;">「平时太忙没时间陪她，但我想让她知道我记得。」</p>
+      </div>
+      <div class="card">
+        <span class="tag" style="margin-bottom:12px; display:inline-block;">小镇青年 · 200-400元</span>
+        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 8px;">送妈妈 + 婆婆</p>
+        <p style="color:#4A5568; font-style:italic;">「买两套，一套妈妈一套婆婆，不偏心。」</p>
+      </div>
+      <div class="card">
+        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(155,142,196,0.15); color:#9B8EC4; border-color:rgba(155,142,196,0.25);">精致妈妈 · 400-600元</span>
+        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 8px;">送自己 / 闺蜜</p>
+        <p style="color:#4A5568; font-style:italic;">「当了妈妈也可以很美，这是给自己的。」</p>
+      </div>
+      <div class="card">
+        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(212,192,160,0.2); color:#A08860; border-color:rgba(212,192,160,0.3);">资深中产 · 500-1000元</span>
+        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 8px;">送妈妈 / 长辈</p>
+        <p style="color:#4A5568; font-style:italic;">「选一个拿得出手的，让她知道我用了心。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P5 核心共同需求 -->
+<div class="slide slide-poem" data-page="5">
+  <div class="content center">
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:#8898AA; letter-spacing:2px; margin-bottom:60px;">人群洞察 · 核心共同需求</p>
+    <p class="poem-line" style="font-size:26px; margin-bottom:48px;">她们买的不是护肤品</p>
+    <div style="width:40px; height:1px; background:#D4C0A0; margin:0 auto 48px;"></div>
+    <p class="poem-line">年轻人给妈妈买护肤品，</p>
+    <p class="poem-line">买的不是产品。</p>
+    <p class="poem-line" style="color:#5A8AB8;">是一次「我看见你了」的表达。</p>
+  </div>
+</div>
+
+<!-- P6 创意阐述 — 送花 -->
+<div class="slide slide-watercolor" data-page="6">
+  <div class="content center">
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:#9B8EC4; letter-spacing:2px; margin-bottom:40px;">创意阐述</p>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:15px; color:#8898AA; margin-bottom:24px;">Brief 说，以「送花」作为切入点。我们问了一个问题——</p>
+    <h1 style="font-size:38px; color:#4A3660; margin-bottom:48px;">母亲节，<br>为什么永远只有康乃馨？</h1>
+    <div style="max-width:600px; margin:0 auto; text-align:left;">
+      <p style="color:#6A5880; margin-bottom:12px;">康乃馨成为母亲节标配，是一百年前花商的营销发明。</p>
+      <p style="color:#6A5880; margin-bottom:12px;">当「送花」变成「送康乃馨」，送礼就变成了完成任务。</p>
+      <p style="color:#6A5880; margin-bottom:12px;">但珀莱雅礼盒上的花，不是康乃馨，不是玫瑰——</p>
+      <p style="color:#4A3660; font-weight:500;">不是任何一种被定义好的花。</p>
+    </div>
+    <div style="width:40px; height:1px; background:#9B8EC4; margin:40px auto;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#4A3660; letter-spacing:3px;">如果花不只有一种，妈妈也不只有一种。</p>
+  </div>
+</div>
+
+<!-- P7 创意阐述 — 逻辑链 -->
+<div class="slide slide-skyblue" data-page="7">
+  <div class="content-wide">
+    <h2 style="margin-bottom:8px;">创意阐述</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:24px; margin-bottom:36px;">从「送花」到「各自盛放」</h3>
+    <div class="three-col">
+      <div class="card" style="text-align:center;">
+        <p style="font-size:48px; margin-bottom:12px;">①</p>
+        <h3 style="color:#5A8AB8; margin-bottom:8px;">送花</h3>
+        <p class="small" style="margin-bottom:16px;">Answer the Brief</p>
+        <p style="font-size:14px; color:#4A5568;">Brief 要求以「送花」作为礼赠情感切入点</p>
+        <div class="spacer-sm"></div>
+        <p style="font-size:14px; color:#4A5568;">珀莱雅礼盒自带可摘花束 = 送花的动作</p>
+        <div class="spacer"></div>
+        <p style="font-size:13px; color:#5A8AB8; font-weight:500;">CTA：摘一朵花，送给她</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <p style="font-size:48px; margin-bottom:12px;">②</p>
+        <h3 style="color:#9B8EC4; margin-bottom:8px;">不止一种花</h3>
+        <p class="small" style="margin-bottom:16px;">洞察</p>
+        <p style="font-size:14px; color:#4A5568;">礼盒上的花不是康乃馨 = 不是任何一种被定义的花</p>
+        <div class="spacer-sm"></div>
+        <p style="font-size:14px; color:#4A5568;">延续品牌六年「为女性松绑」资产</p>
+        <div class="spacer"></div>
+        <p style="font-size:13px; color:#9B8EC4; font-weight:500;">破题：世界上的妈妈，不只有一种</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <p style="font-size:48px; margin-bottom:12px;">③</p>
+        <h3 style="color:#E8A0B8; margin-bottom:8px;">各自盛放</h3>
+        <p class="small" style="margin-bottom:16px;">态度</p>
+        <p style="font-size:14px; color:#4A5568;">每位妈妈都是独一无二的花</p>
+        <p style="font-size:14px; color:#4A5568;">她不必是谁规定的样子</p>
+        <div class="spacer"></div>
+        <p style="font-size:13px; color:#E8A0B8; font-weight:500;">Slogan：各自盛放</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="center" style="font-family:'Noto Serif SC',serif; font-size:18px; color:#2A3A50; letter-spacing:2px;">最好的礼遇，是一整套的款待。</p>
+  </div>
+</div>
+
+<!-- P8 创意主题揭晓 -->
+<div class="slide slide-transition" data-page="8">
+  <div class="content center">
+    <div style="display:flex; gap:6px; justify-content:center; margin-bottom:40px;">
+      <span class="flower-dot pink"></span>
+      <span class="flower-dot purple"></span>
+      <span class="flower-dot blue"></span>
+      <span class="flower-dot warm"></span>
+    </div>
+    <h1 style="font-size:56px; color:#fff; letter-spacing:12px; margin-bottom:40px;">繁花 · 各自盛放</h1>
+    <div style="width:60px; height:1px; background:rgba(255,255,255,0.4); margin:0 auto 40px;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:rgba(255,255,255,0.8); line-height:2.2; letter-spacing:3px;">
+      世界上的妈妈，不只有一种。世界上的花，也不只有一种。<br>
+      <span style="color:#fff;">Slogan：各自盛放。</span><br>
+      <span style="color:rgba(255,255,255,0.7);">CTA：摘一朵花，送给她。</span>
+    </p>
+  </div>
+</div>
+
+<!-- P9 Core Idea 文案 -->
+<div class="slide slide-poem" data-page="9" style="padding:36px 80px;">
+  <div class="content center">
+    <p class="poem-line" style="font-size:14px; color:#8898AA; margin-bottom:20px;">五月的风，有阳光的味道。</p>
+    <p class="poem-line">世界上的妈妈，不只有一种。</p>
+    <p class="poem-line" style="margin-bottom:18px;">世界上的花，也不只有一种。</p>
+    <p class="poem-line">有的花，柔软的。像她抱你时候的手臂。</p>
+    <p class="poem-line">有的花，透亮的。什么心事，你一眼就看见了。</p>
+    <p class="poem-line" style="margin-bottom:18px;">有的花，坚韧的。风吹不倒，时间也是。</p>
+    <p class="poem-line">她不必是康乃馨。</p>
+    <p class="poem-line" style="margin-bottom:18px;">她是她自己。</p>
+    <p class="poem-line" style="color:#5A8AB8;">摘一朵花，送给她。</p>
+    <p class="poem-line">你不用说什么。</p>
+    <p class="poem-line" style="margin-bottom:18px;">花会替你说的。</p>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:13px; color:#8898AA; letter-spacing:2px;">珀莱雅母亲节礼盒</p>
+  </div>
+</div>
+
+<!-- P10 CG 脚本 -->
+<div class="slide slide-skyblue" data-page="10">
+  <div class="content-wide">
+    <h2 style="margin-bottom:8px;">礼盒 CG 视频</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:28px;">14-cut · 旁白脚本</h3>
+    <table style="font-size:13px;">
+      <tr><th style="width:60px;">Cut</th><th>画面</th><th style="width:40%;">旁白</th></tr>
+      <tr><td>1</td><td>乒乓菊钻出</td><td style="color:#5A8AB8;">「五月。」</td></tr>
+      <tr><td>2-3</td><td>攀升、小花绽放</td><td style="color:#8898AA;">（安静）</td></tr>
+      <tr><td>4</td><td>小圆球滚过枝干，花绽放</td><td style="color:#5A8AB8;">「世界上的妈妈，不只有一种。」</td></tr>
+      <tr><td>5</td><td>更多花绽放</td><td style="color:#5A8AB8;">「世界上的花，也不只有一种。」</td></tr>
+      <tr><td>6</td><td>遍地开花（绒布质感花）</td><td style="color:#5A8AB8;">「有的柔软。有的透亮。有的坚韧。」</td></tr>
+      <tr><td>7-8</td><td>花沿手臂，手指间生花</td><td style="color:#5A8AB8;">「她的手心里，有忙碌，有快乐。」</td></tr>
+      <tr><td>9</td><td>不同材质花朵汇聚成花束</td><td style="color:#8898AA;">（安静）</td></tr>
+      <tr><td>10</td><td>手拿起花束</td><td style="color:#5A8AB8;">「摘一朵花。」</td></tr>
+      <tr><td>11</td><td>花束托举出礼盒</td><td style="color:#8898AA;">（安静）</td></tr>
+      <tr><td>12</td><td>小花散落蔓延</td><td style="color:#5A8AB8;">「送给她。」</td></tr>
+      <tr><td>13</td><td>花被风吹散</td><td style="color:#8898AA;">（安静）</td></tr>
+      <tr><td>14</td><td>两人推动礼盒</td><td style="color:#5A8AB8;">「你不用说什么。花会替你说的。」</td></tr>
+      <tr><td style="font-weight:700;">Super</td><td></td><td style="color:#2A3A50; font-weight:500; font-size:15px;">不止一种花。各自盛放。</td></tr>
+      <tr><td>End</td><td></td><td style="color:#8898AA;">珀莱雅母亲节礼盒</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P11 SV1 -->
+<div class="slide slide-watercolor" data-page="11">
+  <div class="content">
+    <h2 style="color:#4A3660; margin-bottom:4px;">SV1</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:24px; color:#4A3660; margin-bottom:24px;">女儿送妈妈</h3>
+    <table class="sv-table sv-detail">
+      <tr><th>时间</th><th>画面</th><th>声音</th></tr>
+      <tr><td>0-5s</td><td>女儿翻妈妈朋友圈。全是食物和风景。没有她自己</td><td>安静</td></tr>
+      <tr><td>6-11s</td><td>收到珀莱雅礼盒。打开。看到花束</td><td style="color:#4A3660;">「你的朋友圈里，没有你自己。」</td></tr>
+      <tr><td>12-16s</td><td>在卡片上写字。只看到笔尖在动</td><td style="color:#4A3660;">「你总是拍我们。拍天空。拍晚饭。」</td></tr>
+      <tr><td>17-21s</td><td>妈妈收到礼盒。摘下花</td><td style="color:#4A3660;">「你从来不拍自己。」</td></tr>
+      <tr><td>22-26s</td><td>妈妈把花别在耳边。对镜子笑了</td><td style="color:#4A3660; font-style:italic;">「……但你笑起来的样子，我都记得。」</td></tr>
+      <tr><td>27-30s</td><td>礼盒特写</td><td style="color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P12 SV2 -->
+<div class="slide slide-watercolor" data-page="12">
+  <div class="content">
+    <h2 style="color:#4A3660; margin-bottom:4px;">SV2</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:24px; color:#4A3660; margin-bottom:24px;">闺蜜互送</h3>
+    <table class="sv-table sv-detail">
+      <tr><th>时间</th><th>画面</th><th>声音</th></tr>
+      <tr><td>0-4s</td><td>两个女生咖啡馆。婴儿车。疲惫的眼圈</td><td>环境声</td></tr>
+      <tr><td>5-9s</td><td>A 拿出礼盒递过去</td><td style="color:#4A3660;">A：「母亲节快乐。」<br>B：「我们什么时候……变成过这个节的人了。」</td></tr>
+      <tr><td>10-15s</td><td>B 拆开。摘下花</td><td style="color:#4A3660;">A：「你那时候就说了——凭什么母亲节只有康乃馨。」</td></tr>
+      <tr><td>16-21s</td><td>B 把花插头上。做了个鬼脸</td><td style="color:#4A3660;">B：「这朵不像康乃馨。」A：「不像妈妈。」</td></tr>
+      <tr><td>22-26s</td><td>两人对视。松了一口气的笑</td><td style="color:#4A3660; font-weight:500;">B：「像我们。」</td></tr>
+      <tr><td>27-30s</td><td>礼盒特写</td><td style="color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P13 SV3 -->
+<div class="slide slide-watercolor" data-page="13">
+  <div class="content">
+    <h2 style="color:#4A3660; margin-bottom:4px;">SV3</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:24px; color:#4A3660; margin-bottom:24px;">媳妇送婆婆</h3>
+    <table class="sv-table sv-detail">
+      <tr><th>时间</th><th>画面</th><th>声音</th></tr>
+      <tr><td>0-5s</td><td>媳妇在客厅。婆婆在厨房。隔着一道门</td><td>锅铲声。电视声。各忙各的</td></tr>
+      <tr><td>6-10s</td><td>媳妇把礼盒轻轻放在餐桌上。退回去了</td><td>安静</td></tr>
+      <tr><td>11-16s</td><td>婆婆出来。看到礼盒。打开卡片。看了很久</td><td style="color:#4A3660;">「我们之间，话不多。」</td></tr>
+      <tr><td>17-22s</td><td>婆婆摘下花。插进窗台的玻璃杯里</td><td style="color:#4A3660;">「但有些事不用说的。」</td></tr>
+      <tr><td>23-27s</td><td>晚饭。多夹一筷子菜。对了一下眼。都没说话</td><td>安静</td></tr>
+      <tr><td>28-30s</td><td>窗台上那朵花。旁边是厨房的热气</td><td style="color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P14 SV4 -->
+<div class="slide slide-watercolor" data-page="14">
+  <div class="content">
+    <h2 style="color:#4A3660; margin-bottom:4px;">SV4</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:24px; color:#4A3660; margin-bottom:24px;">妈妈送自己</h3>
+    <table class="sv-table sv-detail">
+      <tr><th>时间</th><th>画面</th><th>声音</th></tr>
+      <tr><td>0-4s</td><td>手机推送「母亲节送妈妈什么好」。她滑掉了</td><td>安静</td></tr>
+      <tr><td>5-9s</td><td>商场。珀莱雅柜台。手指摸了一下花</td><td style="color:#4A3660;">「每年帮所有人挑。」</td></tr>
+      <tr><td>10-15s</td><td>拿起礼盒。柜姐要走来。她摆了摆手</td><td style="color:#4A3660;">「今年想起来了。」</td></tr>
+      <tr><td>16-21s</td><td>浴室。护肤完。摘下花。别在睡衣领口</td><td>安静。水滴声</td></tr>
+      <tr><td>22-26s</td><td>对着镜子。不是审视，是——看见了</td><td style="color:#4A3660; font-style:italic;">「这朵花，开给我自己。」</td></tr>
+      <tr><td>27-30s</td><td>镜子里她笑了一下。很小。但是真的</td><td style="color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P15-16 电商海报 -->
+<div class="slide slide-skyblue" data-page="15">
+  <div class="content">
+    <h2 style="margin-bottom:32px;">电商海报 × 4</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="card" style="text-align:center; padding:32px;">
+        <span class="flower-dot pink" style="width:12px; height:12px;"></span>
+        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，柔软的。<br>像她抱你时候的手臂。</p>
+        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      </div>
+      <div class="card" style="text-align:center; padding:32px;">
+        <span class="flower-dot blue" style="width:12px; height:12px;"></span>
+        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，透亮的。<br>什么心事，你一眼就看见了。</p>
+        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      </div>
+      <div class="card" style="text-align:center; padding:32px;">
+        <span class="flower-dot warm" style="width:12px; height:12px;"></span>
+        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，坚韧的。<br>风吹不倒，时间也是。</p>
+        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      </div>
+      <div class="card" style="text-align:center; padding:32px;">
+        <span class="flower-dot purple" style="width:12px; height:12px;"></span>
+        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">这朵花，<br>开给我自己。</p>
+        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P17 礼赠触点 -->
+<div class="slide slide-watercolor" data-page="16">
+  <div class="content">
+    <h2 style="color:#4A3660; margin-bottom:32px;">礼赠触点文案</h2>
+    <div class="two-col">
+      <div>
+        <h3 style="color:#9B8EC4; margin-bottom:16px;">贺卡</h3>
+        <div class="card" style="background:rgba(255,255,255,0.9);">
+          <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:#4A3660; margin-bottom:16px;">正面：这朵花，替我说。</p>
+          <div style="border-top:1px dashed #D4C0A0; padding-top:16px;">
+            <p style="font-size:14px; color:#6A5880; line-height:2;">内页：写下你想说的。<br>或者不写也行。<br>她打开的时候，就已经知道了。</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:#9B8EC4; margin-bottom:16px;">护肤贴纸</h3>
+        <p style="font-family:'Noto Serif SC',serif; font-size:16px; color:#4A3660; margin-bottom:16px;">每一步，都在好好待她。</p>
+        <div style="font-size:13px; color:#6A5880; line-height:2.2;">
+          <p>Step 1 洁面 — 洗掉今天的辛苦</p>
+          <p>Step 2 水 — 让皮肤喝口水</p>
+          <p>Step 3 精华油 — 一点点，就够了</p>
+          <p>Step 4 眼霜 — 她的眼睛里，有忙碌，有快乐</p>
+          <p>Step 5 精华 — 这一瓶，我替你研究过了</p>
+          <p>Step 6 乳 — 慢慢来，不着急</p>
+          <p>Step 7 面霜 — 最后一步。好好睡</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P18 MR 延展 -->
+<div class="slide slide-skyblue" data-page="17">
+  <div class="content-wide">
+    <h2 style="margin-bottom:8px;">大曝光物料 MR 延展</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:20px; margin-bottom:28px;">主 KV + 各平台适配</h3>
+    <div class="card" style="margin-bottom:20px; text-align:center; padding:32px;">
+      <p style="font-family:'Noto Serif SC',serif; font-size:28px; color:#2A3A50; margin-bottom:8px;">世界上的妈妈，不只有一种。</p>
+      <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:#5A8AB8; margin-bottom:16px;">摘一朵花，送给她。</p>
+      <p style="font-size:13px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      <p style="font-size:12px; color:#8898AA; margin-top:8px;">红宝石系列 | 精华 · 面霜 · 眼霜 · 水 · 乳 | 一整套，好好款待她</p>
+    </div>
+    <table style="font-size:13px;">
+      <tr><th>平台</th><th>主文案</th><th>CTA</th></tr>
+      <tr><td>天猫首焦</td><td>世界上的妈妈，不只有一种。</td><td>珀莱雅母亲节礼盒 · 立即抢购</td></tr>
+      <tr><td>抖音开屏</td><td>五月的风，有阳光的味道。摘一朵花，送给她。</td><td>珀莱雅母亲节礼盒 · 了解更多</td></tr>
+      <tr><td>小红书 A</td><td>今年母亲节，不送康乃馨。</td><td>#摘一朵花给她</td></tr>
+      <tr><td>小红书 B</td><td>你不用说什么。花会替你说的。</td><td>#妈妈不止一种</td></tr>
+      <tr><td>小红书 C</td><td>一整套搞定妈妈的护肤。红宝石系列 300-500 元</td><td>#各自盛放</td></tr>
+      <tr><td>微博开屏</td><td>不止一种花。各自盛放。</td><td>#各自盛放 #摘一朵花给她</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P19 传播话题 -->
+<div class="slide slide-data" data-page="18">
+  <div class="content">
+    <h2 style="color:#A8C8E8; margin-bottom:32px;">传播话题</h2>
+    <div class="three-col">
+      <div class="card-dark" style="text-align:center; padding:32px;">
+        <p style="font-size:12px; color:#7BA7D4; margin-bottom:12px;">品牌主话题</p>
+        <h3 style="color:#D4E6F8; font-size:28px; letter-spacing:4px;">#各自盛放</h3>
+        <p style="color:#8898AA; margin-top:12px; font-size:13px;">官方传播主线</p>
+        <p style="color:#8898AA; font-size:13px;">主推：微博</p>
+      </div>
+      <div class="card-dark" style="text-align:center; padding:32px;">
+        <p style="font-size:12px; color:#E8A0B8; margin-bottom:12px;">活动话题</p>
+        <h3 style="color:#D4E6F8; font-size:24px; letter-spacing:3px;">#摘一朵花给她</h3>
+        <p style="color:#8898AA; margin-top:12px; font-size:13px;">UGC 互动，拍摘花过程</p>
+        <p style="color:#8898AA; font-size:13px;">主推：小红书 + 抖音</p>
+      </div>
+      <div class="card-dark" style="text-align:center; padding:32px;">
+        <p style="font-size:12px; color:#9B8EC4; margin-bottom:12px;">情感话题</p>
+        <h3 style="color:#D4E6F8; font-size:24px; letter-spacing:3px;">#妈妈不止一种</h3>
+        <p style="color:#8898AA; margin-top:12px; font-size:13px;">你的妈妈是哪种花？</p>
+        <p style="color:#8898AA; font-size:13px;">主推：抖音挑战赛</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P20 Timeline -->
+<div class="slide slide-skyblue" data-page="19">
+  <div class="content">
+    <h2 style="margin-bottom:32px;">执行 Timeline</h2>
+    <table style="font-size:14px;">
+      <tr><th style="width:140px;">日期</th><th>事项</th></tr>
+      <tr><td>3.30</td><td>Brief Meeting ✓</td></tr>
+      <tr style="background:rgba(90,138,184,0.1);"><td style="font-weight:700; color:#5A8AB8;">4.7</td><td style="font-weight:700; color:#2A3A50;">提案比稿 ← 我们在这里</td></tr>
+      <tr><td>4.10</td><td>方案确认</td></tr>
+      <tr><td>4.10 - 4.15</td><td>CG 制作启动 / SV 选角 + 分镜确认</td></tr>
+      <tr><td>4.15 - 4.17</td><td>SV 拍摄（3-4 天，4 支）</td></tr>
+      <tr style="background:rgba(90,138,184,0.1);"><td style="font-weight:700; color:#5A8AB8;">4.17 - 4.20</td><td style="font-weight:700; color:#2A3A50;">礼盒官宣物料发布（CG + SV）</td></tr>
+      <tr><td>4.20</td><td>小红书 #摘一朵花给她 上线 + KOL 种草首波</td></tr>
+      <tr><td>4.20 - 5.1</td><td>抖音 #妈妈不止一种 挑战赛 + 达人带货</td></tr>
+      <tr><td>5.1 - 5.10</td><td>全渠道冲刺：天猫首焦 + 抖音开屏 + 微博 + 直播间</td></tr>
+      <tr style="background:rgba(232,160,184,0.1);"><td style="font-weight:700; color:#E8A0B8;">5.10</td><td style="font-weight:700; color:#2A3A50;">母亲节</td></tr>
+      <tr><td>5.10 - 5.15</td><td>长尾：UGC 二次传播 + 电商返场</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- P21 Thanks -->
+<div class="slide slide-transition" data-page="20">
+  <div class="content center">
+    <div style="display:flex; gap:6px; justify-content:center; margin-bottom:48px;">
+      <span class="flower-dot pink"></span>
+      <span class="flower-dot purple"></span>
+      <span class="flower-dot blue"></span>
+      <span class="flower-dot warm"></span>
+      <span class="flower-dot pink"></span>
+    </div>
+    <h1 style="font-size:42px; color:#fff; letter-spacing:10px;">各自盛放。</h1>
+    <div style="width:40px; height:1px; background:rgba(255,255,255,0.3); margin:48px auto;"></div>
+    <p style="font-family:'Playfair Display',serif; font-size:16px; color:rgba(255,255,255,0.5); letter-spacing:2px;">PROYA × 2026</p>
+  </div>
+</div>
+
+</div>
+
+<!-- Navigation -->
+<div class="page-indicator" id="pageIndicator">1 / 20</div>
+<div class="nav">
+  <button onclick="prevSlide()">‹</button>
+  <button onclick="nextSlide()">›</button>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+const indicator = document.getElementById('pageIndicator');
+
+function showSlide(n) {
+  slides[current].classList.remove('active');
+  current = (n + total) % total;
+  slides[current].classList.add('active');
+  indicator.textContent = (current + 1) + ' / ' + total;
+}
+
+function nextSlide() { showSlide(current + 1); }
+function prevSlide() { showSlide(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+  if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+  if (e.key === 'End') { e.preventDefault(); showSlide(total - 1); }
+});
+
+// Click to advance (except on buttons)
+document.getElementById('deck').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') nextSlide();
+});
+</script>
+
+</body>
+</html>

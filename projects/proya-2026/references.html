@@ -12,7 +12,12 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .card{background:rgba(255,255,255,0.04);border:1px solid rgba(168,200,232,0.1);border-radius:16px;overflow:hidden;transition:transform 0.2s}
 .card:hover{transform:translateY(-2px);border-color:rgba(168,200,232,0.25)}
-.card iframe{width:100%;height:220px;border:none}
+.thumb{position:relative;width:100%;height:220px;background:#000;display:block;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;opacity:0.85;transition:opacity 0.2s}
+.thumb:hover img{opacity:1}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(255,0,0,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.play-btn::after{content:'';width:0;height:0;border-style:solid;border-width:12px 0 12px 22px;border-color:transparent transparent transparent #fff;margin-left:4px}
+.thumb:hover .play-btn{background:rgba(255,0,0,1)}
 .card-body{padding:20px}
 .card-body h3{font-size:16px;font-weight:500;color:#D4E6F8;margin-bottom:6px}
 .brand{font-size:12px;color:#7BA7D4;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
@@ -29,8 +34,8 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </head>
 <body>
 
-<h1>珀莱雅母亲节 · 美妆品牌视频参考</h1>
-<p class="subtitle">繁花 · 各自盛放 — SV 调性参考 · 2026.04.04</p>
+<h1>珀莱雅母亲节 · 视频参考 Dashboard</h1>
+<p class="subtitle">繁花 · 各自盛放 — SV 调性参考 · 点击缩略图在 YouTube 观看</p>
 
 <!-- 最推荐 -->
 <div class="section">
@@ -41,11 +46,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 <div class="grid">
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/8MmjJC11AOM" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=8MmjJC11AOM" target="_blank">
+    <img src="https://img.youtube.com/vi/8MmjJC11AOM/maxresdefault.jpg" alt="OLAY">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">OLAY 台湾 · 2025 母亲节</p>
     <h3>《未说出口的话》Words Unspoken</h3>
-    <p class="desc">金马导演阮凤仪执导，于子育×李沐母女。交叉剪接：女儿冷色理性 vs 母亲暖色包容。核心台词「我只想看看我女儿」。上线5天破百万。<strong>时效性最强，美妆品牌母亲节直接操作范本。</strong></p>
+    <p class="desc">金马导演阮凤仪执导，于子育×李沐母女。交叉剪接：女儿冷色理性 vs 母亲暖色包容。上线5天破百万。<strong>美妆品牌母亲节直接操作范本。</strong></p>
     <div class="tags">
       <span class="tag pink">母女关系</span>
       <span class="tag">留白感强</span>
@@ -55,11 +63,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </div>
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/v3JCA4lCMGw" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=v3JCA4lCMGw" target="_blank">
+    <img src="https://img.youtube.com/vi/v3JCA4lCMGw/maxresdefault.jpg" alt="SK-II">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
-    <p class="brand">SK-II · #changedestiny 系列 · 2017</p>
+    <p class="brand">SK-II · #changedestiny · 2017</p>
     <h3>《The Expiry Date》人生不设限</h3>
-    <p class="desc">中日韩三国女性手臂上浮现「社会保质期」数字——几岁该结婚、几岁该生孩子。用超现实隐喻表达「被定义」。<strong>「不被定义」的视觉化参考，与「各自盛放」直接呼应。</strong></p>
+    <p class="desc">中日韩三国女性手臂上浮现「社会保质期」数字。用超现实隐喻表达「被定义」。<strong>与「各自盛放」直接呼应——不被定义的视觉化。</strong></p>
     <div class="tags">
       <span class="tag purple">诗意隐喻</span>
       <span class="tag pink">不被定义</span>
@@ -70,20 +81,23 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 
 </div>
 
-<!-- SK-II 系列 -->
+<!-- SK-II -->
 <div class="section">
   <h2>SK-II #ChangeDestiny 系列</h2>
-  <p>亚洲美妆品牌女性议题标杆 · 不对抗不愤怒，平静地说「我有我的选择」</p>
+  <p>亚洲美妆品牌女性议题标杆 · 平静地说「我有我的选择」</p>
 </div>
 
 <div class="grid">
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/irfd74z52Cw" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=irfd74z52Cw" target="_blank">
+    <img src="https://img.youtube.com/vi/irfd74z52Cw/maxresdefault.jpg" alt="SK-II Marriage Market">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">SK-II · 2016</p>
     <h3>《她最后去了相亲角》Marriage Market Takeover</h3>
-    <p class="desc">上海人民公园相亲角实拍。真实母女关于婚姻期待的对话，结尾母亲落泪的瞬间极具留白。戛纳金狮奖，全球4400万播放。</p>
+    <p class="desc">上海人民公园相亲角实拍。真实母女关于婚姻期待的对话。戛纳金狮奖，全球4400万播放。</p>
     <div class="tags">
       <span class="tag pink">母女冲突与和解</span>
       <span class="tag">纪录片</span>
@@ -93,11 +107,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </div>
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/GXLVQ3kOjS0" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=GXLVQ3kOjS0" target="_blank">
+    <img src="https://img.youtube.com/vi/GXLVQ3kOjS0/maxresdefault.jpg" alt="SK-II Meet Me Halfway">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">SK-II · 2019</p>
     <h3>《Meet Me Halfway》各退一步</h3>
-    <p class="desc">三位中国单身女性写信给父母，约在「中间地点」见面。记录母女从回避到坦诚相对的过程。上线24小时1800万播放。<strong>母女和解的最佳范本。</strong></p>
+    <p class="desc">三位中国单身女性写信给父母，约在「中间地点」见面。上线24小时1800万播放。<strong>母女和解的最佳范本。</strong></p>
     <div class="tags">
       <span class="tag pink">母女和解</span>
       <span class="tag">真实纪录</span>
@@ -117,11 +134,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 <div class="grid">
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/AIfOykthj-8" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=AIfOykthj-8" target="_blank">
+    <img src="https://img.youtube.com/vi/AIfOykthj-8/maxresdefault.jpg" alt="Shiseido">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">SHISEIDO · 2023</p>
     <h3>《みんな、いい顔してる。》Everyone Has a Good Face</h3>
-    <p class="desc">收集1000+张真实表情——大笑的、严肃的、皱眉的，全都是「好表情」。石田百合子旁白。<strong>核心：不只笑脸才是美的 = 不只一种花才是好的。</strong></p>
+    <p class="desc">1000+ 张真实表情——大笑、严肃、皱眉，全都是「好表情」。<strong>不只笑脸才是美的 = 不只一种花才是好的。</strong></p>
     <div class="tags">
       <span class="tag purple">多元之美</span>
       <span class="tag">极简</span>
@@ -131,11 +151,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </div>
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/C5O8vuF0RsA" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=C5O8vuF0RsA" target="_blank">
+    <img src="https://img.youtube.com/vi/C5O8vuF0RsA/maxresdefault.jpg" alt="Shiseido Mother">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">SHISEIDO Watashi+ · 2020 母亲节</p>
     <h3>《ゆきぽよ给妈妈送口红》</h3>
-    <p class="desc">模特ゆきぽよ与菲律宾裔母亲首次亲子共演。回忆偷看妈妈化妆的记忆，为母亲挑选口红色号并亲手涂上。<strong>「帮妈妈选一个她的颜色」= 珀莱雅礼盒可直接借鉴。</strong></p>
+    <p class="desc">模特与菲律宾裔母亲首次共演。为母亲挑选口红色号并亲手涂上。<strong>「帮妈妈选她的颜色」= 珀莱雅礼盒可借鉴。</strong></p>
     <div class="tags">
       <span class="tag pink">母女</span>
       <span class="tag">母亲节直接案例</span>
@@ -146,20 +169,23 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 
 </div>
 
-<!-- 韩国 / 其他美妆 -->
+<!-- 其他 -->
 <div class="section">
-  <h2>韩国 · 其他美妆品牌</h2>
-  <p>东方美学 · 代际传承 · 花开意象</p>
+  <h2>其他品牌 · 调性参考</h2>
+  <p>东方美学 · 代际传承 · 留白叙事</p>
 </div>
 
 <div class="grid">
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/QfD5j2wGkMU" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=QfD5j2wGkMU" target="_blank">
+    <img src="https://img.youtube.com/vi/QfD5j2wGkMU/maxresdefault.jpg" alt="Sulwhasoo">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">Sulwhasoo 雪花秀 · 2022 Rebloom</p>
     <h3>《From 1932 To You》</h3>
-    <p class="desc">以一滴山茶花油反向追溯品牌近百年。核心是代际传承——母亲脸颊上精华的味道，是 ROSÉ 童年最深刻的嗅觉记忆。<strong>「花开」意象与「各自盛放」天然共振。</strong></p>
+    <p class="desc">一滴山茶花油反向追溯品牌近百年。代际传承——母亲脸颊上精华的味道是童年最深的嗅觉记忆。<strong>「花开」意象天然共振。</strong></p>
     <div class="tags">
       <span class="tag purple">代际传承</span>
       <span class="tag pink">花开意象</span>
@@ -169,11 +195,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </div>
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/litXW91UauE" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=litXW91UauE" target="_blank">
+    <img src="https://img.youtube.com/vi/litXW91UauE/maxresdefault.jpg" alt="Dove">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">Dove 多芬 · 2013</p>
-    <h3>《Real Beauty Sketches》你比你想象的更美丽</h3>
-    <p class="desc">FBI素描师分别根据自述和他人描述画出女性肖像。几乎无旁白，靠表情和沉默传递。全球1.63亿播放，史上最成功美妆广告之一。<strong>素人纪实+温柔基调的执行教科书。</strong></p>
+    <h3>《Real Beauty Sketches》</h3>
+    <p class="desc">FBI素描师根据自述和他人描述画出两幅肖像。几乎无旁白，靠沉默传递。全球1.63亿播放。<strong>素人纪实+温柔基调教科书。</strong></p>
     <div class="tags">
       <span class="tag">素人纪实</span>
       <span class="tag">极致留白</span>
@@ -182,22 +211,15 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
   </div>
 </div>
 
-</div>
-
-<!-- 日本经典 (美妆相关) -->
-<div class="section">
-  <h2>日本 · 留白叙事参考</h2>
-  <p>非美妆但叙事手法值得直接借鉴</p>
-</div>
-
-<div class="grid">
-
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/9TJD8P6wHxo" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=9TJD8P6wHxo" target="_blank">
+    <img src="https://img.youtube.com/vi/9TJD8P6wHxo/maxresdefault.jpg" alt="Tokyo Gas">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">东京瓦斯 · 2025</p>
     <h3>《ふたつの人生》两个人生</h3>
-    <p class="desc">令和女儿 vs 平成母亲。两种生活并置，不评判谁好谁坏。1周破148万播放。<strong>「并置不评判」= 「各自盛放」的叙事结构。</strong></p>
+    <p class="desc">令和女儿 vs 平成母亲。两种生活并置，不评判。1周148万播放。<strong>「并置不评判」= 「各自盛放」的叙事结构。</strong></p>
     <div class="tags">
       <span class="tag purple">并置叙事</span>
       <span class="tag pink">代际对比</span>
@@ -207,11 +229,14 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 </div>
 
 <div class="card">
-  <iframe src="https://www.youtube.com/embed/SwjhXLmTb80" allowfullscreen></iframe>
+  <a class="thumb" href="https://www.youtube.com/watch?v=SwjhXLmTb80" target="_blank">
+    <img src="https://img.youtube.com/vi/SwjhXLmTb80/maxresdefault.jpg" alt="Kao Merit">
+    <div class="play-btn"></div>
+  </a>
   <div class="card-body">
     <p class="brand">花王 Merit · 2024</p>
-    <h3>《家族と愛とメリット》家族与爱 · 手绘动画系列</h3>
-    <p class="desc">温暖手绘动画讲述家庭日常。不拍真人、不用煽情BGM、用简笔画+童声达到极强情感共鸣。<strong>证明「留白感」可以通过极简视觉实现。</strong></p>
+    <h3>《家族と愛とメリット》手绘动画系列</h3>
+    <p class="desc">温暖手绘动画，简笔画+童声。不拍真人却极强共鸣。<strong>证明「留白感」可以通过极简视觉实现。</strong></p>
     <div class="tags">
       <span class="tag">手绘动画</span>
       <span class="tag">极简</span>
@@ -224,11 +249,12 @@ h1{font-size:28px;font-weight:300;letter-spacing:4px;margin-bottom:8px;color:#A8
 
 <div class="note">
   <strong>调性速查</strong><br><br>
-  最安静、最留白：资生堂《みんな、いい顔してる》、东京瓦斯《母とは》<br>
-  最贴合「各自盛放」：SK-II《Timelines》、东京瓦斯《ふたつの人生》<br>
+  最安静、最留白：资生堂《みんな、いい顔してる》<br>
+  最贴合「各自盛放」：SK-II《The Expiry Date》、东京瓦斯《ふたつの人生》<br>
   最有诗意隐喻：SK-II《The Expiry Date》、雪花秀《From 1932 To You》<br>
   最具执行参考（美妆母亲节）：OLAY《未说出口的话》、资生堂《ゆきぽよ送口红》<br>
-  最佳素人纪实：Dove《Real Beauty Sketches》、SK-II《Marriage Market》
+  最佳素人纪实：Dove《Real Beauty Sketches》、SK-II《Marriage Market》<br><br>
+  <em>所有视频均已验证在 YouTube 上可观看（点击缩略图跳转）。部分视频禁止 iframe 嵌入但页面可正常打开。</em>
 </div>
 
 </body>

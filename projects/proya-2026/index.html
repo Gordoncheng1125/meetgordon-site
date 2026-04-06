@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>珀莱雅 2026 母亲节 · 繁花 · 各自盛放</title>
+<title>珀莱雅 2026 母亲节 · 繁花 · 花替我说</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -78,6 +78,46 @@ html, body { width:100%; height:100%; overflow:hidden; background:#1a1a2e; }
   background: linear-gradient(135deg, #A8C8E8 0%, #9B8EC4 100%);
 }
 
+/* 深色电影感模板 */
+.slide-cinematic {
+  background: #0a0a0a;
+  color: #F0E8E0;
+}
+.slide-cinematic .bg-img {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background-size:cover; background-position:center;
+  z-index:0;
+}
+.slide-cinematic .bg-overlay {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.40);
+  z-index:1;
+}
+.slide-cinematic .content,
+.slide-cinematic .content-wide,
+.slide-cinematic .content.center {
+  position:relative; z-index:2;
+}
+.slide-cinematic h1, .slide-cinematic h2 {
+  color:#F0E8E0;
+}
+.slide-cinematic .card-cine {
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;
+  padding:24px;
+}
+
+.slide-cinematic .poem-line { color:#F0E8E0; }
+.slide-cinematic .card { background:rgba(255,255,255,0.06); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.08); }
+.slide-cinematic .card .tag { background:rgba(90,138,184,0.2); color:#A8C8E8; border-color:rgba(90,138,184,0.3); }
+.slide-cinematic .stat { color:#A8C8E8; }
+.slide-cinematic .subtitle { color:rgba(240,232,224,0.5); }
+.slide-cinematic .small { color:rgba(240,232,224,0.3); }
+
+
+
 /* === Typography === */
 h1 {
   font-family:'Noto Serif SC', serif;
@@ -106,7 +146,7 @@ p, li {
   font-weight:300; font-size:16px;
   letter-spacing:2px; color:#5A8AB8;
 }
-.poem-line {
+.poem-line { color:#F0E8E0;
   font-family:'Noto Serif SC', serif;
   font-weight:300; font-size:18px;
   line-height:2.2; letter-spacing:3px;
@@ -114,7 +154,7 @@ p, li {
 }
 /* SV页表格放大 */
 .sv-detail td { font-size:14px; line-height:1.7; }
-.sv-detail td:nth-child(3) { color:#4A3660; }
+.sv-detail td:nth-child(3) { color:#D0C4E0; }
 .stat {
   font-family:'Playfair Display', serif;
   font-size:48px; color:#7BA7D4;
@@ -189,30 +229,28 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 <div class="deck" id="deck">
 
 <!-- P1 封面 -->
-<div class="slide slide-skyblue active" data-page="1">
-  <div class="content center">
-    <p class="subtitle" style="margin-bottom:40px; font-size:14px;">Y26 PROYA Mother's Day Campaign</p>
-    <h1 style="font-size:46px; margin-bottom:16px;">珀莱雅母亲节礼遇营销</h1>
-    <h2 style="font-weight:300; font-size:22px; color:#4A5568; margin-bottom:48px;">创意策略与物料制作</h2>
-    <div style="display:flex; gap:8px; justify-content:center; margin-bottom:48px;">
-      <span class="flower-dot pink"></span>
-      <span class="flower-dot purple"></span>
-      <span class="flower-dot blue"></span>
-      <span class="flower-dot warm"></span>
-      <span class="flower-dot pink"></span>
-    </div>
-    <p style="margin-top:60px; font-size:13px; color:#8898AA; letter-spacing:1px;">2026.04.07</p>
+<div class="slide slide-cinematic active" data-page="1">
+  <div class="bg-img" style="background-image:url('bg-images/bg-cover.jpg');"></div>
+  <div class="bg-overlay"></div>
+  <div class="content style="position:relative; z-index:2; center" style="position:relative; z-index:2;">
+    <p style="margin-bottom:40px; font-size:13px; color:rgba(240,232,224,0.5); letter-spacing:3px; text-transform:uppercase;">Y26 PROYA Mother's Day Campaign</p>
+    <h1 style="font-size:48px; margin-bottom:16px; color:#F0E8E0; letter-spacing:4px;">珀莱雅母亲节礼遇营销</h1>
+    <h2 style="font-weight:300; font-size:22px; color:rgba(240,232,224,0.7); margin-bottom:48px;">创意策略与创意视频脚本及相关物料</h2>
+    <div style="width:60px; height:1px; background:rgba(240,232,224,0.3); margin:0 auto 48px;"></div>
+    <p style="font-size:14px; color:rgba(240,232,224,0.5); letter-spacing:2px; margin-bottom:8px;">岗有文化</p>
+    <p style="font-size:13px; color:rgba(240,232,224,0.4); letter-spacing:2px;">2026.04.07</p>
   </div>
 </div>
 
 <!-- P2 礼遇洞察 — 三个发现 -->
-<div class="slide slide-data" data-page="2">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="2" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-insight1.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content style="position:relative; z-index:2;-wide" style="position:relative; z-index:2;">
     <h2 style="color:#A8C8E8; margin-bottom:8px;">礼遇洞察</h2>
     <h3 style="color:#D4E6F8; font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:36px;">母亲节美妆礼赠，我们看到了三件事</h3>
     <div class="three-col">
       <div class="card-dark">
-        <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=600&q=80');"></div>
         <h3 style="color:#7BA7D4; margin-bottom:12px;">发现一</h3>
         <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">礼赠是美妆确定性增量</p>
         <p style="color:#B8C8D8;">礼物经济 <span class="stat" style="font-size:28px;">1.38</span> 万亿</p>
@@ -222,7 +260,6 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
         <p style="color:#D4E6F8; font-size:14px; font-weight:500;">自用是存量，礼赠是增量。<br>珀莱雅不缺「好用」的认知，<br>缺的是「好送」的理由。</p>
       </div>
       <div class="card-dark">
-        <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=600&q=80');"></div>
         <h3 style="color:#E8A0B8; margin-bottom:12px;">发现二</h3>
         <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">爱很浓，表达很薄</p>
         <p style="color:#B8C8D8;"><span style="color:#E8A0B8; font-weight:500;">47.57%</span> 清楚母亲的爱好</p>
@@ -233,12 +270,11 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
         <p style="color:#D4E6F8; font-size:14px; font-weight:500;">最大的障碍不是不了解产品，<br>是不确定自己够了解妈妈。</p>
       </div>
       <div class="card-dark">
-        <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80');"></div>
         <h3 style="color:#9B8EC4; margin-bottom:12px;">发现三</h3>
         <p style="color:#A8C8E8; font-size:16px; font-weight:500; margin-bottom:12px;">母亲节正在变轻</p>
         <p style="color:#B8C8D8;">小红书最火话题不是 #感恩母爱</p>
-        <p style="color:#B8C8D8;">而是 <span style="color:#9B8EC4; font-weight:500;">#妈妈的留白</span></p>
-        <p style="color:#B8C8D8;">浏览量 <span style="color:#9B8EC4; font-weight:500;">5,625 万</span></p>
+        <p style="color:#B8C8D8;">而是 <span style="color:#C8B8E8; font-weight:500;">#妈妈的留白</span></p>
+        <p style="color:#B8C8D8;">浏览量 <span style="color:#C8B8E8; font-weight:500;">5,625 万</span></p>
         <div class="spacer"></div>
         <p style="color:#D4E6F8; font-size:14px; font-weight:500;">好的礼物不是填满，是留白。<br>给她一个「可以为自己」的空间。</p>
       </div>
@@ -248,8 +284,10 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- P3a 竞品格局（带活动照片） -->
-<div class="slide slide-data" data-page="3">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="3" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-insight2.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.60);"></div>
+  <div class="content style="position:relative; z-index:2;-wide" style="position:relative; z-index:2;">
     <h2 style="color:#A8C8E8; margin-bottom:8px;">礼遇洞察</h2>
     <h3 style="color:#D4E6F8; font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:28px;">2025 母亲节竞争格局</h3>
     <p style="color:#B8C8D8; margin-bottom:24px;">所有品牌都在告诉消费者「选我」，没有品牌在帮消费者说「为什么送」。</p>
@@ -300,8 +338,10 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- P3b 珀莱雅的位置 -->
-<div class="slide slide-data" data-page="3b">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="3b" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-persona.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content style="position:relative; z-index:2;-wide" style="position:relative; z-index:2;">
     <div class="two-col" style="gap:60px; align-items:start;">
       <!-- 左栏：六年积累 -->
       <div>
@@ -339,83 +379,91 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- P4 人群洞察 -->
-<div class="slide slide-skyblue" data-page="4">
-  <div class="content">
-    <h2 style="margin-bottom:8px;">人群洞察</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:40px; color:#2A3A50;">她们都在找同一个东西</h3>
+<div class="slide slide-cinematic" data-page="4" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-need.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.50);"></div>
+  <div class="content style="position:relative; z-index:2;" style="position:relative; z-index:2;">
+    <h2 style="margin-bottom:8px; color:#F0E8E0;">人群洞察</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:40px; color:rgba(240,232,224,0.75);">她们都在找同一个东西</h3>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-      <div class="card">
+      <div class="card-cine">
         <span class="tag" style="margin-bottom:12px; display:inline-block;">⭐ 新锐白领 · 预算 300-500元</span>
-        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 4px;">送妈妈</p>
-        <p style="color:#5A8AB8; font-size:12px; margin-bottom:8px;">单身未婚都市白领，乐于尝新，情绪价值是关键</p>
-        <p style="color:#4A5568; font-style:italic;">「平时太忙没时间陪她，但我想让她知道我记得。」</p>
+        <p style="font-size:18px; font-weight:500; color:#F0E8E0; margin:12px 0 4px;">送妈妈</p>
+        <p style="color:rgba(168,200,232,0.7); font-size:12px; margin-bottom:8px;">单身未婚都市白领，乐于尝新，情绪价值是关键</p>
+        <p style="color:rgba(240,232,224,0.65); font-style:italic;">「平时太忙没时间陪她，但我想让她知道我记得。」</p>
       </div>
-      <div class="card">
+      <div class="card-cine">
         <span class="tag" style="margin-bottom:12px; display:inline-block;">⭐ 高消费小镇青年 · 预算 200-400元</span>
-        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 4px;">送妈妈 + 婆婆</p>
-        <p style="color:#5A8AB8; font-size:12px; margin-bottom:8px;">实用型婚后女性，好看好用性价比高，一套搞定长辈护肤</p>
-        <p style="color:#4A5568; font-style:italic;">「买两套，一套妈妈一套婆婆，不偏心。」</p>
+        <p style="font-size:18px; font-weight:500; color:#F0E8E0; margin:12px 0 4px;">送妈妈 + 婆婆</p>
+        <p style="color:rgba(168,200,232,0.7); font-size:12px; margin-bottom:8px;">实用型婚后女性，好看好用性价比高，一套搞定长辈护肤</p>
+        <p style="color:rgba(240,232,224,0.65); font-style:italic;">「买两套，一套妈妈一套婆婆，不偏心。」</p>
       </div>
-      <div class="card">
-        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(155,142,196,0.15); color:#9B8EC4; border-color:rgba(155,142,196,0.25);">精致妈妈 · 预算 400-600元</span>
-        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 4px;">送闺蜜 / 送自己</p>
-        <p style="color:#5A8AB8; font-size:12px; margin-bottom:8px;">送礼对象含闺蜜（新手妈妈），也存在悦己 self-gifting 场景</p>
-        <p style="color:#4A5568; font-style:italic;">「当了妈妈也可以很美，这是给自己的。」</p>
+      <div class="card-cine">
+        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(155,142,196,0.2); color:#C8B8E8; border-color:rgba(155,142,196,0.35);">精致妈妈 · 预算 400-600元</span>
+        <p style="font-size:18px; font-weight:500; color:#F0E8E0; margin:12px 0 4px;">送闺蜜</p>
+        <p style="color:rgba(168,200,232,0.7); font-size:12px; margin-bottom:8px;">送礼对象含闺蜜（新手妈妈），护肤礼盒是最安全的闺蜜礼物</p>
+        <p style="color:rgba(240,232,224,0.65); font-style:italic;">「她刚当妈，我想让她记得自己还是她自己。」</p>
       </div>
-      <div class="card">
-        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(212,192,160,0.2); color:#A08860; border-color:rgba(212,192,160,0.3);">资深中产 · 预算 500-1000元</span>
-        <p style="font-size:18px; font-weight:500; color:#2A3A50; margin:12px 0 4px;">送妈妈 / 长辈</p>
-        <p style="color:#5A8AB8; font-size:12px; margin-bottom:8px;">品牌忠诚度高，注重稀缺性与溢价感</p>
-        <p style="color:#4A5568; font-style:italic;">「选一个拿得出手的，让她知道我用了心。」</p>
+      <div class="card-cine">
+        <span class="tag" style="margin-bottom:12px; display:inline-block; background:rgba(212,192,160,0.2); color:#D4C0A0; border-color:rgba(212,192,160,0.35);">资深中产 · 预算 500-1000元</span>
+        <p style="font-size:18px; font-weight:500; color:#F0E8E0; margin:12px 0 4px;">送自己</p>
+        <p style="color:rgba(168,200,232,0.7); font-size:12px; margin-bottom:8px;">品牌忠诚度高，悦己消费意识强，母亲节也是犒赏自己的理由</p>
+        <p style="color:rgba(240,232,224,0.65); font-style:italic;">「当了这么多年妈妈，这束花送给我自己。」</p>
       </div>
     </div>
-    <p style="font-size:12px; color:#2A3A50; margin-top:16px; background:rgba(255,255,255,0.5); padding:10px 14px; border-radius:8px; line-height:1.8;">人群优先级：新锐白领、高消费小镇青年 > 精致妈妈 > 资深中产（Brief 原文）｜预算数据：艾媒咨询 2025<br>产品对应：红宝石水乳两件套 ~300元 / 水乳精华三件套 ~600元 / 全套礼盒 ~900元（京东/天猫实际售价）</p>
+    <p style="font-size:12px; color:#F0E8E0; margin-top:16px; background:rgba(255,255,255,0.06); padding:10px 14px; border-radius:8px; line-height:1.8;">人群优先级：新锐白领、高消费小镇青年 > 精致妈妈 > 资深中产（Brief 原文）｜预算数据：艾媒咨询 2025<br>产品对应：红宝石水乳两件套 ~300元 / 水乳精华三件套 ~600元 / 全套礼盒 ~900元（京东/天猫实际售价）</p>
   </div>
 </div>
 
 <!-- P5 核心共同需求 -->
-<div class="slide slide-poem" data-page="5">
-  <div class="content center">
+<div class="slide slide-cinematic" data-page="5" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-silhouette.jpg');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.5);"></div>
+  <div class="content center" style="position:relative; z-index:2;">
     <h2 style="font-size:28px; color:#5A8AB8; letter-spacing:3px; margin-bottom:8px;">人群洞察</h2>
-    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:#8898AA; letter-spacing:2px; margin-bottom:48px;">核心共同需求</p>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:rgba(240,232,224,0.5); letter-spacing:2px; margin-bottom:48px;">核心共同需求</p>
     <p class="poem-line" style="font-size:26px; margin-bottom:40px;">她们买的不是护肤品</p>
     <div style="width:40px; height:1px; background:#D4C0A0; margin:0 auto 40px;"></div>
     <p class="poem-line">年轻人给妈妈买护肤品，</p>
     <p class="poem-line">买的不是产品。</p>
-    <p class="poem-line" style="color:#5A8AB8;">是一次「我看见你了」的表达。</p>
+    <p class="poem-line" style="color:#7BB8E8;">是一次「我看见你了，我懂你了」的表达。</p>
   </div>
 </div>
 
 <!-- P6 创意阐述 — 送花 -->
-<div class="slide slide-watercolor" data-page="6">
-  <div class="content center">
-    <h2 style="font-size:28px; color:#4A3660; letter-spacing:3px; margin-bottom:32px;">创意阐述</h2>
+<div class="slide slide-cinematic" data-page="6" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-flowers-dark.jpg');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.5);"></div>
+  <div class="content center" style="position:relative; z-index:2;">
+    <h2 style="font-size:28px; color:#F0E8E0; letter-spacing:3px; margin-bottom:32px;">创意阐述</h2>
     <p style="font-family:'Noto Sans SC',sans-serif; font-size:15px; color:#8898AA; margin-bottom:24px;">Brief 说，以「送花」作为切入点。我们问了一个问题——</p>
-    <h1 style="font-size:38px; color:#4A3660; margin-bottom:48px;">母亲节，<br>为什么永远只有康乃馨？</h1>
+    <h1 style="font-size:38px; color:#D0C4E0; margin-bottom:48px; text-align:center;">母亲节，<br>为什么永远只有康乃馨？</h1>
     <div style="max-width:600px; margin:0 auto; text-align:center;">
-      <p style="color:#6A5880; margin-bottom:12px;">康乃馨成为母亲节标配，是一百年前花商的营销发明。</p>
-      <p style="color:#6A5880; margin-bottom:12px;">当「送花」变成「送康乃馨」，送礼就变成了完成任务。</p>
-      <p style="color:#6A5880; margin-bottom:12px;">但珀莱雅礼盒上的花，不是康乃馨，不是玫瑰——</p>
-      <p style="color:#4A3660; font-weight:500;">不是任何一种被定义好的花。</p>
+      <p style="color:rgba(240,232,224,0.6); margin-bottom:12px;">康乃馨成为母亲节标配，是一百年前花商的营销发明。</p>
+      <p style="color:rgba(240,232,224,0.6); margin-bottom:12px;">当「送花」变成「送康乃馨」，送礼就变成了完成任务。</p>
+      <p style="color:rgba(240,232,224,0.6); margin-bottom:12px;">但珀莱雅礼盒上的花，不是康乃馨，不是玫瑰——</p>
+      <p style="color:#D0C4E0; font-weight:500;">不是任何一种被定义好的花。</p>
     </div>
     <div style="width:40px; height:1px; background:#9B8EC4; margin:40px auto;"></div>
-    <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#4A3660; letter-spacing:3px;">如果花不只有一种，妈妈也不只有一种。</p>
+    <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#F0E8E0; letter-spacing:3px;">如果花不只有一种，妈妈也不只有一种。</p>
   </div>
 </div>
 
 <!-- P7 创意阐述 — 逻辑链 -->
-<div class="slide slide-skyblue" data-page="7">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="7" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-bloom-dark.jpg');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.45);"></div>
+  <div class="content-wide" style="position:relative; z-index:2;">
     <h2 style="margin-bottom:8px;">创意阐述</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:36px;">从「送花」到「各自盛放」</h3>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:22px; margin-bottom:36px;">从「送花」到「说话」</h3>
     <div class="three-col">
       <div class="card" style="text-align:center;">
         <p style="font-size:48px; margin-bottom:12px;">①</p>
         <h3 style="color:#5A8AB8; margin-bottom:8px;">送花</h3>
         <p class="small" style="margin-bottom:16px;">Answer the Brief</p>
-        <p style="font-size:14px; color:#4A5568;">Brief 要求以「送花」作为礼赠情感切入点</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">Brief 要求以「送花」作为礼赠情感切入点</p>
         <div class="spacer-sm"></div>
-        <p style="font-size:14px; color:#4A5568;">珀莱雅礼盒自带可摘花束 = 送花的动作</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">珀莱雅礼盒自带可摘花束 = 送花的动作</p>
         <div class="spacer"></div>
         <p style="font-size:13px; color:#5A8AB8; font-weight:500;">CTA：摘一朵花，送给她</p>
       </div>
@@ -423,49 +471,53 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
         <p style="font-size:48px; margin-bottom:12px;">②</p>
         <h3 style="color:#9B8EC4; margin-bottom:8px;">不止一种花</h3>
         <p class="small" style="margin-bottom:16px;">洞察</p>
-        <p style="font-size:14px; color:#4A5568;">礼盒上的花不是康乃馨 = 不是任何一种被定义的花</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">礼盒上的花不是康乃馨 = 不是任何一种被定义的花</p>
         <div class="spacer-sm"></div>
-        <p style="font-size:14px; color:#4A5568;">延续品牌六年「为女性松绑」资产</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">延续品牌六年「为女性松绑」资产</p>
         <div class="spacer"></div>
-        <p style="font-size:13px; color:#9B8EC4; font-weight:500;">破题：世界上的妈妈，不只有一种</p>
+        <p style="font-size:13px; color:#C8B8E8; font-weight:500;">破题：世界上的妈妈，不只有一种</p>
       </div>
       <div class="card" style="text-align:center;">
         <p style="font-size:48px; margin-bottom:12px;">③</p>
-        <h3 style="color:#E8A0B8; margin-bottom:8px;">各自盛放</h3>
-        <p class="small" style="margin-bottom:16px;">态度</p>
-        <p style="font-size:14px; color:#4A5568;">每位妈妈都是独一无二的花</p>
-        <p style="font-size:14px; color:#4A5568;">她不必是谁规定的样子</p>
+        <h3 style="color:#E8A0B8; margin-bottom:8px;">每一次真实的互动</h3>
+        <p class="small" style="margin-bottom:16px;">关系</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">送花不只是一个动作</p>
+        <p style="font-size:14px; color:rgba(240,232,224,0.65);">每一次真实的互动，都是一段关系的开始或改变</p>
         <div class="spacer"></div>
-        <p style="font-size:13px; color:#E8A0B8; font-weight:500;">Slogan：各自盛放</p>
+        <p style="font-size:13px; color:#E8A0B8; font-weight:500;">花，是说不出口的话的出口</p>
       </div>
     </div>
     <div class="spacer"></div>
-    <p class="center" style="font-family:'Noto Serif SC',serif; font-size:18px; color:#2A3A50; letter-spacing:2px;">最好的礼遇，是一整套的款待。</p>
+    <p class="center" style="font-family:'Noto Serif SC',serif; font-size:18px; color:#F0E8E0; letter-spacing:2px;">最好的礼遇，是一整套的款待。</p>
   </div>
 </div>
 
 <!-- P8 创意主题揭晓 -->
-<div class="slide slide-transition" data-page="8">
-  <div class="content center">
+<div class="slide slide-cinematic" data-page="8" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-bouquet.jpg');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content center" style="position:relative; z-index:2;">
     <div style="display:flex; gap:6px; justify-content:center; margin-bottom:40px;">
       <span class="flower-dot pink"></span>
       <span class="flower-dot purple"></span>
       <span class="flower-dot blue"></span>
       <span class="flower-dot warm"></span>
     </div>
-    <h1 style="font-size:56px; color:#fff; letter-spacing:12px; margin-bottom:40px;">各自盛放</h1>
+    <h1 style="font-size:56px; color:#fff; letter-spacing:12px; margin-bottom:40px;">花替我说</h1>
     <div style="width:60px; height:1px; background:rgba(255,255,255,0.4); margin:0 auto 40px;"></div>
     <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:rgba(255,255,255,0.8); line-height:2.2; letter-spacing:3px;">
       世界上的妈妈，不只有一种。世界上的花，也不只有一种。<br>
-      <span style="color:#fff;">Slogan：各自盛放。</span><br>
+      <span style="color:#fff;">Slogan：花替我说。</span><br>
       <span style="color:rgba(255,255,255,0.7);">CTA：摘一朵花，送给她。</span>
     </p>
   </div>
 </div>
 
 <!-- P9 Core Idea 文案 -->
-<div class="slide slide-poem" data-page="9" style="padding:36px 80px;">
-  <div class="content center">
+<div class="slide slide-cinematic" data-page="9" style="padding:36px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-writing.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.45);"></div>
+  <div class="content center" style="position:relative; z-index:2;">
     <p class="poem-line" style="color:#8898AA; margin-bottom:20px;">五月的风，有阳光的味道。</p>
     <p class="poem-line">世界上的妈妈，不只有一种。</p>
     <p class="poem-line" style="margin-bottom:18px;">世界上的花，也不只有一种。</p>
@@ -477,21 +529,23 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
     <p class="poem-line" style="color:#5A8AB8;">摘一朵花，送给她。</p>
     <p class="poem-line">你不用说什么。</p>
     <p class="poem-line" style="margin-bottom:18px;">花会替你说的。</p>
-    <p class="poem-line" style="margin-bottom:18px; color:#5A8AB8;">母亲节的花，不止一种。各自盛放。</p>
+    <p class="poem-line" style="margin-bottom:18px; color:#5A8AB8;">母亲节的花，不止一种。</p>
     <p style="font-family:'Noto Sans SC',sans-serif; font-size:13px; color:#8898AA; letter-spacing:2px;">珀莱雅母亲节礼盒</p>
   </div>
 </div>
 
 <!-- P10 CG 脚本 第一页 Cut 1-8 -->
-<div class="slide slide-skyblue" data-page="10" style="padding:32px 60px;">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="10" style="padding:32px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-window.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content-wide" style="position:relative; z-index:2;">
     <h2 style="margin-bottom:4px;">礼盒 CG 视频</h2>
     <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:20px; margin-bottom:14px;">14-cut · 旁白脚本（1/2）</h3>
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
       <div style="text-align:center;">
         <img src="cg-cuts/cut01.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 1</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「五月的风，<br>有阳光的味道。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「五月的风，<br>有阳光的味道。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut02.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
@@ -501,29 +555,29 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
       <div style="text-align:center;">
         <img src="cg-cuts/cut04-05.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 4-5</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「世界上的妈妈，不只有一种。」<br>「世界上的花，也不只有一种。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「世界上的妈妈，不只有一种。」<br>「世界上的花，也不只有一种。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut06.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 6</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「有的柔软。<br>像她抱你时候的手臂。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「有的柔软。<br>像她抱你时候的手臂。」</p>
       </div>
     </div>
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:12px;">
       <div style="text-align:center;">
         <img src="cg-cuts/cut07-08.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 7-8</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「有的透亮。什么心事，你一眼就看见了。」<br>「有的坚韧。风吹不倒，时间也是。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「有的透亮。什么心事，你一眼就看见了。」<br>「有的坚韧。风吹不倒，时间也是。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut09.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 9</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「她不必是康乃馨。<br>她是她自己。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「她不必是康乃馨。<br>她是她自己。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut10.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 10</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「摘一朵花。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「摘一朵花。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut11.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
@@ -535,15 +589,17 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- P11 CG 脚本 第二页 Cut 12-14 + Super -->
-<div class="slide slide-skyblue" data-page="11" style="padding:32px 60px;">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="11" style="padding:32px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-mood.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content-wide" style="position:relative; z-index:2;">
     <h2 style="margin-bottom:4px;">礼盒 CG 视频</h2>
     <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:20px; margin-bottom:14px;">14-cut · 旁白脚本（2/2）</h3>
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
       <div style="text-align:center;">
         <img src="cg-cuts/cut12.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 12</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「送给她。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「送给她。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/cut13.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
@@ -553,12 +609,12 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
       <div style="text-align:center;">
         <img src="cg-cuts/cut14.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#5A8AB8; margin-top:4px; font-weight:500;">Cut 14</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic; line-height:1.4;">「你不用说什么。<br>花会替你说的。」</p>
+        <p style="font-size:11px; color:#7BB8E8; font-style:italic; line-height:1.4;">「你不用说什么。<br>花会替你说的。」</p>
       </div>
       <div style="text-align:center;">
         <img src="cg-cuts/super.png" style="width:100%; height:130px; object-fit:contain; background:#f0f0f0; border-radius:8px;">
         <p style="font-size:11px; color:#E8A0B8; margin-top:4px; font-weight:500;">Super</p>
-        <p style="font-size:12px; color:#2A3A50; font-weight:500; line-height:1.4;">母亲节的花，不止一种。<br>各自盛放。</p>
+        <p style="font-size:12px; color:#F0E8E0; font-weight:500; line-height:1.4;">母亲节的花，不止一种。</p>
       </div>
     </div>
     <div style="margin-top:24px; text-align:center;">
@@ -569,298 +625,797 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- SV 扉页 — 创作阐述 -->
-<div class="slide slide-poem" data-page="sv-intro" style="padding:40px 80px;">
-  <div class="content-wide">
-    <h2 style="font-size:28px; color:#4A3660; letter-spacing:3px; margin-bottom:8px;">社交视频 × 4</h2>
+<div class="slide slide-cinematic" data-page="sv-intro" style="padding:40px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-floor.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.5);"></div>
+  <div class="content-wide" style="position:relative; z-index:2;">
+    <h2 style="font-size:28px; color:#F0E8E0; letter-spacing:3px; margin-bottom:8px;">社交视频 × 4</h2>
     <p style="font-family:'Noto Serif SC',serif; font-size:16px; color:#8898AA; margin-bottom:32px;">四朵花，四个真实的送礼时刻</p>
-    <div style="max-width:720px; margin:0 auto 28px; text-align:left; font-family:'Noto Serif SC',serif; font-size:15px; color:#4A3660; line-height:2;">
+    <div style="max-width:720px; margin:0 auto 28px; text-align:left; font-family:'Noto Serif SC',serif; font-size:15px; color:#D0C4E0; line-height:2;">
       <p>母亲节不再只是「感恩」的节日，它正在变成一次关系的确认。</p>
       <p style="margin-top:12px;">四个故事，回应三件事——</p>
       <p style="margin-top:12px;"><span style="color:#5A8AB8; font-weight:500;">时代洞察</span>：当代的「母亲」不只有一种样貌。她是在阳台收衣服的人，是咖啡馆里推婴儿车的人，是帮忙接孩子放学的人，也是第一次为自己买花的人。</p>
       <p style="margin-top:8px;"><span style="color:#5A8AB8; font-weight:500;">人群切面</span>：每个故事切中一个消费入口——从新锐白领到小镇青年，从闺蜜到悦己，覆盖全部目标人群。</p>
       <p style="margin-top:8px;"><span style="color:#5A8AB8; font-weight:500;">互动可能</span>：四朵花各自独立，但放在一起，开启了不同关系之间的互动。每一次「摘花」，都是一次真实的连结。</p>
     </div>
-    <div style="width:40px; height:1px; background:#D4C0A0; margin:0 auto 24px;"></div>
-    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; max-width:960px; margin:0 auto;">
-      <div class="card" style="padding:16px; text-align:center;">
-        <p style="font-size:14px; font-weight:500; color:#5A8AB8; margin-bottom:6px;">SV1 · 女儿送妈妈</p>
-        <p style="font-size:12px; color:#8898AA; margin-bottom:8px;">新锐白领 · 30s</p>
-        <p style="font-size:13px; color:#4A3660; line-height:1.6;">翻妈妈朋友圈——全是食物和风景，没有她自己。</p>
+  </div>
+</div>
+
+<!-- SV1 分隔页 -->
+<div class="slide slide-cinematic" data-page="sv1-divider" style="padding:60px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-floor.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content" style="position:relative; z-index:2; text-align:center;">
+    <p style="font-size:14px; color:#5A8AB8; letter-spacing:3px; margin-bottom:24px;">SV1</p>
+    <h1 style="font-size:42px; color:#F0E8E0; letter-spacing:4px; margin-bottom:16px;">女儿送妈妈</h1>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:rgba(240,232,224,0.5); margin-bottom:40px;">新锐白领</p>
+    <div style="width:40px; height:1px; background:rgba(240,232,224,0.2); margin:0 auto 40px;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:17px; color:rgba(240,232,224,0.7); line-height:2; max-width:560px; margin:0 auto;">刚参加工作的她，第一次体会到妈妈当年的节奏。<br><span style="color:#7BB8E8;">「我不想说您辛苦了。<br>我想说，我好像有一点懂你了。」</span></p>
+  </div>
+</div>
+
+<!-- SV1 女儿送妈妈 Page 1: Cut 1-4 -->
+
+<div class="slide slide-cinematic" data-page="sv1a" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV1 · 女儿送妈妈</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">~55s · 核心 TA：新锐白领 · 「我好像有一点懂你了」</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv1/sv1-f1.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 1</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">城市清晨<br>楼和楼之间透进来的光</p>
       </div>
-      <div class="card" style="padding:16px; text-align:center;">
-        <p style="font-size:14px; font-weight:500; color:#E8A0B8; margin-bottom:6px;">SV2 · 闺蜜互送</p>
-        <p style="font-size:12px; color:#8898AA; margin-bottom:8px;">精致妈妈 · 30s</p>
-        <p style="font-size:13px; color:#4A3660; line-height:1.6;">「我们什么时候，变成过这个节的人了。」</p>
+      <div style="text-align:center;">
+        <img src="sv-images/sv1/sv1-f2.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 2</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">出租屋。很小，但阳光很好</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「五月了。」</p>
       </div>
-      <div class="card" style="padding:16px; text-align:center;">
-        <p style="font-size:14px; font-weight:500; color:#9B8EC4; margin-bottom:6px;">SV3 · 三代女性</p>
-        <p style="font-size:12px; color:#8898AA; margin-bottom:8px;">婚后 / 小镇青年 · 30s</p>
-        <p style="font-size:13px; color:#4A3660; line-height:1.6;">她照顾她，她也照顾我。婆媳之间，也有一朵花。</p>
+      <div style="text-align:center;">
+        <img src="sv-images/sv1/sv1-f3.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 3</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">镜子前扎头发<br>动作快、熟练</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「第一年。一个人的城市。」</p>
       </div>
-      <div class="card" style="padding:16px; text-align:center;">
-        <p style="font-size:14px; font-weight:500; color:#D4C0A0; margin-bottom:6px;">SV4 · 妈妈送自己</p>
-        <p style="font-size:12px; color:#8898AA; margin-bottom:8px;">精致中产 / 悦己 · 30s</p>
-        <p style="font-size:13px; color:#4A3660; line-height:1.6;">儿子上大学了。第一个不在身边的母亲节，也是第一次属于自己的五月。</p>
+      <div style="text-align:center;">
+        <img src="sv-images/sv1/sv1-f4.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 4</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">地铁。靠着门边<br>手里拿着手机但没在看</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- P11 SV1 -->
-<div class="slide slide-watercolor" data-page="11" style="padding:36px 60px;">
+<!-- SV1 女儿送妈妈 Page 2: Cut 5-8 -->
+
+<div class="slide slide-cinematic" data-page="sv1b" style="padding:32px 60px; justify-content:flex-start;">
   <div class="content-wide">
-    <h2 style="color:#4A3660; margin-bottom:4px;">SV1 · 女儿送妈妈</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:18px; color:#6A5880; margin-bottom:16px;">30s · 核心 TA：新锐白领</h3>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV1 · 女儿送妈妈（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">日常触发 · 妈妈的消息与一个人的晚餐</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f1.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">0-5s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">翻妈妈朋友圈<br>全是食物和风景。没有她自己</p>
-        <p style="font-size:11px; color:#8898AA;">安静</p>
+        <img src="sv-images/sv1/sv1-f5.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 5</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">办公桌。咖啡凉了<br>揉了一下眼睛</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f2.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">6-11s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">收到礼盒。打开。看到花束</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">「你的朋友圈里，没有你自己。」</p>
+        <img src="sv-images/sv1/sv1-f6.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 6</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">手机亮了。妈妈：「今天冷，外套带了吗」<br>她看了一眼。没回</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「你总是知道，今天冷不冷。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f3.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">12-16s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">在卡片上写字。只看到笔尖</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">「你总是拍我们。拍天空。拍晚饭。」</p>
-      </div>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:12px;">
-      <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f4.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">17-21s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">妈妈收到礼盒。摘下花</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">「你从来不拍自己。」</p>
+        <img src="sv-images/sv1/sv1-f7.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 7</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">傍晚。她走在路上<br>天色从亮变暗</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f5.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">22-26s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">花别在耳边。对镜子笑了</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">「……但你笑起来的样子，我都记得。」</p>
-      </div>
-      <div style="text-align:center;">
-        <img src="sv-images/sv1/sv1-f6.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">27-30s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">礼盒特写</p>
-        <p style="font-size:11px; color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</p>
+        <img src="sv-images/sv1/sv1-f8.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 8</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">灶台前煮面。等水开<br>一个人的厨房</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- P12 SV2 -->
-<div class="slide slide-watercolor" data-page="12" style="padding:36px 60px;">
+<!-- SV1 女儿送妈妈 Page 3: Cut 9-12 -->
+
+<div class="slide slide-cinematic" data-page="sv1c" style="padding:32px 60px; justify-content:flex-start;">
   <div class="content-wide">
-    <h2 style="color:#4A3660; margin-bottom:4px;">SV2 · 闺蜜互送</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:18px; color:#6A5880; margin-bottom:16px;">30s · 核心 TA：精致妈妈 / 新手妈妈</h3>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV1 · 女儿送妈妈（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">转折 · 水开了，懂了</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f1.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">0-4s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">咖啡馆。婴儿车。疲惫的眼圈</p>
-        <p style="font-size:11px; color:#8898AA;">环境声</p>
+        <img src="sv-images/sv1/sv1-f9.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 9</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">特写：锅里水开了<br>蒸汽升起来</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「这一年，我学会了一个人煮面。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f2.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">5-9s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">A 拿出礼盒递过去</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">A：「母亲节快乐。」<br>B：「我们什么时候…变成过这个节的人了。」</p>
+        <img src="sv-images/sv1/sv1-f10.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 10</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她停了一下。低头笑了</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「那时候你，一边工作，一边带我。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f3.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">10-15s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">B 拆开。摘下花</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">A：「你那时候就说了——<br>凭什么母亲节只有康乃馨。」</p>
-      </div>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:12px;">
-      <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f4.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">16-21s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">花插头上。做了个鬼脸</p>
-        <p style="font-size:11px; color:#5A8AB8; font-style:italic;">B：「这朵不像康乃馨。」A：「不像妈妈。」</p>
+        <img src="sv-images/sv1/sv1-f11.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 11</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">桌上一碗面。她一个人吃<br>窗外城市的灯</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「原来你每天，都是这种节奏。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f5.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">22-26s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">两人对视。松了一口气的笑</p>
-        <p style="font-size:11px; color:#5A8AB8; font-weight:500; font-style:italic;">B：「像我们。」</p>
-      </div>
-      <div style="text-align:center;">
-        <img src="sv-images/sv2/sv2-f6.jpg" style="width:100%; height:170px; object-fit:cover; border-radius:8px;">
-        <p style="font-size:11px; color:#9B8EC4; margin-top:6px; font-weight:500;">27-30s</p>
-        <p style="font-size:12px; color:#4A3660; line-height:1.5;">礼盒特写</p>
-        <p style="font-size:11px; color:#9B8EC4;">摘一朵花，送给她。珀莱雅母亲节礼盒</p>
+        <img src="sv-images/sv1/sv1-f12.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 12</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">放下筷子。看着窗外<br>安静了一会</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「我不想说您辛苦了。」</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- P13 SV3 -->
-<div class="slide slide-watercolor" data-page="13" style="padding:32px 50px;">
+<!-- SV1 女儿送妈妈 Page 4: Cut 13-17 + Super -->
+
+<div class="slide slide-cinematic" data-page="sv1d" style="padding:32px 60px; justify-content:flex-start;">
   <div class="content-wide">
-    <h2 style="color:#4A3660; margin-bottom:4px;">SV3 · 媳妇送婆婆（三代女性）</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:18px; color:#6A5880; margin-bottom:12px;">30s · 核心 TA：婚后女性 / 小镇青年</h3>
-    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV1 · 女儿送妈妈（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">送礼 · 回响 · 两扇窗</h3>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f1.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">0-3s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">小女孩踩凳子<br>婆婆扶着她</p>
-        <p style="font-size:10px; color:#8898AA;">「奶奶！」（笑）</p>
+        <img src="sv-images/sv1/sv1-f13.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 13</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">回过头<br>手机屏幕亮着妈妈的头像</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「我想说，我好像<br>有一点懂你了。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f2.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">4-8s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">半蹲换鞋<br>低头看到另外两双鞋</p>
-        <p style="font-size:10px; color:#8898AA;">安静</p>
+        <img src="sv-images/sv1/sv1-f14.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 14</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">礼盒。摸了一下花<br>卡片上写了几个字</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「我还不太会说。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f3.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">9-13s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">小女孩趴在婆婆腿上<br>媳妇放下礼盒</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「妈每天都帮我把孩子接回来。」</p>
-      </div>
-      <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f4.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">14-18s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">婆婆打开礼盒<br>摘下花</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「小裙子洗好了，<br>故事也讲完了。」</p>
+        <img src="sv-images/sv1/sv1-f15.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 15</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">妈妈拆开礼盒。看到花<br>读卡片。停了一下。笑了</p>
       </div>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:10px;">
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:10px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f5.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">19-23s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">花递给小女孩<br>摸了一下花瓣</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「她照顾她。她也照顾我。」</p>
+        <img src="sv-images/sv1/sv1-f16.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 16</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">妈妈把花摘下来<br>放在窗台。阳光照着</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f6.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">24-27s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">晚饭。互相夹菜</p>
-        <p style="font-size:10px; color:#8898AA;">安静</p>
+        <img src="sv-images/sv1/sv1-f17.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 17</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">两扇窗<br>女儿的 / 妈妈的。各自有光</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「花替我说。」</p>
+      </div>
+    </div>
+    <div style="margin-top:8px; text-align:center; padding:6px; background:rgba(200,184,232,0.10); border-radius:8px;">
+      <p style="font-size:12px; color:#C8B8E8; font-weight:500;">Super：摘一朵花，送给她。珀莱雅母亲节礼盒 · 花替我说</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- SV2 分隔页 -->
+<div class="slide slide-cinematic" data-page="sv2-divider" style="padding:60px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-floor.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content" style="position:relative; z-index:2; text-align:center;">
+    <p style="font-size:14px; color:#E8A0B8; letter-spacing:3px; margin-bottom:24px;">SV2</p>
+    <h1 style="font-size:42px; color:#F0E8E0; letter-spacing:4px; margin-bottom:16px;">闺蜜互送</h1>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:rgba(240,232,224,0.5); margin-bottom:40px;">精致妈妈</p>
+    <div style="width:40px; height:1px; background:rgba(240,232,224,0.2); margin:0 auto 40px;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:17px; color:rgba(240,232,224,0.7); line-height:2; max-width:560px; margin:0 auto;">当了妈以后，所有人都叫她宝妈。闺蜜是唯一一个还看见「她」的人。<br><span style="color:#7BB8E8;">「不是送给妈妈的。是送给你的。」</span></p>
+  </div>
+</div>
+
+<!-- SV2 闺蜜互送 Page 1: Cut 1-4 -->
+
+<div class="slide slide-cinematic" data-page="sv2a" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV2 · 闺蜜互送</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">~58s · 核心 TA：精致妈妈 / 新手妈妈 · 「不是送给妈妈的。是送给你的。」</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f1.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 1</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">清晨。她醒来<br>婴儿在旁边睡着</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv3/sv3-f7.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">28-30s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">三双手叠在花上</p>
-        <p style="font-size:10px; color:#9B8EC4;">摘一朵花，送给她。</p>
+        <img src="sv-images/sv2/sv2-f2.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 2</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">喂奶。一只手抱着孩子<br>一只手划手机</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f3.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 3</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">手机屏幕。群消息：<br>「宝宝多大了」「吃什么奶粉」</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「五月了。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f4.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 4</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">镜子。黑眼圈<br>头发随便扎了一下</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- P14 SV4 -->
-<div class="slide slide-watercolor" data-page="14" style="padding:32px 50px;">
+<!-- SV2 闺蜜互送 Page 2: Cut 5-8 -->
+
+<div class="slide slide-cinematic" data-page="sv2b" style="padding:32px 60px; justify-content:flex-start;">
   <div class="content-wide">
-    <h2 style="color:#4A3660; margin-bottom:4px;">SV4 · 妈妈送自己</h2>
-    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:18px; color:#6A5880; margin-bottom:12px;">30s · 核心 TA：精致中产 / 悦己</h3>
-    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV2 · 闺蜜互送（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">从窗到咖啡馆 · 久违的冰美式</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f1.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">0-3s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">阳台收衣服<br>手机亮了：「妈 母亲节快乐」</p>
-        <p style="font-size:10px; color:#8898AA;">安静。远处有鸟</p>
+        <img src="sv-images/sv2/sv2-f5.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 5</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">窗外。天很好<br>她站在窗前看了一眼</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「好像好久，没看过窗外了。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f2.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">4-8s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">风吹纱帘。儿子的房间<br>床铺整齐，没人睡过</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「五月了。」</p>
+        <img src="sv-images/sv2/sv2-f6.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 6</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">手机。闺蜜发了一个咖啡 emoji<br>没别的字</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f3.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">9-11s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">路过花摊。一桶康乃馨<br>看了一眼，没停</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「风是暖的。」</p>
+        <img src="sv-images/sv2/sv2-f7.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 7</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">咖啡馆<br>她推着婴儿车进来</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f4.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">12-16s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">珀莱雅柜台<br>手停在花上</p>
-        <p style="font-size:10px; color:#8898AA;">安静</p>
+        <img src="sv-images/sv2/sv2-f8.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 8</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">闺蜜已经坐好了<br>桌上一杯冰美式</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「你的。」</p>
       </div>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:10px;">
+  </div>
+</div>
+
+<!-- SV2 闺蜜互送 Page 3: Cut 9-12 -->
+
+<div class="slide slide-cinematic" data-page="sv2c" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV2 · 闺蜜互送（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">拆礼物 · 摘花</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f5.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">17-21s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">礼盒放进车篮<br>花露出来</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「窗开着。」</p>
+        <img src="sv-images/sv2/sv2-f9.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 9</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她接过来。喝了一口<br>笑了</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f6.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">22-26s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">骑自行车。风吹着头发<br>阳光很好</p>
-        <p style="font-size:10px; color:#5A8AB8; font-style:italic;">「好久没有，停下来过。」</p>
+        <img src="sv-images/sv2/sv2-f10.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 10</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">闺蜜拿出袋子</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「给你的。不是给宝宝的。」</p>
       </div>
       <div style="text-align:center;">
-        <img src="sv-images/sv4/sv4-f7.jpg" style="width:100%; height:180px; object-fit:contain; background:#f5eef8; border-radius:8px;">
-        <p style="font-size:10px; color:#9B8EC4; margin-top:4px; font-weight:500;">27-30s</p>
-        <p style="font-size:11px; color:#4A3660; line-height:1.4;">背影。自行车<br>车篮里的花。五月的光</p>
-        <p style="font-size:10px; color:#9B8EC4;">摘一朵花，送给她。</p>
+        <img src="sv-images/sv2/sv2-f11.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 11</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她看了闺蜜一眼<br>拆开礼盒</p>
       </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f12.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 12</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">摘下花</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「你那时候就说了——<br>凭什么母亲节只有康乃馨。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV2 闺蜜互送 Page 4: Cut 13-16 -->
+
+<div class="slide slide-cinematic" data-page="sv2d" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV2 · 闺蜜互送（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">不是妈妈，是我们</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f13.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 13</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她看着花。没说话</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f14.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 14</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">闺蜜摇头</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「不是送给妈妈的。<br>是送给你的。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f15.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 15</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她拿着花。停了一下</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「好久没有人，<br>不是叫我宝妈了。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f16.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 16</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她把花插在头顶<br>做了个鬼脸</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV2 闺蜜互送 Page 5: Cut 17-20 + Super -->
+
+<div class="slide slide-cinematic" data-page="sv2e" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV2 · 闺蜜互送（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">旧照片 · 有风的街</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f17.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 17</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">闺蜜笑出来</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「不像妈妈。」「像我们。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f18.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 18</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">插入：一张旧照片<br>两个穿校服的女孩</p>
+        <p style="font-size:10px; color:#8898AA;">安静。半秒</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f19.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 19</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">回到现在<br>两个人还在笑</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv2/sv2-f20.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 20</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">两个人的背影<br>推着婴儿车。街上有风</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「花替我说。」</p>
+      </div>
+    </div>
+    <div style="margin-top:8px; text-align:center; padding:6px; background:rgba(200,184,232,0.10); border-radius:8px;">
+      <p style="font-size:12px; color:#C8B8E8; font-weight:500;">Super：摘一朵花，送给她。珀莱雅母亲节礼盒 · 花替我说</p>
+    </div>
+  </div>
+</div>
+
+<!-- SV3 分隔页 -->
+<div class="slide slide-cinematic" data-page="sv3-divider" style="padding:60px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-floor.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content" style="position:relative; z-index:2; text-align:center;">
+    <p style="font-size:14px; color:#9B8EC4; letter-spacing:3px; margin-bottom:24px;">SV3</p>
+    <h1 style="font-size:42px; color:#F0E8E0; letter-spacing:4px; margin-bottom:16px;">三代女性</h1>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:rgba(240,232,224,0.5); margin-bottom:40px;">婚后 / 小镇青年</p>
+    <div style="width:40px; height:1px; background:rgba(240,232,224,0.2); margin:0 auto 40px;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:17px; color:rgba(240,232,224,0.7); line-height:2; max-width:560px; margin:0 auto;">婆婆换了减盐酱油，媳妇帮她涂了面霜。<br><span style="color:#7BB8E8;">「一开始，是称呼。后来，是感情。」</span></p>
+  </div>
+</div>
+
+<!-- SV3 三代女性 Page 1: Cut 1-4 -->
+
+<div class="slide slide-cinematic" data-page="sv3a" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV3 · 三代女性</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">~58s · 核心 TA：婚后女性 / 小镇青年 · 「一开始，是称呼。后来，是感情。」</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f1.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 1</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">清晨。厨房。灶台上冒着热气</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f2.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 2</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">婆婆的手在切菜。动作很熟</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f3.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 3</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">特写：两瓶酱油。先碰到老式的，停了一下，拿了减盐的</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f4.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 4</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">媳妇走进来。自己打开冰箱拿鸡蛋</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「五月了。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV3 三代女性 Page 2: Cut 5-8 -->
+
+<div class="slide slide-cinematic" data-page="sv3b" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV3 · 三代女性（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">日常 · 并排灶台与三双鞋</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f5.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 5</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">并排站厨房。婆婆炒菜，媳妇在弄咖啡机</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「结婚以后，多了一个人叫妈。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f6.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 6</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">继续做各自的。一个炒菜，一个喝咖啡。不说话</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f7.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 7</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">餐桌。三个人吃早饭。婆婆把菜往媳妇面前推了推</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f8.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 8</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">下午。婆婆牵着孩子从外面回来</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV3 三代女性 Page 3: Cut 9-12 -->
+
+<div class="slide slide-cinematic" data-page="sv3c" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV3 · 三代女性（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">转折 · 她只是还在当妈妈</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f9.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 9</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">媳妇到家。换鞋。玄关三双鞋</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f10.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 10</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">晚上。孩子在婆婆怀里。婆婆轻轻拍着背</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f11.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 11</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">媳妇站在门口看着。没进去</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「她不是在帮我带孩子。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f12.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 12</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">婆婆的手。还在拍。孩子睡了。她自己也快睡着了</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「她只是，还在当妈妈。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV3 三代女性 Page 4: Cut 13-16 -->
+
+<div class="slide slide-cinematic" data-page="sv3d" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV3 · 三代女性（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">触碰 · 她有多久没人碰过她的脸了</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f13.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 13</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">孩子睡了。媳妇在卫生间做护肤。婆婆路过，站在门口看了一眼</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f14.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 14</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">媳妇注意到了。拉了把椅子</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「妈，来，坐。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f15.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 15</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">媳妇的手。把面霜点在婆婆脸上。婆婆有点不自在，想躲。然后不动了</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「她有多久，没人碰过她的脸了。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f16.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 16</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">慢慢抹开。婆婆闭着眼。睁眼看镜子。摸了摸脸。笑了</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「照顾，从来不是单向的。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV3 三代女性 Page 5: Cut 17-19 + Super -->
+
+<div class="slide slide-cinematic" data-page="sv3e" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV3 · 三代女性（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">花在三个人手里递了一圈</h3>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f17.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 17</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">第二天。礼盒放在桌上。婆婆打开。看到花。愣了一下</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f18.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 18</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">孩子跑来要花。花在三个人手里递了一圈</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「一开始，是称呼。后来，是感情。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv3/sv3-f19.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 19</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">三双手叠在花上</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「花替我说。」</p>
+      </div>
+    </div>
+    <div style="margin-top:8px; text-align:center; padding:6px; background:rgba(200,184,232,0.10); border-radius:8px;">
+      <p style="font-size:12px; color:#C8B8E8; font-weight:500;">Super：摘一朵花，送给她。珀莱雅母亲节礼盒 · 花替我说</p>
+    </div>
+  </div>
+</div>
+
+<!-- SV4 分隔页 -->
+<div class="slide slide-cinematic" data-page="sv4-divider" style="padding:60px 80px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-floor.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content" style="position:relative; z-index:2; text-align:center;">
+    <p style="font-size:14px; color:#D4C0A0; letter-spacing:3px; margin-bottom:24px;">SV4</p>
+    <h1 style="font-size:42px; color:#F0E8E0; letter-spacing:4px; margin-bottom:16px;">妈妈送自己</h1>
+    <p style="font-family:'Noto Sans SC',sans-serif; font-size:14px; color:rgba(240,232,224,0.5); margin-bottom:40px;">精致中产 / 悦己</p>
+    <div style="width:40px; height:1px; background:rgba(240,232,224,0.2); margin:0 auto 40px;"></div>
+    <p style="font-family:'Noto Serif SC',serif; font-size:17px; color:rgba(240,232,224,0.7); line-height:2; max-width:560px; margin:0 auto;">儿子上大学了。她走在街上，重新发现世界。<br><span style="color:#7BB8E8;">「当了十八年的妈妈。原来我还在。」</span></p>
+  </div>
+</div>
+
+<!-- SV4 妈妈送自己 Page 1: Cut 1-4 -->
+
+<div class="slide slide-cinematic" data-page="sv4a" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV4 · 妈妈送自己</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">~58s · 核心 TA：精致中产 / 悦己 · 「当了十八年的妈妈。原来我还在。」</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f1.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 1</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">清晨。安静的房子。她醒来。光很好</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f2.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 2</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">阳台收衣服。只剩自己的了。手机亮了：「妈 母亲节快乐」。看了一眼</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「五月了。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f3.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 3</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">儿子的房间。风吹纱帘。海报还在。床铺整齐。没人睡过</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f4.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 4</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她站在门口看了一会。没进去</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「房间多了一间。时间多了很多。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV4 妈妈送自己 Page 2: Cut 5-8 -->
+
+<div class="slide slide-cinematic" data-page="sv4b" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV4 · 妈妈送自己（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">出门 · 街上的新可能</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f5.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 5</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">厨房。煮了一杯咖啡。桌上只有一个杯子</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f6.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 6</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">出门。没什么目的。阳光照在街上</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f7.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 7</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">路过花摊。一桶一桶的康乃馨。看了一眼，没停</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「风是暖的。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f8.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 8</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">路过一家陶艺工作室。透过玻璃往里看。有人在拉坯</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV4 妈妈送自己 Page 3: Cut 9-12 -->
+
+<div class="slide slide-cinematic" data-page="sv4c" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV4 · 妈妈送自己（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">给自己 · 这朵花，给我自己的</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f9.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 9</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她停下来了。看了一会。手不自觉地摸了一下玻璃</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「路上有一家店。不知道开了多久了。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f10.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 10</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">继续走。路过一家书店。门口摆着椅子和绿植</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f11.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 11</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">珀莱雅柜台。手停在礼盒上面的花上</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f12.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 12</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她买了。提着袋子走出来。表情很平静</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「这朵花，给我自己的。」</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV4 妈妈送自己 Page 4: Cut 13-16 -->
+
+<div class="slide slide-cinematic" data-page="sv4d" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV4 · 妈妈送自己（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">自由 · 风吹着头发</h3>
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f13.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 13</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">把礼盒放进自行车篮里。花露出来</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f14.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 14</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">骑自行车。风吹头发。阳光穿过树叶</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「好久没有，停下来过。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f15.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 15</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">骑在路上。她笑了</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f16.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 16</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">回到家。把花摘下来。放在窗台</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SV4 妈妈送自己 Page 5: Cut 17-19 + Super -->
+
+<div class="slide slide-cinematic" data-page="sv4e" style="padding:32px 60px; justify-content:flex-start;">
+  <div class="content-wide">
+    <h2 style="color:#D0C4E0; font-size:24px; margin-bottom:2px;">SV4 · 妈妈送自己（续）</h2>
+    <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:15px; color:rgba(240,232,224,0.6); margin-bottom:6px;">原来我还在</h3>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f17.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 17</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她站在窗前。阳光照着花，也照着她</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「当了十八年的妈妈。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f18.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 18</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">她看着花。摸了一下</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「原来我还在。」</p>
+      </div>
+      <div style="text-align:center;">
+        <img src="sv-images/sv4/sv4-f19.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:8px;">
+        <p style="font-size:10px; color:#C8B8E8; margin-top:2px; font-weight:500;">Cut 19</p>
+        <p style="font-size:11px; color:#D0C4E0; line-height:1.4;">窗台上的花。五月的光</p>
+        <p style="font-size:10px; color:#7BB8E8; font-style:italic;">「花替我说。」</p>
+      </div>
+    </div>
+    <div style="margin-top:8px; text-align:center; padding:6px; background:rgba(200,184,232,0.10); border-radius:8px;">
+      <p style="font-size:12px; color:#C8B8E8; font-weight:500;">Super：摘一朵花，送给她。珀莱雅母亲节礼盒 · 花替我说</p>
     </div>
   </div>
 </div>
 
 <!-- P15-16 电商海报 -->
-<div class="slide slide-skyblue" data-page="15">
-  <div class="content">
-    <h2 style="margin-bottom:32px;">电商海报 × 4</h2>
+<div class="slide slide-cinematic" data-page="15" style="padding:40px 60px; background:linear-gradient(160deg, #1a1020 0%, #0d0d1a 40%, #0a0a14 100%);">
+  <div class="content" style="position:relative; z-index:2;">
+    <h2 style="margin-bottom:32px; color:#F0E8E0; letter-spacing:2px;">电商海报 × 4</h2>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-      <div class="card" style="text-align:center; padding:32px;">
+      <div style="text-align:center; padding:36px 28px; background:linear-gradient(180deg, rgba(232,160,184,0.08) 0%, rgba(232,160,184,0.02) 100%); border:1px solid rgba(232,160,184,0.15); border-radius:12px;">
         <span class="flower-dot pink" style="width:12px; height:12px;"></span>
-        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，柔软的。<br>像她抱你时候的手臂。</p>
-        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
-        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+        <p style="font-family:'Noto Serif SC',serif; font-size:22px; color:#FFFFFF; margin:20px 0 8px; line-height:1.8; text-shadow:0 1px 8px rgba(0,0,0,0.3);">有的花，柔软的。<br>像她抱你时候的手臂。</p>
+        <p style="font-size:14px; color:#E8A0B8; margin-top:20px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:rgba(240,232,224,0.4); margin-top:6px;">珀莱雅母亲节礼盒 · 花替我说</p>
       </div>
-      <div class="card" style="text-align:center; padding:32px;">
+      <div style="text-align:center; padding:36px 28px; background:linear-gradient(180deg, rgba(90,138,184,0.08) 0%, rgba(90,138,184,0.02) 100%); border:1px solid rgba(90,138,184,0.15); border-radius:12px;">
         <span class="flower-dot blue" style="width:12px; height:12px;"></span>
-        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，透亮的。<br>什么心事，你一眼就看见了。</p>
-        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
-        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+        <p style="font-family:'Noto Serif SC',serif; font-size:22px; color:#FFFFFF; margin:20px 0 8px; line-height:1.8; text-shadow:0 1px 8px rgba(0,0,0,0.3);">有的花，透亮的。<br>什么心事，你一眼就看见了。</p>
+        <p style="font-size:14px; color:#7BB8E8; margin-top:20px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:rgba(240,232,224,0.4); margin-top:6px;">珀莱雅母亲节礼盒 · 花替我说</p>
       </div>
-      <div class="card" style="text-align:center; padding:32px;">
+      <div style="text-align:center; padding:36px 28px; background:linear-gradient(180deg, rgba(212,192,160,0.08) 0%, rgba(212,192,160,0.02) 100%); border:1px solid rgba(212,192,160,0.15); border-radius:12px;">
         <span class="flower-dot warm" style="width:12px; height:12px;"></span>
-        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">有的花，坚韧的。<br>风吹不倒，时间也是。</p>
-        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
-        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+        <p style="font-family:'Noto Serif SC',serif; font-size:22px; color:#FFFFFF; margin:20px 0 8px; line-height:1.8; text-shadow:0 1px 8px rgba(0,0,0,0.3);">有的花，坚韧的。<br>风吹不倒，时间也是。</p>
+        <p style="font-size:14px; color:#D4C0A0; margin-top:20px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:rgba(240,232,224,0.4); margin-top:6px;">珀莱雅母亲节礼盒 · 花替我说</p>
       </div>
-      <div class="card" style="text-align:center; padding:32px;">
+      <div style="text-align:center; padding:36px 28px; background:linear-gradient(180deg, rgba(155,142,196,0.08) 0%, rgba(155,142,196,0.02) 100%); border:1px solid rgba(155,142,196,0.15); border-radius:12px;">
         <span class="flower-dot purple" style="width:12px; height:12px;"></span>
-        <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:#2A3A50; margin:20px 0 8px; line-height:1.8;">这朵花，<br>开给我自己。</p>
-        <p style="font-size:13px; color:#5A8AB8; margin-top:16px;">摘一朵花，送给她。</p>
-        <p style="font-size:12px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+        <p style="font-family:'Noto Serif SC',serif; font-size:22px; color:#FFFFFF; margin:20px 0 8px; line-height:1.8; text-shadow:0 1px 8px rgba(0,0,0,0.3);">这朵花，<br>开给我自己。</p>
+        <p style="font-size:14px; color:#C8B8E8; margin-top:20px;">摘一朵花，送给她。</p>
+        <p style="font-size:12px; color:rgba(240,232,224,0.4); margin-top:6px;">珀莱雅母亲节礼盒 · 花替我说</p>
       </div>
     </div>
   </div>
 </div>
 
+<!-- 电商海报 视觉调性参考 Moodboard -->
+<div class="slide slide-cinematic" data-page="15b" style="padding:28px 48px; background:#0a0a0c;">
+  <div class="content-wide" style="position:relative; z-index:2;">
+    <p style="font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#8b9dc3; font-weight:300; text-align:center; margin-bottom:4px;">PROYA 2026 Mother's Day</p>
+    <h2 style="font-size:24px; font-weight:300; letter-spacing:3px; color:#d4c5b0; text-align:center; margin-bottom:4px;">电商海报 · 视觉调性参考</h2>
+    <p style="font-size:11px; color:#666; text-align:center; letter-spacing:2px; margin-bottom:16px;">Visual Direction Reference</p>
+    <div style="display:grid; grid-template-columns:repeat(7, 1fr); grid-auto-rows:80px; gap:4px;">
+      <div style="grid-column:span 2; grid-row:span 2;"><img src="poster-moodboard/01-film-poster.png" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 3;"><img src="poster-moodboard/02-triptych-hands-face.png" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 2;"><img src="poster-moodboard/11-double-exposure-flowers.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/06-hands-intertwined.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 2; grid-row:span 2;"><img src="poster-moodboard/03-hands-light.png" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/07-hands-dappled-light.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/10-hand-dried-flowers.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/13-face-light-shadow.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 2; grid-row:span 1;"><img src="poster-moodboard/04-hand-water-flower.png" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 2;"><img src="poster-moodboard/05-window-sakura.png" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 2;"><img src="poster-moodboard/08-hand-sheer-fabric.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/09-hand-curtain.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/12-double-exposure-pink.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 1; grid-row:span 1;"><img src="poster-moodboard/14-woman-window-linen.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+      <div style="grid-column:span 2; grid-row:span 1;"><img src="bg-images/bg-flowers-dark.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:4px; filter:brightness(0.92) contrast(1.05);"></div>
+    </div>
+    <div style="display:flex; justify-content:center; gap:48px; margin-top:16px;">
+      <div style="text-align:center;"><p style="font-size:18px; letter-spacing:4px; color:#d4c5b0; font-weight:300;">柔 软</p><p style="font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#666; margin-top:2px;">Soft</p></div>
+      <div style="text-align:center;"><p style="font-size:18px; letter-spacing:4px; color:#d4c5b0; font-weight:300;">透 亮</p><p style="font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#666; margin-top:2px;">Translucent</p></div>
+      <div style="text-align:center;"><p style="font-size:18px; letter-spacing:4px; color:#d4c5b0; font-weight:300;">坚 韧</p><p style="font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#666; margin-top:2px;">Resilient</p></div>
+      <div style="text-align:center;"><p style="font-size:18px; letter-spacing:4px; color:#d4c5b0; font-weight:300;">自 己</p><p style="font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#666; margin-top:2px;">Be Yourself</p></div>
+    </div>
+  </div>
+</div>
+
 <!-- P17 礼赠触点 -->
-<div class="slide slide-watercolor" data-page="16">
-  <div class="content">
-    <h2 style="color:#4A3660; margin-bottom:32px;">礼赠触点文案</h2>
+<div class="slide slide-cinematic" data-page="16" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-flowers-dark.jpg');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.5);"></div>
+  <div class="content" style="position:relative; z-index:2;">
+    <h2 style="color:#D0C4E0; margin-bottom:32px;">礼赠触点文案</h2>
     <div class="two-col">
       <div>
         <h3 style="color:#9B8EC4; margin-bottom:16px;">贺卡</h3>
-        <div class="card" style="background:rgba(255,255,255,0.9);">
-          <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:#4A3660; margin-bottom:16px;">正面：这朵花，替我说。</p>
-          <div style="border-top:1px dashed #D4C0A0; padding-top:16px;">
-            <p style="font-size:14px; color:#6A5880; line-height:2;">内页：写下你想说的。<br>或者不写也行。<br>她打开的时候，就已经知道了。</p>
+        <div style="background:rgba(255,255,255,0.06); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px;">
+          <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:#F0E8E0; margin-bottom:16px;">正面：这朵花，替我说。</p>
+          <div style="border-top:1px dashed rgba(212,192,160,0.3); padding-top:16px;">
+            <p style="font-size:14px; color:rgba(240,232,224,0.65); line-height:2;">内页：写下你想说的。<br>或者不写也行。<br>她打开的时候，就已经知道了。</p>
           </div>
         </div>
       </div>
       <div>
         <h3 style="color:#9B8EC4; margin-bottom:16px;">护肤贴纸</h3>
-        <p style="font-family:'Noto Serif SC',serif; font-size:16px; color:#4A3660; margin-bottom:16px;">每一步，都在好好待她。</p>
-        <div style="font-size:13px; color:#6A5880; line-height:2.2;">
+        <p style="font-family:'Noto Serif SC',serif; font-size:16px; color:#D0C4E0; margin-bottom:16px;">每一步，都在好好待她。</p>
+        <div style="font-size:13px; color:rgba(200,184,232,0.7); line-height:2.2;">
           <p>Step 1 洁面 — 洗掉今天的辛苦</p>
           <p>Step 2 水 — 让皮肤喝口水</p>
           <p>Step 3 精华油 — 一点点，就够了</p>
@@ -875,14 +1430,16 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
 </div>
 
 <!-- P18 MR 延展 -->
-<div class="slide slide-skyblue" data-page="17">
-  <div class="content-wide">
+<div class="slide slide-cinematic" data-page="17" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-mood.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.55);"></div>
+  <div class="content-wide" style="position:relative; z-index:2;">
     <h2 style="margin-bottom:8px;">大曝光物料 MR 延展</h2>
     <h3 style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:20px; margin-bottom:28px;">主 KV + 各平台适配</h3>
     <div class="card" style="margin-bottom:20px; text-align:center; padding:32px;">
-      <p style="font-family:'Noto Serif SC',serif; font-size:28px; color:#2A3A50; margin-bottom:8px;">世界上的妈妈，不只有一种。</p>
+      <p style="font-family:'Noto Serif SC',serif; font-size:28px; color:#F0E8E0; margin-bottom:8px;">世界上的妈妈，不只有一种。</p>
       <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:#5A8AB8; margin-bottom:16px;">摘一朵花，送给她。</p>
-      <p style="font-size:13px; color:#8898AA;">珀莱雅母亲节礼盒 · 各自盛放</p>
+      <p style="font-size:13px; color:#8898AA;">珀莱雅母亲节礼盒 · 花替我说</p>
       <p style="font-size:12px; color:#8898AA; margin-top:8px;">红宝石系列 | 精华 · 面霜 · 眼霜 · 水 · 乳 | 一整套，好好款待她</p>
     </div>
     <table style="font-size:13px;">
@@ -891,63 +1448,17 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
       <tr><td>抖音开屏</td><td>五月的风，有阳光的味道。摘一朵花，送给她。</td><td>珀莱雅母亲节礼盒 · 了解更多</td></tr>
       <tr><td>小红书 A</td><td>今年母亲节，不送康乃馨。</td><td>#摘一朵花给她</td></tr>
       <tr><td>小红书 B</td><td>你不用说什么。花会替你说的。</td><td>#妈妈不止一种</td></tr>
-      <tr><td>小红书 C</td><td>一整套搞定妈妈的护肤。红宝石系列 300-500 元</td><td>#各自盛放</td></tr>
-      <tr><td>微博开屏</td><td>不止一种花。各自盛放。</td><td>#各自盛放 #摘一朵花给她</td></tr>
-    </table>
-  </div>
-</div>
-
-<!-- P19 传播话题 -->
-<div class="slide slide-data" data-page="18">
-  <div class="content">
-    <h2 style="color:#A8C8E8; margin-bottom:32px;">传播话题</h2>
-    <div class="three-col">
-      <div class="card-dark" style="text-align:center; padding:32px;">
-        <p style="font-size:12px; color:#7BA7D4; margin-bottom:12px;">品牌主话题</p>
-        <h3 style="color:#D4E6F8; font-size:28px; letter-spacing:4px;">#各自盛放</h3>
-        <p style="color:#8898AA; margin-top:12px; font-size:13px;">官方传播主线</p>
-        <p style="color:#8898AA; font-size:13px;">主推：微博</p>
-      </div>
-      <div class="card-dark" style="text-align:center; padding:32px;">
-        <p style="font-size:12px; color:#E8A0B8; margin-bottom:12px;">活动话题</p>
-        <h3 style="color:#D4E6F8; font-size:24px; letter-spacing:3px;">#摘一朵花给她</h3>
-        <p style="color:#8898AA; margin-top:12px; font-size:13px;">UGC 互动，拍摘花过程</p>
-        <p style="color:#8898AA; font-size:13px;">主推：小红书 + 抖音</p>
-      </div>
-      <div class="card-dark" style="text-align:center; padding:32px;">
-        <p style="font-size:12px; color:#9B8EC4; margin-bottom:12px;">情感话题</p>
-        <h3 style="color:#D4E6F8; font-size:24px; letter-spacing:3px;">#妈妈不止一种</h3>
-        <p style="color:#8898AA; margin-top:12px; font-size:13px;">你的妈妈是哪种花？</p>
-        <p style="color:#8898AA; font-size:13px;">主推：抖音挑战赛</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- P20 Timeline -->
-<div class="slide slide-skyblue" data-page="19">
-  <div class="content">
-    <h2 style="margin-bottom:32px;">执行 Timeline</h2>
-    <table style="font-size:14px;">
-      <tr><th style="width:140px;">日期</th><th>事项</th></tr>
-      <tr><td>3.30</td><td>Brief Meeting ✓</td></tr>
-      <tr style="background:rgba(90,138,184,0.1);"><td style="font-weight:700; color:#5A8AB8;">4.7</td><td style="font-weight:700; color:#2A3A50;">提案比稿 ← 我们在这里</td></tr>
-      <tr><td>4.10</td><td>方案确认</td></tr>
-      <tr><td>4.10 - 4.15</td><td>CG 制作启动 / SV 选角 + 分镜确认</td></tr>
-      <tr><td>4.15 - 4.17</td><td>SV 拍摄（3-4 天，4 支）</td></tr>
-      <tr style="background:rgba(90,138,184,0.1);"><td style="font-weight:700; color:#5A8AB8;">4.17 - 4.20</td><td style="font-weight:700; color:#2A3A50;">礼盒官宣物料发布（CG + SV）</td></tr>
-      <tr><td>4.20</td><td>小红书 #摘一朵花给她 上线 + KOL 种草首波</td></tr>
-      <tr><td>4.20 - 5.1</td><td>抖音 #妈妈不止一种 挑战赛 + 达人带货</td></tr>
-      <tr><td>5.1 - 5.10</td><td>全渠道冲刺：天猫首焦 + 抖音开屏 + 微博 + 直播间</td></tr>
-      <tr style="background:rgba(232,160,184,0.1);"><td style="font-weight:700; color:#E8A0B8;">5.10</td><td style="font-weight:700; color:#2A3A50;">母亲节</td></tr>
-      <tr><td>5.10 - 5.15</td><td>长尾：UGC 二次传播 + 电商返场</td></tr>
+      <tr><td>小红书 C</td><td>一整套搞定妈妈的护肤。红宝石系列 300-500 元</td><td>#花替我说</td></tr>
+      <tr><td>微博开屏</td><td>不止一种花。花替我说。</td><td>#花替我说 #摘一朵花给她</td></tr>
     </table>
   </div>
 </div>
 
 <!-- P21 Thanks -->
-<div class="slide slide-transition" data-page="20">
-  <div class="content center">
+<div class="slide slide-cinematic" data-page="20" style="padding:40px 60px;">
+  <div class="bg-img" style="background-image:url('bg-images/bg-writing.png');"></div>
+  <div class="bg-overlay" style="background:rgba(0,0,0,0.45);"></div>
+  <div class="content center" style="position:relative; z-index:2;">
     <div style="display:flex; gap:6px; justify-content:center; margin-bottom:48px;">
       <span class="flower-dot pink"></span>
       <span class="flower-dot purple"></span>
@@ -955,7 +1466,7 @@ td { padding:10px 12px; border-bottom:1px solid rgba(90,138,184,0.1); }
       <span class="flower-dot warm"></span>
       <span class="flower-dot pink"></span>
     </div>
-    <h1 style="font-size:42px; color:#fff; letter-spacing:10px;">各自盛放。</h1>
+    <h1 style="font-size:42px; color:#fff; letter-spacing:10px;">花替我说。</h1>
     <div style="width:40px; height:1px; background:rgba(255,255,255,0.3); margin:48px auto;"></div>
     <p style="font-family:'Playfair Display',serif; font-size:16px; color:rgba(255,255,255,0.5); letter-spacing:2px;">PROYA × 2026</p>
   </div>

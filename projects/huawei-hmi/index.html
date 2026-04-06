@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Car That Knows You | Gordon Cheng</title>
+  <meta name="description" content="HarmonyOS Intelligent Cockpit & DTOF Parking — Concept Direction for Huawei's next-generation in-vehicle experience. Creative Director: Gordon Cheng">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23050505'/><text x='50' y='68' font-family='system-ui' font-size='48' font-weight='700' fill='%23f0f0f0' text-anchor='middle'>GC</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #f0f0f0;
+      --dim: #888;
+      --accent: #4af;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* BACK NAV */
+    .back-nav {
+      position: fixed; top: 0; left: 0; z-index: 100;
+      padding: 1.5rem 2rem;
+      mix-blend-mode: difference;
+    }
+    .back-nav a {
+      color: #fff; text-decoration: none; font-size: 0.8rem;
+      letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+      display: flex; align-items: center; gap: 0.5rem;
+      opacity: 0.7; transition: opacity 0.3s;
+    }
+    .back-nav a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) saturate(0.8);
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: var(--dim); font-weight: 300;
+      max-width: 600px; line-height: 1.6;
+    }
+
+    /* CREDENTIAL BOX — Step 2 */
+    .credentials {
+      padding: 4rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .cred-item { }
+    .cred-label {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #555;
+      font-weight: 600; margin-bottom: 0.4rem;
+    }
+    .cred-value { font-size: 0.95rem; font-weight: 500; }
+
+    /* CONTENT SECTIONS */
+    .section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 5rem 4rem;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      color: #555;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+    }
+    .section h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .section p {
+      color: var(--dim); font-size: 1.05rem;
+      line-height: 1.8; font-weight: 300;
+      max-width: 700px;
+    }
+
+    /* PULLQUOTE */
+    .pullquote {
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem;
+      border-left: 3px solid var(--accent);
+    }
+    .pullquote p {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-style: italic; font-weight: 300;
+      line-height: 1.5; color: var(--text);
+      max-width: none;
+    }
+    .pullquote cite {
+      display: block; margin-top: 1rem;
+      font-size: 0.85rem; font-style: normal;
+      color: #555;
+    }
+
+    /* RESULTS */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 3rem; margin: 3rem 0;
+    }
+    .result-item {}
+    .result-number {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 900; line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .result-label {
+      font-size: 0.85rem; color: var(--dim);
+      font-weight: 400; line-height: 1.4;
+    }
+
+    /* FEATURE GRID — video loops */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem; margin: 3rem 0;
+    }
+    .feature-card {
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: #333; }
+    .feature-card video {
+      width: 100%; display: block;
+      aspect-ratio: 16/9; object-fit: cover;
+    }
+    .feature-card-info {
+      padding: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem; color: var(--dim);
+      line-height: 1.6; font-weight: 300;
+    }
+    .feature-card .tag {
+      font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent);
+      font-weight: 600; margin-bottom: 0.75rem;
+    }
+
+    /* FULL WIDTH IMAGE */
+    .full-image {
+      width: 100%;
+      margin: 2rem 0;
+    }
+    .full-image img, .full-image video {
+      width: 100%; display: block;
+    }
+
+    /* PROCESS */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2.5rem; margin: 3rem 0;
+    }
+    .process-step {}
+    .process-num {
+      font-size: 3rem; font-weight: 900;
+      color: #1a1a1a; margin-bottom: 1rem;
+    }
+    .process-step h3 {
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .process-step p {
+      font-size: 0.9rem; color: var(--dim);
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* TAKEAWAYS */
+    .takeaways {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin: 3rem 0;
+    }
+    .takeaway-col h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .takeaway-col li {
+      color: var(--dim); font-size: 0.95rem;
+      line-height: 1.7; font-weight: 300;
+      margin-bottom: 1rem;
+      list-style: none;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .takeaway-col li::before {
+      content: '—'; position: absolute; left: 0;
+      color: #333;
+    }
+
+    /* FOOTER */
+    .case-footer {
+      padding: 4rem;
+      border-top: 1px solid #1a1a1a;
+      text-align: center;
+    }
+    .case-footer a {
+      color: var(--dim); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.1em;
+      text-transform: uppercase; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .case-footer a:hover { color: var(--text); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { padding: 0 1.5rem 3rem; }
+      .credentials { padding: 2rem 1.5rem; }
+      .section { padding: 3rem 1.5rem; }
+      .pullquote { padding: 2rem 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .takeaways { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACK NAV -->
+  <div class="back-nav">
+    <a href="../../">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+  </div>
+
+  <!-- STEP 1: TITLE + STEP 3: HERO IMAGE -->
+  <section class="hero">
+    <img src="media/hero-cockpit.jpg" alt="HarmonyOS Intelligent Cockpit — multimodal AI interface" class="hero-bg">
+    <div class="hero-content">
+      <h1>The Car<br>That Knows You.</h1>
+      <p class="hero-sub">
+        Concept direction for Huawei's HarmonyOS intelligent cockpit and DTOF parking system — where AI meets every seat, every voice, every obstacle.
+      </p>
+    </div>
+  </section>
+
+  <!-- STEP 2: CREDENTIAL BOX -->
+  <div class="credentials">
+    <div class="credentials-grid">
+      <div class="cred-item">
+        <div class="cred-label">Category</div>
+        <div class="cred-value">Automotive HMI / UX</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-label">Client</div>
+        <div class="cred-value">Huawei Intelligent Automotive</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-label">Role</div>
+        <div class="cred-value">Creative Director — Concept & UX Storytelling</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-label">Platform</div>
+        <div class="cred-value">HarmonyOS Cockpit + ADS</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-label">Skills</div>
+        <div class="cred-value">HMI Concept, UX Narrative, Motion Design Direction</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-label">Methods</div>
+        <div class="cred-value">User Scenario Design, Feature Storyboarding</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: WHO / WHAT / WOW -->
+  <div class="section">
+    <p style="font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--text); font-weight: 400; line-height: 1.7; max-width: 800px;">
+      A multimodal AI cockpit that recognizes every passenger by face and voice — personalizing content, audio zones, and ambient lighting per seat. Paired with a DTOF parking system that sees what no camera can: suspended pipes, sunken stairs, and obstacles invisible to traditional sensors.
+    </p>
+  </div>
+
+  <!-- STEP 5: PULLQUOTE #1 -->
+  <div class="pullquote">
+    <p>"Most cars ask you to adapt to them. What if the car adapted to you — the moment you sat down?"</p>
+    <cite>— Gordon Cheng, Creative Director</cite>
+  </div>
+
+  <!-- STEP 6: RESULTS + PROBLEM + SOLUTION -->
+  <div class="section">
+    <div class="section-title">The Challenge</div>
+    <h2>Making Intelligence Feel Invisible</h2>
+    <p>
+      Huawei's HarmonyOS cockpit had dozens of AI-powered features — face recognition, voice zones, memory-based personalization, ambient control. But advanced technology means nothing if users don't feel it. The challenge: how do you communicate invisible intelligence in a way that feels human, not robotic?
+    </p>
+    <p style="margin-top: 1.5rem;">
+      For DTOF parking: Huawei's Direct Time-of-Flight sensors could detect obstacles that traditional cameras and ultrasonics miss entirely — hanging pipes, negative-height curbs, suspended barriers. But no one had seen this capability demonstrated. The challenge: how do you make the invisible visible?
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">The Solution</div>
+    <h2>Two Films. Two Dimensions of Trust.</h2>
+    <p>
+      I directed two concept films that translated Huawei's engineering capabilities into emotionally legible stories — one for the cockpit experience (human warmth), one for DTOF parking (technical confidence).
+    </p>
+  </div>
+
+  <!-- COCKPIT FEATURES — WebM loops -->
+  <div class="section">
+    <div class="section-title">Cockpit — Multimodal AI</div>
+    <h2>Every Seat Has a Voice. Every Voice Has a Memory.</h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/01-mola-recognition.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">MoLA Multimodal Perception</div>
+          <h3>Face Recognition → Instant Personalization</h3>
+          <p>The car identifies each passenger the moment they sit down. Seat position, mirror angle, climate, and content preferences load automatically.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/02-personalized-content.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Preference Engine</div>
+          <h3>Personalized News & Content</h3>
+          <p>The system learns your interests over time. Dad gets sports news. The car remembers — no setup, no asking.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/03-child-voice-memory.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Per-Seat Voice + Memory</div>
+          <h3>The Child the Car Remembers</h3>
+          <p>Daughter says "Tuantuan" — the assistant recognizes her voice and face, recalls she was watching Peppa Pig last time, and asks if she'd like to continue.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/04-headrest-audio.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Directional Audio</div>
+          <h3>Navigation That Only the Driver Hears</h3>
+          <p>Headrest-integrated speakers create personal sound zones. Navigation guides the driver while the child watches cartoons in back — no interference.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/05-starlight-ambient.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Ambient Intelligence</div>
+          <h3>A Sky Full of Stars — By Voice</h3>
+          <p>"Xiaoyi, turn the ceiling into stars." The child controls ambient lighting with natural language. The interior transforms into a planetarium.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 8: PULLQUOTE #2 -->
+  <div class="pullquote">
+    <p>"The best interface is one that disappears. When a 6-year-old can command the car with a sentence, the technology has become invisible."</p>
+    <cite>— Gordon Cheng, on designing the child interaction scenario</cite>
+  </div>
+
+  <!-- DTOF FEATURES — WebM loops -->
+  <div class="section">
+    <div class="section-title">DTOF Parking — Beyond What Cameras See</div>
+    <h2>The Sensor That Sees the Invisible.</h2>
+    <p style="margin-bottom: 2rem;">
+      Direct Time-of-Flight (DTOF) sensors emit laser pulses to measure distance with millimeter precision — detecting obstacles that cameras and ultrasonics fundamentally cannot: suspended objects above bumper height, negative-height drop-offs like stairs, and narrow lateral obstructions.
+    </p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/06-parking-ui.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Parking HMI</div>
+          <h3>Split-Screen Parking Interface</h3>
+          <p>3D bird's-eye view + rear camera + real-time obstacle overlay. The driver sees exactly what the car sees — with distance markers to the centimeter.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/07-rear-steer-parking.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Rear-Wheel Steering</div>
+          <h3>Tight-Space Automated Parking</h3>
+          <p>Rear-wheel steering enables the car to park in spaces other vehicles simply cannot fit. Fully automated — the driver watches from outside.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/08-negative-obstacle.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Negative Obstacle Detection</div>
+          <h3>Seeing What Isn't There</h3>
+          <p>Sunken stairs, curb drop-offs, drainage ditches — obstacles defined by absence. DTOF detects changes in ground plane that cameras interpret as flat surface.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <video autoplay muted loop playsinline>
+          <source src="media/09-suspended-obstacle.webm" type="video/webm">
+        </video>
+        <div class="feature-card-info">
+          <div class="tag">Suspended Obstacle Detection</div>
+          <h3>The Pipe the Camera Missed</h3>
+          <p>Hanging water pipes, gate arms, overhead barriers — above bumper height, invisible to traditional ultrasonic sensors. DTOF scans the full vertical plane.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 10: PROCESS -->
+  <div class="section">
+    <div class="section-title">The Process</div>
+    <h2>From Engineering Specs to Human Stories</h2>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <h3>Feature Deconstruction</h3>
+        <p>Translated Huawei's engineering documentation into user-facing feature maps. Identified 12 cockpit features and 6 DTOF capabilities. Prioritized by emotional impact, not technical complexity.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <h3>Scenario Design</h3>
+        <p>Created character-driven scenarios: a father driving with his daughter. Every feature demonstrated through their interaction — the car becomes a character in a family story.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <h3>UX Storyboarding</h3>
+        <p>Storyboarded each UI moment: voice bubble positioning, face recognition feedback, parking UI transitions. Defined when the interface appears and — critically — when it stays invisible.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <h3>Production Direction</h3>
+        <p>Directed two films: a 79-second cockpit narrative and nine DTOF capability demos. Managed the tension between engineering accuracy and emotional storytelling.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 11: PULLQUOTE #3 -->
+  <div class="pullquote">
+    <p>"Engineering teams build features. Storytelling makes people trust them. My job was the bridge."</p>
+    <cite>— Gordon Cheng</cite>
+  </div>
+
+  <!-- STEP 12: TAKEAWAYS -->
+  <div class="section">
+    <div class="section-title">Takeaways</div>
+    <div class="takeaways">
+      <div class="takeaway-col">
+        <h3>What Worked</h3>
+        <ul>
+          <li>The father-daughter scenario made abstract AI features emotionally concrete — viewers understood personalization through a child's voice, not a spec sheet</li>
+          <li>Showing DTOF detecting "invisible" obstacles (sunken stairs, hanging pipes) created immediate "I didn't know that was possible" moments</li>
+          <li>The split-screen parking UI gave technical audiences proof while the narrative gave everyone else trust</li>
+        </ul>
+      </div>
+      <div class="takeaway-col">
+        <h3>What I Learned</h3>
+        <ul>
+          <li>Automotive HMI is where my CD background (brand storytelling) and IxD training (interaction logic) converge — this is the intersection I want to build a career in</li>
+          <li>The hardest UX problem isn't making features work — it's deciding when the interface should be invisible. The child talking to the car is better UX than any touchscreen</li>
+          <li>Chinese automotive tech (Huawei, NIO, XPeng) is 2-3 years ahead of Western OEMs in cockpit AI — understanding this landscape is a strategic advantage in the US market</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="case-footer">
+    <a href="../../">Back to Portfolio</a>
+    <p style="margin-top: 2rem; font-size: 0.65rem; color: #333; letter-spacing: 0.1em; text-transform: uppercase;">
+      Gordon Cheng &copy; 2026
+    </p>
+  </div>
+
+</body>
+</html>

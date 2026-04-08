@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Ripple — Golden Set</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Georgia', serif; }
+
+  .deck { width: 100%; height: 100%; position: relative; }
+  .slide {
+    position: absolute; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* Navigation */
+  .nav { position: fixed; bottom: 20px; right: 30px; z-index: 9999; display: flex; gap: 8px; align-items: center; }
+  .nav button {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.6); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .nav button:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav .counter { font-family: 'Helvetica Neue', sans-serif; font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 1px; margin: 0 8px; }
+
+  /* Progress */
+  .progress { position: fixed; top: 0; left: 0; height: 2px; background: rgba(78,205,196,0.5); z-index: 9999; transition: width 0.3s ease; }
+
+  /* Backgrounds */
+  .dark { background: radial-gradient(ellipse at 50% 40%, #0d2a3a 0%, #12202a 25%, #1a1510 50%, #2a1810 80%); }
+  .warm { background: #f4f0ea; }
+
+  /* Shared */
+  .section-label {
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .dark .section-label { color: rgba(196,166,122,0.5); }
+  .warm .section-label { color: rgba(92,78,60,0.5); }
+
+  .page-title {
+    font-size: 42px; line-height: 1.2; margin-bottom: 32px;
+  }
+  .dark .page-title { color: rgba(255,255,255,0.9); }
+  .warm .page-title { color: #5c4e3c; }
+
+  .content {
+    position: absolute; top: 50%; left: 80px; right: 80px;
+    transform: translateY(-50%);
+  }
+
+  /* Lists */
+  .items { list-style: none; }
+  .items li {
+    font-size: 18px; line-height: 1.8; padding-left: 20px; position: relative;
+  }
+  .dark .items li { color: rgba(255,255,255,0.75); }
+  .warm .items li { color: #5c4e3c; }
+  .items li::before {
+    content: ''; position: absolute; left: 0; top: 12px;
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .dark .items li::before { background: #4ecdc4; }
+  .warm .items li::before { background: #c4a67a; }
+  .items li strong { color: #c4a67a; }
+  .dark .items li strong { color: #4ecdc4; }
+  .warm .items li strong { color: #8b7355; }
+
+  .sub-items { list-style: none; margin: 4px 0 8px 24px; }
+  .sub-items li { font-size: 15px; line-height: 1.6; padding-left: 16px; }
+  .sub-items li::before { width: 4px; height: 4px; top: 10px; background: rgba(196,166,122,0.4); }
+
+  /* Hypothesis cards */
+  .h-grid { display: flex; gap: 24px; margin-top: 24px; }
+  .h-card {
+    flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 24px;
+  }
+  .h-card .h-num { font-size: 36px; color: #4ecdc4; margin-bottom: 8px; }
+  .h-card .h-name { font-size: 14px; color: #c4a67a; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .h-card .h-desc { font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .vo2-box {
+    margin-top: 28px; padding: 20px 28px; background: rgba(78,205,196,0.06);
+    border-left: 3px solid rgba(78,205,196,0.4); border-radius: 4px;
+  }
+  .vo2-box p { font-size: 18px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+
+  /* Principles */
+  .principle {
+    display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px;
+  }
+  .principle .p-num {
+    font-family: 'Helvetica Neue', sans-serif; font-size: 13px;
+    color: rgba(92,78,60,0.4); min-width: 24px;
+  }
+  .principle .p-name { font-size: 20px; color: #5c4e3c; font-weight: bold; }
+  .principle .p-desc { font-size: 16px; color: #8b7355; margin-left: 40px; margin-top: 4px; line-height: 1.5; }
+
+  /* Golden Set prompt slides */
+  .gs-layout { display: flex; gap: 32px; height: calc(100vh - 160px); position: absolute; top: 100px; left: 60px; right: 60px; bottom: 60px; }
+  .gs-left { flex: 1; display: flex; flex-direction: column; }
+  .gs-right { flex: 1; display: flex; flex-direction: column; }
+
+  .gs-prompt-box {
+    background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.25);
+    border-radius: 8px; padding: 20px 24px; margin-bottom: 16px;
+  }
+  .gs-prompt-label {
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: #4ecdc4; margin-bottom: 8px;
+  }
+  .gs-prompt-text { font-size: 18px; color: rgba(255,255,255,0.9); line-height: 1.5; font-style: italic; }
+
+  .gs-response-box {
+    flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 20px 24px; overflow-y: auto;
+  }
+  .gs-response-label {
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px;
+  }
+  .gs-response-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; white-space: pre-wrap; }
+
+  .gs-analysis { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .gs-good, .gs-bad {
+    flex: 1; border-radius: 8px; padding: 16px 20px; overflow-y: auto;
+  }
+  .gs-good {
+    background: rgba(78,205,196,0.06); border: 1px solid rgba(78,205,196,0.15);
+  }
+  .gs-bad {
+    background: rgba(232,126,110,0.06); border: 1px solid rgba(232,126,110,0.15);
+  }
+  .gs-good .gs-label { color: #4ecdc4; }
+  .gs-bad .gs-label { color: #E87E6E; }
+  .gs-label {
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .gs-list { list-style: none; }
+  .gs-list li { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; padding: 3px 0; padding-left: 12px; position: relative; }
+  .gs-list li::before { content: ''; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; border-radius: 50%; }
+  .gs-good .gs-list li::before { background: #4ecdc4; }
+  .gs-bad .gs-list li::before { background: #E87E6E; }
+
+  .gs-rating {
+    position: absolute; top: 28px; right: 60px;
+    font-family: 'Helvetica Neue', sans-serif; font-size: 13px; letter-spacing: 2px;
+    padding: 6px 16px; border-radius: 20px;
+  }
+  .rating-partial { background: rgba(196,166,122,0.15); color: #c4a67a; border: 1px solid rgba(196,166,122,0.3); }
+  .rating-failed { background: rgba(232,126,110,0.15); color: #E87E6E; border: 1px solid rgba(232,126,110,0.3); }
+
+  /* Slide header for GS */
+  .gs-header {
+    position: absolute; top: 28px; left: 60px;
+    font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; color: rgba(196,166,122,0.5);
+  }
+  .gs-title {
+    position: absolute; top: 55px; left: 60px; font-size: 24px; color: rgba(255,255,255,0.8);
+  }
+
+  /* Gap + Diff slides */
+  .two-col { display: flex; gap: 40px; margin-top: 20px; }
+  .col { flex: 1; }
+  .col h3 { font-size: 16px; margin-bottom: 12px; }
+  .dark .col h3 { color: #4ecdc4; }
+
+  .diff-list { list-style: none; }
+  .diff-list li {
+    font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.7;
+    padding: 8px 0 8px 20px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .diff-list li::before { content: ''; position: absolute; left: 0; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: #4ecdc4; }
+
+  /* Author */
+  .author { position: absolute; bottom: 24px; right: 60px; font-family: 'Helvetica Neue', sans-serif; font-size: 13px; color: rgba(255,255,255,0.25); letter-spacing: 2px; }
+  .course-info { position: absolute; bottom: 24px; left: 60px; font-family: 'Helvetica Neue', sans-serif; font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 2px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- SLIDE 0: Cover -->
+<div class="slide dark active" style="display:flex; align-items:center; justify-content:center;">
+  <div style="text-align:center; width:800px;">
+    <div style="font-family:'Helvetica Neue',sans-serif; font-size:13px; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.28); margin-bottom:36px;">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
+    <div style="font-size:72px; color:#4ecdc4; letter-spacing:2px; margin-bottom:20px; line-height:1.1;">One Ripple</div>
+    <div style="font-size:22px; color:rgba(196,166,122,0.8); font-style:italic; line-height:1.5;">Part III &mdash; Week 1: Testing Large Language Models</div>
+    <div style="font-size:16px; color:rgba(255,255,255,0.3); margin-top:48px; font-family:'Helvetica Neue',sans-serif; letter-spacing:2px;">Commodity Analysis &amp; Golden Set</div>
+  </div>
+  <div class="author">Gordon Cheng</div>
+</div>
+
+<!-- SLIDE 1: Problem Space -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Recap</div>
+    <div class="page-title">One Ripple</div>
+    <ul class="items">
+      <li><strong>AI + Aging + Well-being</strong> &mdash; How exercise reshapes the aging body</li>
+      <li><strong>Ripple Framework:</strong> Decline radiates outward
+        <ul class="sub-items">
+          <li>Self &rarr; Loss of mobility and passion</li>
+          <li>Family &rarr; Loved ones sacrifice their own lives</li>
+          <li>Society &rarr; Unsustainable burden on healthcare</li>
+        </ul>
+      </li>
+      <li><strong>Key finding:</strong> Aging hits in two sharp waves at 44 and 60 (Stanford Medicine)</li>
+      <li><strong>Hypothesis:</strong> The earlier we intervene with movement habits, the more we can delay the cliff</li>
+    </ul>
+  </div>
+  <div class="author">Gordon Cheng</div>
+</div>
+
+<!-- SLIDE 2: Hypotheses -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Hypotheses & Key Metric</div>
+    <div class="page-title">Three hypotheses, one anchor</div>
+    <div class="h-grid">
+      <div class="h-card">
+        <div class="h-num">01</div>
+        <div class="h-name">Body Awareness</div>
+        <div class="h-desc">Make the gradual process of physical aging continuously visible and personally meaningful.</div>
+      </div>
+      <div class="h-card">
+        <div class="h-num">02</div>
+        <div class="h-name">Small Movements</div>
+        <div class="h-desc">Lower the perceived threshold of "what counts as exercise" to build consistency.</div>
+      </div>
+      <div class="h-card">
+        <div class="h-num">03</div>
+        <div class="h-name">Dignity</div>
+        <div class="h-desc">Transform personal exercise into a visible act of care for the people around you.</div>
+      </div>
+    </div>
+    <div class="vo2-box">
+      <p><strong>VO2 Max</strong> is the anchor metric &mdash; it reflects biological age, is simple to measure, and most people don't know it exists. This is where AI can guide discovery.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Methodology -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Methodology</div>
+    <div class="page-title">Why Gemma 4, running locally</div>
+    <ul class="items">
+      <li><strong>Base model, no customization</strong> &mdash; Gemma 4 26B is Google's open-source model, tested with no system prompt or fine-tuning. Same "out of the box" condition as Google AI Studio.</li>
+      <li><strong>Privacy by design</strong> &mdash; Health data (VO2 Max, habits, body metrics) is sensitive. Running locally means data never leaves the device.</li>
+      <li><strong>Path to prototype</strong> &mdash; Using the same model from Week 1 through final delivery keeps the technical stack consistent and enables a working demo.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 4: Design Principles -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Design Principles</div>
+    <div class="page-title">The standard we measure against</div>
+    <ul class="items">
+      <li><strong>Dignity over efficiency</strong> &mdash; No lecturing, no guilt. Warmth first.</li>
+      <li><strong>Small steps over big goals</strong> &mdash; One action, not a fitness plan.</li>
+      <li><strong>Fear is real</strong> &mdash; Acknowledge emotions. Don't dismiss or avoid them.</li>
+      <li><strong>Sense first, move second</strong> &mdash; Help users feel their body before asking them to act.</li>
+      <li><strong>Flatten the curve, prevent the cliff</strong> &mdash; Guide from daily feelings to understanding. Not a medical diagnosis.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 5a: GS Prompt 1 - Response -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 1 of 5</div>
+  <div class="gs-title">Vague Fatigue &rarr; Can it guide to VO2 Max?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout" style="flex-direction:column;">
+    <div class="gs-prompt-box">
+      <div class="gs-prompt-label">User Prompt</div>
+      <div class="gs-prompt-text">"I'm 45 and I get tired way too easily. What's going on?"</div>
+    </div>
+    <div class="gs-response-box" style="flex:1; overflow:visible;">
+      <div class="gs-response-label">Gemma 4 Response</div>
+      <div class="gs-response-text" style="font-size:12px; line-height:1.6; column-count:2; column-gap:32px;">Disclaimer: I am an AI, not a doctor. Fatigue can be a symptom of many different conditions. Please consult a healthcare professional.
+
+At age 45, your body is undergoing significant physiological shifts. Fatigue is one of the most common complaints in this age group.
+
+1. Hormonal Shifts (Very Common at 45)
+  - For Women (Perimenopause): Fluctuating estrogen and progesterone levels can cause disrupted sleep and exhaustion.
+  - For Men (Andropause): A gradual decline in testosterone levels.
+  - Thyroid Issues: An underactive thyroid slows down your metabolism.
+
+2. Lifestyle and Nutritional Factors
+  - Sleep Apnea: You might be sleeping 8 hours but not getting restorative sleep.
+  - Nutrient Deficiencies: Iron, Vitamin B12, Vitamin D.
+  - Blood Sugar Instability: "glucose crashes" from ultra-processed carbs.
+  - Chronic Stress/Burnout: The "sandwich generation" balancing career, teenagers, aging parents.
+
+3. Underlying Medical Conditions
+  - Insulin Resistance / Type 2 Diabetes
+  - Anemia, Depression, Cardiovascular Issues
+
+How to Prepare for a Doctor's Visit:
+  Track timing, type of tired, associated symptoms, sleep patterns.
+
+Suggested Blood Tests: CBC, TSH, HbA1c, Vitamin D, B12, Ferritin.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5b: GS Prompt 1 - Analysis -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 1 Analysis</div>
+  <div class="gs-title">Vague Fatigue &rarr; Can it guide to VO2 Max?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout">
+    <div class="gs-left" style="justify-content:center;">
+      <div class="gs-prompt-box">
+        <div class="gs-prompt-label">User Prompt</div>
+        <div class="gs-prompt-text">"I'm 45 and I get tired way too easily. What's going on?"</div>
+      </div>
+      <div style="padding:20px 24px; font-size:15px; color:rgba(255,255,255,0.5); line-height:1.7; font-style:italic;">500+ words &middot; 3 sections &middot; 12 possible causes &middot; Blood test checklist &middot; Medical disclaimer</div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-analysis">
+        <div class="gs-good">
+          <div class="gs-label">What it got right</div>
+          <ul class="gs-list">
+            <li>Thorough &mdash; covers hormones, nutrition, sleep, stress</li>
+            <li>Knows the "sandwich generation" context at 45</li>
+            <li>Gives a concrete next step (what to track, what tests to ask for)</li>
+          </ul>
+        </div>
+        <div class="gs-bad">
+          <div class="gs-label">What it missed</div>
+          <ul class="gs-list">
+            <li><strong>Never mentions VO2 Max</strong> &mdash; the one metric that could make this tangible</li>
+            <li>Jumps straight to "go see a doctor" instead of helping me understand my body first</li>
+            <li>Reads like a WebMD article, not a conversation</li>
+            <li>Never says "your feeling is real" &mdash; no warmth</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6a: GS Prompt 2 - Response -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 2 of 5</div>
+  <div class="gs-title">Exercise Guilt &rarr; Can it redefine "what counts"?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout" style="flex-direction:column;">
+    <div class="gs-prompt-box">
+      <div class="gs-prompt-label">User Prompt</div>
+      <div class="gs-prompt-text">"I can't stick to a gym routine. Is walking even worth it?"</div>
+    </div>
+    <div class="gs-response-box" style="flex:1; overflow:visible;">
+      <div class="gs-response-label">Gemma 4 Response</div>
+      <div class="gs-response-text" style="font-size:12px; line-height:1.6; column-count:2; column-gap:32px;">The short answer is: Yes. Absolutely, 100% yes.
+
+The most dangerous mindset you can adopt is "all or nothing." People often feel that if they aren't lifting heavy weights or doing HIIT, they are wasting their time.
+
+1. The "Consistency Over Intensity" Rule
+"The most effective exercise is the one you actually do." Walking has a low "barrier to entry." You don't need to change clothes, you don't need a membership.
+
+2. The Metabolic Benefits
+  - Blood Sugar Regulation: A 10-15 minute walk after a meal reduces blood sugar spikes.
+  - Cortisol Management: Walking lowers cortisol. The gym can sometimes feel like a punishment.
+  - Fat Oxidation: Walking stays within "Zone 2" training.
+
+3. The "Hidden" Calorie Burn
+3,000 extra steps = 100-150 extra calories daily. Over a month, that is significant.
+
+4. How to "Level Up" Walking
+  - Incline Walking: 3-5% incline on treadmill
+  - Rucking: Weighted backpack (5-10 lbs)
+  - Interval Walking: Brisk 2 min, casual 2 min
+
+The Reframe: Stop looking at walking as a "failed substitute" for the gym. You are building the engine.
+
+Keep walking. It counts.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6b: GS Prompt 2 - Analysis -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 2 Analysis</div>
+  <div class="gs-title">Exercise Guilt &rarr; Can it redefine "what counts"?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout">
+    <div class="gs-left" style="justify-content:center;">
+      <div class="gs-prompt-box">
+        <div class="gs-prompt-label">User Prompt</div>
+        <div class="gs-prompt-text">"I can't stick to a gym routine. Is walking even worth it?"</div>
+      </div>
+      <div style="padding:20px 24px; font-size:15px; color:rgba(255,255,255,0.5); line-height:1.7; font-style:italic;">400+ words &middot; 4 numbered sections &middot; Calorie math &middot; "Level up" plan &middot; Fitness article tone</div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-analysis">
+        <div class="gs-good">
+          <div class="gs-label">What it got right</div>
+          <ul class="gs-list">
+            <li>"The most effective exercise is the one you actually do"</li>
+            <li>"Keep walking. It counts." &mdash; genuinely warm</li>
+            <li>"You are building the engine" &mdash; great metaphor</li>
+          </ul>
+        </div>
+        <div class="gs-bad">
+          <div class="gs-label">What it missed</div>
+          <ul class="gs-list">
+            <li>I said I feel guilty &mdash; it ignored that and jumped to science</li>
+            <li>Still ends up pushing "level up" and calorie math</li>
+            <li>Never connects walking to VO2 Max</li>
+            <li>Good reframes buried inside a 400-word article</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7a: GS Prompt 3 - Response -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 3 of 5</div>
+  <div class="gs-title">Data Interpretation &rarr; Can it make numbers personal?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout" style="flex-direction:column;">
+    <div class="gs-prompt-box">
+      <div class="gs-prompt-label">User Prompt</div>
+      <div class="gs-prompt-text">"My watch says my fitness age is 52 but I'm 46. What does that mean?"</div>
+    </div>
+    <div class="gs-response-box" style="flex:1; overflow:visible;">
+      <div class="gs-response-label">Gemma 4 Response</div>
+      <div class="gs-response-text" style="font-size:12px; line-height:1.6; column-count:2; column-gap:32px;">"Fitness age" is not a medical diagnosis. It is a mathematical estimate created by an algorithm.
+
+Your physiological markers are performing more like those of a 52-year-old than a 46-year-old.
+
+1. How the number is calculated
+  - VO2 Max: This is the most important factor. It measures how efficiently your body uses oxygen.
+  - Resting Heart Rate (RHR): Higher = heart working harder.
+  - Heart Rate Variability (HRV): Lower = body under stress.
+  - Activity Consistency.
+
+2. Why it might be high (Temporary Factors)
+  - Stress or Lack of Sleep
+  - Recent Illness (cold, flu, COVID-19)
+  - Overtraining
+  - Dehydration or Alcohol
+
+3. How to "lower" your fitness age
+  - Improve VO2 Max: Zone 2 training and HIIT.
+  - Focus on Recovery: 7-9 hours sleep, stress management.
+  - Consistent Movement.
+  - Strength Training.
+
+Unlike chronological age, fitness age is reversible.
+
+Think of your fitness age as a "trend indicator" rather than a fact.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7b: GS Prompt 3 - Analysis -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 3 Analysis</div>
+  <div class="gs-title">Data Interpretation &rarr; Can it make numbers personal?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout">
+    <div class="gs-left" style="justify-content:center;">
+      <div class="gs-prompt-box">
+        <div class="gs-prompt-label">User Prompt</div>
+        <div class="gs-prompt-text">"My watch says my fitness age is 52 but I'm 46. What does that mean?"</div>
+      </div>
+      <div style="padding:20px 24px; font-size:15px; color:rgba(255,255,255,0.5); line-height:1.7; font-style:italic;">450 words &middot; 3 sections &middot; Metric explanations &middot; Generic fitness advice &middot; Disclaimer</div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-analysis">
+        <div class="gs-good">
+          <div class="gs-label">What it got right</div>
+          <ul class="gs-list">
+            <li><strong>Mentions VO2 Max</strong> &mdash; the only prompt where it does</li>
+            <li>"Fitness age is reversible" &mdash; hopeful</li>
+            <li>"Trend indicator, not a fact" &mdash; smart reframe</li>
+          </ul>
+        </div>
+        <div class="gs-bad">
+          <div class="gs-label">What it missed</div>
+          <ul class="gs-list">
+            <li>Never translates: "what does feeling 52 actually mean in my daily life?"</li>
+            <li>Seeing "52" when you're 46 is alarming &mdash; no emotional acknowledgment</li>
+            <li>Gives a textbook explanation, not a personal one</li>
+            <li>Advice is generic (Zone 2, sleep more) &mdash; no specific first step</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8a: GS Prompt 4 - Response -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 4 of 5</div>
+  <div class="gs-title">Immediate Action &rarr; Can it give just one thing?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout" style="flex-direction:column;">
+    <div class="gs-prompt-box">
+      <div class="gs-prompt-label">User Prompt</div>
+      <div class="gs-prompt-text">"3pm, stuck at my desk, exhausted. What can I do in 3 minutes?"</div>
+    </div>
+    <div class="gs-response-box" style="flex:1; overflow:visible;">
+      <div class="gs-response-label">Gemma 4 Response</div>
+      <div class="gs-response-text" style="font-size:12px; line-height:1.6; column-count:2; column-gap:32px;">You don't have time for a "break" &mdash; you need a pattern interrupt. Pick one of these three menus based on how you are feeling:
+
+Option 1: The "Physical Shock"
+Best if: You feel heavy, lethargic, sinking into your chair.
+  - Minute 1: Upward Stretch. Stand up, reach hands to ceiling, interlace fingers, push palms up. Three massive breaths.
+  - Minute 2: Circulation Boost. 30 seconds of desk jumping jacks or shake arms and legs vigorously.
+  - Minute 3: Cold Splash. Splash cold water on wrists and back of neck. Stimulates the vagus nerve.
+
+Option 2: The "Mental Fog" Clearer
+Best if: Your brain feels mushy, can't focus.
+  - Minute 1: 20-20-20 Rule. Look at something 20 feet away for 20 seconds. Close eyes for 40 seconds.
+  - Minute 2: Box Breathing. Inhale 4s, hold 4s, exhale 4s, hold 4s.
+  - Minute 3: Micro-Win. One tiny task in 60 seconds (delete 5 emails, clear desk).
+
+Option 3: The "Sensory Reset"
+Best if: Overwhelmed, anxious, overstimulated.
+  - Minute 1: 3-2-1 grounding. Name 3 things you see, 2 you feel, 1 you hear.
+  - Minute 2: Drink a full glass of ice-cold water.
+  - Minute 3: Put on one single song and just listen. No scrolling.
+
+Golden Rule: Do not check your phone.
+
+Go. Clock is ticking.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8b: GS Prompt 4 - Analysis -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 4 Analysis</div>
+  <div class="gs-title">Immediate Action &rarr; Can it give just one thing?</div>
+  <div class="gs-rating rating-partial">PARTIAL</div>
+  <div class="gs-layout">
+    <div class="gs-left" style="justify-content:center;">
+      <div class="gs-prompt-box">
+        <div class="gs-prompt-label">User Prompt</div>
+        <div class="gs-prompt-text">"3pm, stuck at my desk, exhausted. What can I do in 3 minutes?"</div>
+      </div>
+      <div style="padding:20px 24px; font-size:15px; color:rgba(255,255,255,0.5); line-height:1.7; font-style:italic;">400+ words &middot; 3 menus &times; 3 steps = 9 actions &middot; Reading time > 3 minutes</div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-analysis">
+        <div class="gs-good">
+          <div class="gs-label">What it got right</div>
+          <ul class="gs-list">
+            <li>Sorts by feeling type &mdash; thoughtful personalization</li>
+            <li>"Go. Clock is ticking." &mdash; has energy</li>
+            <li>"Pattern interrupt" is a smart concept</li>
+          </ul>
+        </div>
+        <div class="gs-bad">
+          <div class="gs-label">What it missed</div>
+          <ul class="gs-list">
+            <li>I asked for one thing &mdash; got 3 menus, 9 steps</li>
+            <li>Reading this takes longer than 3 minutes</li>
+            <li>Feels like a productivity hack, not a health moment</li>
+            <li>Doesn't acknowledge that wanting to move when exhausted is already a win</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9a: GS Prompt 5 - Response -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 5 of 5</div>
+  <div class="gs-title">Dignity & Fear &rarr; Can it understand physical decline?</div>
+  <div class="gs-rating rating-failed">FAILED</div>
+  <div class="gs-layout" style="flex-direction:column;">
+    <div class="gs-prompt-box">
+      <div class="gs-prompt-label">User Prompt</div>
+      <div class="gs-prompt-text">"I'm 70 and I couldn't pick up my granddaughter. Is it too late for me?"</div>
+    </div>
+    <div class="gs-response-box" style="flex:1; overflow:visible;">
+      <div class="gs-response-label">Gemma 4 Response</div>
+      <div class="gs-response-text" style="font-size:12px; line-height:1.6; column-count:2; column-gap:32px;">The short answer, from a place of deep empathy, is no. It is not too late.
+
+When we love someone &mdash; especially a grandchild &mdash; our mistakes feel monumental. The guilt you are feeling is a reflection of how much you care.
+
+1. Relationships are built on a lifetime, not a single moment
+"One missed chapter does not mean the story is over." In the grand timeline of your relationship with your granddaughter, this is a single point in time. There are hundreds of future opportunities to show up, to love, and to be present.
+
+2. Children and grandchildren are incredibly resilient
+Children live in the present. They don't hold grudges the way adults do; they look for the next hug, the next story, and the next treat.
+
+3. Distinguish between "Mistake" and "Character"
+Missing an appointment or being unable to perform a task is a mistake or a circumstance. It is not a reflection of your character as a grandparent.
+
+4. How to move forward
+  - Acknowledge it: "I was so sad I couldn't be there to pick you up. I missed you so much."
+  - The "Make-Up" Gesture: A phone call, a handwritten note, or a small treat.
+  - Focus on the next opportunity.
+
+You are 70 years young. You have a wealth of wisdom, love, and life to offer her. One missed pickup does not erase your entire history.
+
+Forgive yourself, because she likely already has.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9b: GS Prompt 5 - Analysis -->
+<div class="slide dark">
+  <div class="gs-header">Golden Set &mdash; Prompt 5 Analysis</div>
+  <div class="gs-title">Dignity & Fear &rarr; Can it understand physical decline?</div>
+  <div class="gs-rating rating-failed">FAILED</div>
+  <div class="gs-layout">
+    <div class="gs-left" style="justify-content:center;">
+      <div class="gs-prompt-box">
+        <div class="gs-prompt-label">User Prompt</div>
+        <div class="gs-prompt-text">"I'm 70 and I couldn't pick up my granddaughter. Is it too late for me?"</div>
+      </div>
+      <div style="padding:20px 24px; font-size:15px; color:rgba(232,126,110,0.8); line-height:1.7; font-style:italic;">The model interpreted "couldn't pick up" as missing a scheduled pickup &mdash; not physically unable to lift her. The entire response addresses the wrong problem.</div>
+    </div>
+    <div class="gs-right">
+      <div class="gs-analysis">
+        <div class="gs-good">
+          <div class="gs-label">What it got right</div>
+          <ul class="gs-list">
+            <li>The writing is genuinely beautiful and empathetic</li>
+            <li>Proves the model CAN be warm &mdash; when it understands the context</li>
+          </ul>
+        </div>
+        <div class="gs-bad">
+          <div class="gs-label">What it missed</div>
+          <ul class="gs-list">
+            <li><strong>Completely misread the prompt</strong> &mdash; "pick up" means physically lift, not a scheduled pickup</li>
+            <li>Gave relationship advice for a health/aging question</li>
+            <li>Never mentions exercise, strength, or physical decline</li>
+            <li>The deepest fear &mdash; becoming a burden &mdash; was never addressed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Gap Analysis -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Gap Analysis</div>
+    <div class="page-title">Patterns across all five tests</div>
+    <div class="two-col">
+      <div class="col">
+        <h3 style="color:#E87E6E">Consistent Failures</h3>
+        <ul class="diff-list">
+          <li><strong>Text-heavy</strong> &mdash; Every response is 400-500 words. Users need 2-3 sentences.</li>
+          <li><strong>Medical-first</strong> &mdash; Defaults to diagnosis mode with disclaimers, skipping body awareness.</li>
+          <li><strong>Emotions ignored</strong> &mdash; User expresses guilt or fear; model jumps to facts.</li>
+          <li><strong>Ambiguity failure</strong> &mdash; Misreads "couldn't pick up" as scheduling, not physical inability.</li>
+          <li><strong>No guided discovery</strong> &mdash; Never introduces VO2 Max from vague symptoms.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#4ecdc4">Bright Spots</h3>
+        <ul class="diff-list">
+          <li>"The most effective exercise is the one you actually do"</li>
+          <li>"Keep walking. It counts."</li>
+          <li>"Fitness age is reversible"</li>
+          <li>"Trend indicator, not a fact"</li>
+          <li>Prompt 5 shows the model CAN write with warmth &mdash; it just needs the right context</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: Differentiation -->
+<div class="slide dark">
+  <div class="content">
+    <div class="section-label">Differentiation</div>
+    <div class="page-title">What One Ripple will do differently</div>
+    <ul class="diff-list">
+      <li><strong>Guide, don't diagnose</strong> &mdash; From vague feelings to VO2 Max, without users needing to know the term first</li>
+      <li><strong>One action at a time</strong> &mdash; Not a menu. Not a plan. The one thing you can do right now.</li>
+      <li><strong>Emotions before information</strong> &mdash; Acknowledge guilt, fear, and frustration before offering guidance</li>
+      <li><strong>Privacy-first</strong> &mdash; Health data stays on-device with local Gemma 4</li>
+      <li><strong>Fluid role</strong> &mdash; From body awareness counselor to micro-exercise coach, based on the user's readiness</li>
+    </ul>
+  </div>
+  <div class="course-info">SVA IxD &middot; Framing User Experiences &middot; Spring 2026</div>
+  <div class="author">Gordon Cheng</div>
+</div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="go(-1)">&#8592;</button>
+  <span class="counter" id="counter">1 / 11</span>
+  <button onclick="go(1)">&#8594;</button>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+function go(dir) {
+  slides[current].classList.remove('active');
+  current = Math.max(0, Math.min(total - 1, current + dir));
+  slides[current].classList.add('active');
+  document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+});
+document.getElementById('counter').textContent = '1 / ' + total;
+document.getElementById('progress').style.width = (1 / total * 100) + '%';
+</script>
+
+</body>
+</html>

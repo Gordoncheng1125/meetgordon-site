@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>导演参考 · 是枝裕和风格 · 珀莱雅母亲节</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0f; color:#e8e0d8; font-family:'Noto Sans SC','Inter',sans-serif; line-height:1.7; }
+a { color:#7BB8E8; text-decoration:none; }
+a:hover { color:#A8D0F0; text-decoration:underline; }
+
+.header { padding:60px 80px 40px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.header h1 { font-family:'Noto Serif SC',serif; font-size:32px; font-weight:300; color:#F0E8E0; letter-spacing:2px; }
+.header p { color:rgba(240,232,224,0.5); font-size:14px; margin-top:8px; }
+
+.brief { padding:30px 80px; background:rgba(255,255,255,0.02); border-bottom:1px solid rgba(255,255,255,0.06); }
+.brief h3 { color:#C8B8E8; font-size:14px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.brief .tags { display:flex; gap:10px; flex-wrap:wrap; }
+.brief .tag { padding:6px 14px; border-radius:20px; font-size:12px; border:1px solid rgba(255,255,255,0.1); color:rgba(240,232,224,0.6); }
+
+.tier { padding:40px 80px; }
+.tier-label { font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#C8B8E8; margin-bottom:8px; }
+.tier-title { font-family:'Noto Serif SC',serif; font-size:22px; font-weight:300; color:#F0E8E0; margin-bottom:24px; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(440px, 1fr)); gap:20px; }
+
+.card {
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:28px;
+  transition:border-color 0.2s;
+}
+.card:hover { border-color:rgba(200,184,232,0.25); }
+
+.video-link {
+  display:block; margin:8px 0; padding:10px 14px; border-radius:8px;
+  background:rgba(123,184,232,0.06); border:1px solid rgba(123,184,232,0.12);
+  color:#7BB8E8; font-size:13px; text-decoration:none; transition:all 0.2s;
+}
+.video-link:hover { background:rgba(123,184,232,0.12); text-decoration:none; color:#A8D0F0; }
+.video-link .platform { font-size:11px; color:rgba(240,232,224,0.4); margin-left:6px; }
+.video-label { font-size:11px; color:rgba(240,232,224,0.4); margin-top:4px; margin-bottom:4px; }
+
+
+.card .name { font-family:'Noto Serif SC',serif; font-size:20px; color:#F0E8E0; margin-bottom:2px; }
+.card .name-en { font-family:'Inter',sans-serif; font-size:13px; color:rgba(240,232,224,0.4); margin-bottom:12px; }
+.card .region { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; margin-bottom:14px; }
+.region-jp { background:rgba(232,160,184,0.12); color:#E8A0B8; border:1px solid rgba(232,160,184,0.2); }
+.region-cn { background:rgba(212,160,80,0.12); color:#D4A050; border:1px solid rgba(212,160,80,0.2); }
+.region-th { background:rgba(100,200,160,0.12); color:#64C8A0; border:1px solid rgba(100,200,160,0.2); }
+.region-us { background:rgba(90,138,184,0.12); color:#5A8AB8; border:1px solid rgba(90,138,184,0.2); }
+.region-hk { background:rgba(200,180,140,0.12); color:#C8B48C; border:1px solid rgba(200,180,140,0.2); }
+.region-tw { background:rgba(160,200,120,0.12); color:#A0C878; border:1px solid rgba(160,200,120,0.2); }
+.region-kr { background:rgba(180,140,200,0.12); color:#B48CC8; border:1px solid rgba(180,140,200,0.2); }
+
+.card .style { font-size:13px; color:rgba(240,232,224,0.6); margin-bottom:14px; font-style:italic; }
+
+.card .brands { font-size:12px; color:rgba(240,232,224,0.5); margin-bottom:14px; }
+.card .brands strong { color:rgba(240,232,224,0.7); font-weight:500; }
+
+.card .refs { margin-bottom:14px; }
+.card .refs p { font-size:12px; color:rgba(240,232,224,0.5); margin-bottom:4px; }
+.card .refs a { font-size:12px; }
+
+.card .links { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
+.card .links a {
+  padding:5px 12px; border-radius:6px; font-size:11px;
+  background:rgba(123,184,232,0.08); border:1px solid rgba(123,184,232,0.15); color:#7BB8E8;
+}
+.card .links a:hover { background:rgba(123,184,232,0.15); text-decoration:none; }
+
+.card .note { font-size:12px; color:#D4C0A0; margin-top:12px; padding:8px 12px; background:rgba(212,192,160,0.06); border-radius:6px; border-left:2px solid rgba(212,192,160,0.3); }
+
+.divider { height:1px; background:rgba(255,255,255,0.04); margin:20px 80px; }
+
+.footer { padding:40px 80px; color:rgba(240,232,224,0.3); font-size:12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>导演风格参考 · 是枝裕和系</h1>
+  <p>珀莱雅 2026 母亲节 SV 导演候选 — 暖调自然主义 · 日常细节 · 情感留白</p>
+</div>
+
+<div class="brief">
+  <h3>风格关键词</h3>
+  <div class="tags">
+    <span class="tag">自然光 / 黄金时段</span>
+    <span class="tag">日常家居场景</span>
+    <span class="tag">纪录片式自然主义</span>
+    <span class="tag">克制的情感表达</span>
+    <span class="tag">Show don't tell</span>
+    <span class="tag">母女 / 女性友谊</span>
+  </div>
+</div>
+
+<!-- TIER 1 -->
+<div class="tier">
+  <p class="tier-label">Tier 1 · 最佳匹配</p>
+  <p class="tier-title">风格高度吻合，有相关品牌经验</p>
+  <div class="grid">
+
+    <div class="card">
+      <p class="name">泷本干也</p>
+      <p class="name-en">Mikiya Takimoto</p>
+      <span class="region region-jp">日本</span>
+      <p class="style">「是枝裕和御用摄影师。温暖、明亮的自然光，耐心的构图。他的广告作品与电影作品有同等的情感亲密感。」</p>
+      <p class="brands"><strong>代表品牌：</strong>三得利 Sapporo 黑标「大人电梯」系列（2010至今）、大和 House「在一起」系列、三三、麦当劳日本</p>
+      <div class="refs">
+        <p><strong>参考作品：</strong></p>
+        <p>📽 是枝裕和《如父如子》《海街日记》《第三度嫌疑人》— 摄影指导</p>
+        <p>📽 Sapporo 黑标「大人电梯」— 暖调日常对话</p>
+        <p class="video-label">▼ 住友林業 CM（是枝裕和导演 × 泷本干也摄影）</p>
+        <a class="video-link" href="https://www.bilibili.com/video/av15964144/" target="_blank">▶ 点击观看 <span class="platform">Bilibili</span></a>
+      </div>
+      <div class="links">
+        <a href="https://mikiyatakimoto.com/" target="_blank">官方网站</a>
+        <a href="https://www.instagram.com/mikiya_takimoto" target="_blank">Instagram</a>
+      </div>
+      <div class="note">💡 他就是是枝裕和视觉语言的缔造者。预算允许的话，这是最理想的人选。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">张大鹏</p>
+      <p class="name-en">Zhang Dapeng</p>
+      <span class="region region-cn">中国</span>
+      <p class="style">「克制的情感传递，用节制放大情感强度。暖色调，人物尺度的故事。非常接近是枝裕和的情感减法哲学。」</p>
+      <p class="brands"><strong>代表品牌：</strong>红星美凯龙「爱让家更美」（日系格调）、链家「老张的团圆年」、华为 Mate 20、百事可乐</p>
+      <div class="refs">
+        <p><strong>参考作品：</strong></p>
+        <p>📽 《啥是佩奇》— 2019 中国广告金狮最佳微电影 / 导演 / 摄影</p>
+        <p>📽 《珍珠》— 2020 金瞳奖最佳导演 + 全场大奖</p>
+        <p>📽 红星美凯龙品牌片 — 明确标注「日系格调」</p>
+        <p class="video-label">▼ 《啥是佩奇》— 2019金狮最佳微电影/导演/摄影</p>
+        <a class="video-link" href="https://www.bilibili.com/video/BV1ea4y1a7bE/" target="_blank">▶ 点击观看 <span class="platform">Bilibili</span></a>
+      </div>
+      <div class="links">
+        <a href="https://www.xinpianchang.com/u10002513" target="_blank">新片场主页</a>
+        <a href="https://www.thgfilms.com/direct/74" target="_blank">桃花谷影视</a>
+      </div>
+      <div class="note">💡 本土市场强势 + 暖调家庭叙事验证。红星美凯龙那条被标注为「日系格调」，调性完全对口。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">席然</p>
+      <p class="name-en">Xi Ran</p>
+      <span class="region region-cn">中国</span>
+      <p class="style">「核心理念是'传递感受'——每条片子从一个情感关键词出发。强调真实的人的瞬间，而非精致的制作。」</p>
+      <p class="brands"><strong>代表品牌：</strong>招商银行「番茄炒蛋」（刷屏级）、淘宝「一千零一夜」16集系列、快手、B站「送月亮的人」、美团、OPPO、腾讯99公益日、抖音</p>
+      <div class="refs">
+        <p><strong>参考作品：</strong></p>
+        <p>📽 招行「番茄炒蛋」— 安静、家庭中心、母子情感连接，调性极近</p>
+        <p>📽 B站「送月亮的人」— 温暖人文</p>
+        <p class="video-label">▼ 招行「番茄炒蛋」— 安静、母子情感</p>
+        <a class="video-link" href="https://www.bilibili.com/video/BV1NK41137pL/" target="_blank">▶ 点击观看 <span class="platform">Bilibili</span></a>
+        <p>🏆 第48届金马奖最佳原创剧本（《到阜阳六百里》）</p>
+      </div>
+      <div class="links">
+        <a href="https://www.digitaling.com/articles/903881.html" target="_blank">数英访谈</a>
+      </div>
+      <div class="note">💡 招行「番茄炒蛋」的调性和我们珀莱雅的脚本几乎完美对标——安静、家庭、无煽情的温暖。</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TIER 2 -->
+<div class="tier">
+  <p class="tier-label">Tier 2 · 强候选</p>
+  <p class="tier-title">美学方向正确，有美妆/时尚品牌经验</p>
+  <div class="grid">
+
+    <div class="card">
+      <p class="name">柳沢翔</p>
+      <p class="name-en">Sho Yanagisawa</p>
+      <span class="region region-jp">日本</span>
+      <p class="style">「资生堂御用导演。擅长将实拍与动画混合，平光构图。宝矿力水特系列尤其温暖有情感共鸣。」</p>
+      <p class="brands"><strong>代表品牌：</strong>资生堂「High School Girl?」（戛纳金狮）、资生堂「Snow Beauty」、宝矿力水特系列（5+支）、Netflix、日清、Panasonic、Sony</p>
+      <div class="refs">
+        <p>📽 资生堂「Snow Beauty」— 美妆品牌参考</p>
+        <p>📽 宝矿力「不需要翅膀」— 暖调情感</p>
+        <p>📽 相铁「12 Years」— 时间流逝的亲密叙事</p>
+        <p class="video-label">▼ 资生堂「High School Girl?」— 戛纳金狮</p>
+        <a class="video-link" href="https://www.youtube.com/results?search_query=Shiseido%20High%20School%20Girl%20CM%20%E8%B3%87%E7%94%9F%E5%A0%82" target="_blank">▶ 資生堂「High School Girl?」<span class="platform">YouTube</span></a>
+      </div>
+      <div class="links">
+        <a href="https://showyanagisawa.com/works/" target="_blank">作品集</a>
+        <a href="https://www.instagram.com/showyanagisawa" target="_blank">Instagram</a>
+      </div>
+      <div class="note">💡 有资生堂美妆经验。部分作品偏概念/风格化，但宝矿力和相铁那几条很接近 brief。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">麦子</p>
+      <p class="name-en">Maizi</p>
+      <span class="region region-cn">中国</span>
+      <p class="style">「强调'真实'，抵制套路化商业惯例。偏爱即兴和细节。用长镜头+剧场式光线设计，关注女性内在与外在的身份。」</p>
+      <p class="brands"><strong>代表品牌：</strong>NEIWAI 内外「一个人，两面」纪录片系列（谭元元、杜鹃出演）、华为「大象」定格动画</p>
+      <div class="refs">
+        <p>📽 NEIWAI「我是__，我是我自己」— 亲密、纪录片感的真实女性肖像</p>
+        <p class="video-label">▼ NEIWAI「NO BODY IS NOBODY」纪录片</p>
+        <a class="video-link" href="https://www.bilibili.com/video/BV12E41177a9/" target="_blank">▶ 点击观看 <span class="platform">Bilibili</span></a>
+      </div>
+      <div class="links">
+        <a href="https://www.digitaling.com/articles/146887.html" target="_blank">数英访谈</a>
+      </div>
+      <div class="note">💡 女性视角 + 纪录片直觉。NEIWAI 那条和珀莱雅 brief 主题高度重合——亲密的女性肖像，真实，不矫饰。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">山田智和</p>
+      <p class="name-en">Tomokazu Yamada</p>
+      <span class="region region-jp">日本</span>
+      <p class="style">「诗意的视觉叙事与氛围感构图。时尚/奢侈品调性但有情感深度。米津玄師的《Lemon》MV 6.5亿播放。」</p>
+      <p class="brands"><strong>代表品牌：</strong>Nike、Valentino × Undercover、Tod's、Givenchy、三得利、NTT Docomo</p>
+      <div class="refs">
+        <p><strong>广告作品：</strong></p>
+        <p class="video-label">▼ KANEBO「希望よ、超えてゆけ。」— 美妆品牌概念片</p>
+        <a class="video-link" href="https://www.youtube.com/results?search_query=KANEBO%20%E5%B8%8C%E6%9C%9B%E3%82%88%E8%B6%85%E3%81%88%E3%81%A6%E3%82%86%E3%81%91%20CM%202023" target="_blank">▶ KANEBO「希望よ、超えてゆけ。」<span class="platform">YouTube</span></a>
+        <p class="video-label">▼ 三得利 BOSS「365 STEPS」— 医疗题材暖调叙事（伊藤沙莉主演）</p>
+        <a class="video-link" href="https://www.youtube.com/results?search_query=%E3%82%B5%E3%83%B3%E3%83%88%E3%83%AA%E3%83%BC%20BOSS%20365STEPS%20%E4%BC%8A%E8%97%A4%E6%B2%99%E8%8E%89%20CM" target="_blank">▶ 三得利 BOSS「365 STEPS」<span class="platform">YouTube</span></a>
+        <p>📽 Nike Jordan「Tokyo Fearless Ones」</p>
+        <p>📽 UNIQLO Jeans / Tod's / Givenchy / い・ろ・は・す / 綾鷹×宇多田ヒカル</p>
+      </div>
+      <div class="links">
+        <a href="https://tomokazuyamada.com/" target="_blank">官方作品集</a>
+        <a href="https://cvr-stg.com/tomokazuyamada/" target="_blank">CAVIAR 主页</a>
+        <a href="https://www.instagram.com/tomoymd" target="_blank">Instagram</a>
+        <a href="https://vimeo.com/caviarfilm" target="_blank">CAVIAR Vimeo</a>
+      </div>
+      <div class="note">💡 KANEBO 是美妆品牌，这条概念片的调性和珀莱雅 brief 有参考价值。</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TIER 3 -->
+<div class="tier">
+  <p class="tier-label">Tier 3 · 值得关注</p>
+  <p class="tier-title">有独到优势，或有特定品牌经验</p>
+  <div class="grid">
+
+    <div class="card">
+      <p class="name">Jackie Bao</p>
+      <p class="name-en">Jackie Bao</p>
+      <span class="region region-us">美国/亚裔</span>
+      <p class="style">「专业的节奏把控、表演指导和精心构图，传递真实的人类情感和视觉上authentic的场景。摄影师出身，光线/构图专长。」</p>
+      <p class="brands"><strong>代表品牌：</strong>La Mer（Michelle Yeoh）、Victoria's Secret「Bare」、Nike、Ralph Lauren、Gillette Venus（奥运）、K18（Simone Biles）</p>
+      <div class="links">
+        <a href="https://www.jackie-bao.com/" target="_blank">作品集</a>
+        <a href="https://biscuitfilmworks.com/us/commercial/jackie-bao/" target="_blank">Biscuit Filmworks</a>
+      </div>
+      <div class="note">💡 有 La Mer 美妆经验 + 亚裔视角。擅长亲密情感故事。但在美国，对中国市场的了解可能需要评估。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">Thanonchai</p>
+      <p class="name-en">Thanonchai Sornsriwichai</p>
+      <span class="region region-th">泰国</span>
+      <p class="style">「电影感情感叙事大师。擅长构建安静的情感高潮。泰国人寿'无名英雄'广告的观察式叙事直接和是枝裕和相邻。」</p>
+      <p class="brands"><strong>代表品牌：</strong>泰国人寿「Unsung Hero」（~3000万播放）、潘婷「Chrysalis」</p>
+      <div class="links">
+        <a href="https://www.thedrum.com/news/2022/06/14/world-s-best-ads-ever-16-thai-life-pulls-heartstrings-with-unsung-hero" target="_blank">The Drum 报道</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="name">陈可辛</p>
+      <p class="name-en">Peter Chan</p>
+      <span class="region region-hk">香港/中国</span>
+      <p class="style">「Apple「三分钟」（iPhone X 拍摄，2018春节）是教科书级的暖调自然主义：纪录片感、真实场景、母子情感、无矫饰。」</p>
+      <p class="brands"><strong>代表品牌：</strong>Apple「三分钟」— 列车员母亲与儿子月台重逢</p>
+      <p class="video-label">▼ Apple「三分钟」— iPhone X 拍摄</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=Apple%20Three%20Minutes%20%E4%B8%89%E5%88%86%E9%92%9F%20%E9%99%88%E5%8F%AF%E8%BE%9B%20iPhone" target="_blank">▶ Apple「三分钟」陈可辛 <span class="platform">YouTube</span></a>
+      <div class="links">
+        <a href="https://www.adweek.com/brand-marketing/apples-sad-sweet-short-film-about-a-mothers-love-goes-viral-in-china/" target="_blank">Adweek 报道</a>
+      </div>
+      <div class="note">💡 A-list 电影导演。Apple 那条证明他能做到精准的是枝风格。但预算和档期可能是挑战。</div>
+    </div>
+
+    <div class="card">
+      <p class="name">黄茂森（瓜导）</p>
+      <p class="name-en">Huang Maosen</p>
+      <span class="region region-tw">台湾</span>
+      <p class="style">「细腻的视觉语言，善于通过影像表达真挚情感。被称为'瓜导'。」</p>
+      <p class="brands"><strong>代表品牌：</strong>CCTV 品牌片、华为 P7、Mercedes-Benz、李宗盛「山丘」MV、五月天、汪峰</p>
+      <div class="links">
+        <a href="https://www.tvcbook.com/" target="_blank">TVCBOOK</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="name">任顺实</p>
+      <p class="name-en">Yim Soon-rye / 임순례</p>
+      <span class="region region-kr">韩国</span>
+      <p class="style">「《小森林》韩国版导演。暖调、美食、回归乡间的叙事。韩国400万票房。是枝裕和家庭视觉语言的韩国变体。」</p>
+      <p class="brands"><strong>暂无确认的商业广告作品</strong>，但《小森林》的美学正是韩国美妆品牌近年在模仿的方向</p>
+      <div class="note">💡 值得接触看看是否愿意接首个广告项目。</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Reference -->
+<div class="tier">
+  <p class="tier-label">参考基准</p>
+  <p class="tier-title">是枝裕和本人的广告作品</p>
+  <div class="grid">
+    <div class="card" style="border-color:rgba(200,184,232,0.2);">
+      <p class="name">是枝裕和</p>
+      <p class="name-en">Hirokazu Koreeda / 是枝裕和</p>
+      <span class="region region-jp">日本</span>
+      <p class="style">「自然光、日常细节、不煽情但触动人。广告和电影用同一套美学。」</p>
+      <p class="brands"><strong>确认的广告作品：</strong></p>
+      <div class="refs">
+        <p>📽 住友林業「たいせつな時間」— 加濑亮 + 长泽雅美（《海街日记》原班）</p>
+        <p>📽 伊藤忠商事 — 企业广告系列（纪录片式拍法，2015起）</p>
+        <p>📽 JR 九州《奇迹》— 新干线开通委托，拍成完整剧情片</p>
+        <p class="video-label">▼ 住友林業「たいせつな時間」CM</p>
+        <a class="video-link" href="https://www.bilibili.com/video/av15964144/" target="_blank">▶ 点击观看 <span class="platform">Bilibili</span></a>
+      </div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/av15964144/" target="_blank">住友林業 CM（B站）</a>
+        <a href="https://www.itochu.co.jp/en/news/press/2015/1504013.html" target="_blank">伊藤忠新闻稿</a>
+        <a href="https://movie.douban.com/celebrity/1274351/movies?sortby=time&format=pic" target="_blank">豆瓣作品页</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="tier">
+  <p class="tier-label">发现平台</p>
+  <p class="tier-title">可以进一步浏览的导演发现渠道</p>
+  <div class="grid">
+    <div class="card">
+      <p class="name">新片场 Xinpianchang</p>
+      <p class="style">中国最大的短片/广告导演平台，美妆/生活方式分类下有大量暖调自然主义风格的新锐导演。</p>
+      <div class="links"><a href="https://www.xinpianchang.com/" target="_blank">xinpianchang.com</a></div>
+    </div>
+    <div class="card">
+      <p class="name">TVCBOOK</p>
+      <p class="style">美妆/护肤品类导演专区，可以按品类筛选。</p>
+      <div class="links"><a href="https://www.tvcbook.com/discover/tags/3/2157/1.html" target="_blank">美妆护肤分类</a></div>
+    </div>
+    <div class="card">
+      <p class="name">Shots.net / LBBOnline</p>
+      <p class="style">全球广告导演作品库，可以找到国际导演的商业作品。</p>
+      <div class="links">
+        <a href="https://shots.net" target="_blank">shots.net</a>
+        <a href="https://lbbonline.com" target="_blank">LBBOnline</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>珀莱雅 2026 母亲节 · 导演参考 · 更新于 2026.04.06</p>
+</div>
+
+</body>
+</html>

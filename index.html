@@ -85,6 +85,45 @@
     }
     @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
+    /* ==================== TRANSITION — REFRAME ==================== */
+    .transition {
+      padding: 6rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .transition-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.65rem 1.6rem;
+      border-radius: 999px;
+    }
+    .transition-badge img {
+      height: 20px;
+      opacity: 0.85;
+    }
+    .transition-text {
+      font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+      line-height: 1.85;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+    }
+    .transition-text strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+
     /* ==================== PROJECTS — IMMERSIVE FULL-WIDTH ==================== */
     .projects-section {
       padding: 0;
@@ -427,6 +466,7 @@
       .project-num { display: none; }
       .explorations { padding: 5rem 1.5rem; }
       .explorations-grid { grid-template-columns: 1fr; }
+      .transition { padding: 4rem 1.5rem; }
       .sva-divider { padding: 4rem 1.5rem; }
       .sva-projects { padding: 2rem 1.5rem 5rem; }
       .sva-grid { grid-template-columns: 1fr; }
@@ -462,6 +502,17 @@
       bringing brand strategy and AI fluency to interaction design.
     </p>
     <span class="scroll-hint">Scroll</span>
+  </section>
+
+  <!-- TRANSITION — REFRAME -->
+  <section class="transition">
+    <div class="transition-badge">
+      <img src="public/sva-logo.svg" alt="SVA">
+      MFA Interaction Design — School of Visual Arts, New York
+    </div>
+    <p class="transition-text">
+      Every project below started as a creative brief. But the work I'm proudest of was never about the ad — it was about how people <strong>moved through a space</strong>, <strong>interacted with a screen</strong>, or <strong>felt something shift</strong>. That's product design. I just didn't call it that yet.
+    </p>
   </section>
 
   <!-- PROJECTS -->

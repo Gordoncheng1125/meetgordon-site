@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F7F3EA">
+<title>One Ripple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400&display=swap">
+<style>
+:root{
+  --bg:#F7F3EA; --bg2:#F0EADD; --fg:#2B2721; --fg2:#6E6862; --fg3:#A6A099;
+  --line:#E9E2D3; --card:#FCF9F2;
+  --fl:rgba(172,156,128,.19); --flh:rgba(255,253,247,.85);
+  --base:#D3C4AA; --hi:#EFE3CC; --lo:#AE9E82;
+  --hiS:rgba(255,250,236,.8); --loS:rgba(140,124,98,.4);
+  --serif:Newsreader,Georgia,'Times New Roman',serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--serif);font-weight:300;
+  overflow:hidden;overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;
+  padding:max(58px,env(safe-area-inset-top)) 32px max(34px,env(safe-area-inset-bottom));
+  max-width:430px;margin:0 auto;z-index:2}
+#bg{position:fixed;inset:0;z-index:1;pointer-events:none;max-width:430px;margin:0 auto}
+
+/* ---------- type ---------- */
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg3)}
+.disp{font-size:42px;font-weight:300;letter-spacing:-.022em;line-height:1.06}
+.disp.m{font-size:34px}.disp.s{font-size:29px}
+.sup{font-size:19px;line-height:1.5;color:var(--fg2)}
+.sup.sm{font-size:17px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg3);line-height:1.7}
+.note{font-size:19px;line-height:1.45}
+.ctr{text-align:center}
+.grow{flex:1 1 auto;min-height:8px}
+.sp6{height:6px;flex:none}.sp10{height:10px;flex:none}.sp16{height:16px;flex:none}
+.sp22{height:22px;flex:none}.sp26{height:26px;flex:none}.sp30{height:30px;flex:none}.sp40{height:40px;flex:none}
+
+/* ---------- controls ---------- */
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;text-align:left}
+.btn{height:70px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--fg);color:var(--bg);border-radius:2px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  transition:opacity 170ms ease}
+.btn:active{opacity:.82}
+.btn.g{background:transparent;border:1px solid var(--line);color:var(--fg2);height:56px;font-size:11px}
+.opt{width:100%;border:1px solid var(--line);border-radius:2px;background:var(--card);min-height:64px;flex:none;
+  display:flex;align-items:center;gap:14px;padding:12px 18px 12px 20px;margin-bottom:9px;
+  transition:border-color 170ms ease,transform 170ms ease}
+.opt:active{border-color:var(--fg3);transform:scale(.994)}
+.opt .oc{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.opt .o1{font-size:19px;line-height:1.28}
+.opt .o2{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--fg3);margin-top:4px}
+.opt.ghosty .o1{color:var(--fg3)}
+.opt.num .oc{flex-direction:row;align-items:baseline;gap:10px}
+.opt.num b{font-size:30px;font-weight:300;letter-spacing:-.02em}
+.opt.num span{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg3)}
+.fine{font-family:var(--mono);font-size:10.5px;color:var(--fg3);text-align:center;margin-top:11px;line-height:1.6;flex:none}
+.fine b{font-weight:400;color:var(--fg2)}
+
+/* ---------- chat ---------- */
+.chat{display:flex;align-items:center;gap:14px;height:58px;flex:none;
+  border:1px solid var(--line);border-radius:2px;background:var(--card);padding:0 14px 0 19px;margin-top:14px}
+.chat input{flex:1 1 auto;min-width:0;border:none;outline:none;background:transparent;
+  font-family:var(--serif);font-weight:300;font-size:17px;color:var(--fg);letter-spacing:-.004em}
+.chat input::placeholder{color:var(--fg3)}
+.mic{position:relative;width:26px;height:22px;flex:none;color:var(--fg2);padding:0}
+.mic .dot{position:absolute;top:50%;left:1px;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:currentColor}
+.mic i{position:absolute;top:50%;left:1px;transform:translateY(-50%);border-radius:50%;
+  border:1.4px solid currentColor;border-color:transparent currentColor transparent transparent;display:block}
+.mic i:nth-of-type(1){width:12px;height:12px}
+.mic i:nth-of-type(2){width:19px;height:19px;animation-delay:.35s}
+.mic i:nth-of-type(3){width:26px;height:26px;animation-delay:.7s}
+@keyframes micp{0%,100%{opacity:.3}50%{opacity:.95}}
+.mic i{animation:micp 4.2s ease-in-out infinite}
+
+/* ---------- reply screen ---------- */
+.said{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--fg3);line-height:1.7;
+  padding-left:13px;border-left:1px solid var(--line);text-transform:none}
+.reply{font-size:29px;font-weight:300;letter-spacing:-.016em;line-height:1.3;text-wrap:pretty}
+@keyframes sink{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-7px)}}
+.sinking{animation:sink 170ms cubic-bezier(.4,0,1,1) both}
+/* ---------- ripple: sculpted ---------- */
+.rp{position:relative;border-radius:50%;flex:none;align-self:center}
+.rp i{position:absolute;top:50%;left:50%;border-radius:50%;display:block;transform:translate(-50%,-50%);
+  background:linear-gradient(145deg,var(--hi) 0%,var(--base) 46%,var(--lo) 100%);
+  box-shadow:calc(var(--u)*-1) calc(var(--u)*-1) var(--b) var(--hiS), var(--u) var(--u) var(--b) var(--loS)}
+@keyframes swell{0%,100%{transform:translate(-50%,-50%) scale(.985)}50%{transform:translate(-50%,-50%) scale(1.012)}}
+.rp.breathe i{animation:swell 5.2s ease-in-out infinite}
+.rp.breathe i:nth-child(2){animation-delay:.16s}.rp.breathe i:nth-child(3){animation-delay:.32s}
+.rp.breathe i:nth-child(4){animation-delay:.48s}.rp.breathe i:nth-child(5){animation-delay:.64s}
+.rp.breathe i:nth-child(6){animation-delay:.8s}.rp.breathe i:nth-child(7){animation-delay:.96s}
+.rp.breathe i:nth-child(8){animation-delay:1.12s}
+@keyframes travel{0%{transform:translate(-50%,-50%) scale(.16);opacity:0}12%{opacity:1}85%{opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1.02);opacity:0}}
+.rp.expand i{animation:travel 4.4s cubic-bezier(.18,.72,.36,1) infinite}
+.rp.expand i:nth-child(2){animation-delay:.73s}.rp.expand i:nth-child(3){animation-delay:1.46s}
+.rp.expand i:nth-child(4){animation-delay:2.19s}.rp.expand i:nth-child(5){animation-delay:2.92s}
+.rp.expand i:nth-child(6){animation-delay:3.65s}
+
+/* ---------- ripple: embossed field ---------- */
+.field{position:absolute;inset:0;--ax:50%;--ay:50%}
+.field i{position:absolute;top:var(--ay);left:var(--ax);transform:translate(-50%,-50%);
+  border-radius:50%;display:block;border:1px solid var(--fl);
+  box-shadow:0 1px 0 var(--flh), inset 0 1px 0 var(--flh);filter:blur(.25px)}
+@keyframes drift{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.055)}}
+.field i{animation:drift 15s ease-in-out infinite}
+.field i:nth-child(2){animation-delay:1.1s}.field i:nth-child(3){animation-delay:2.2s}
+.field i:nth-child(4){animation-delay:3.3s}.field i:nth-child(5){animation-delay:4.4s}
+.field i:nth-child(6){animation-delay:5.5s}
+.field.slow i{animation-duration:26s}
+
+/* ---------- ripple: escape / tick ---------- */
+@keyframes escape{0%{transform:translate(-50%,-50%) scale(.30);opacity:.30}100%{transform:translate(-50%,-50%) scale(2.9);opacity:0}}
+.esc{position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1px solid rgba(172,156,128,.42);box-shadow:0 1px 0 rgba(255,253,247,.7);
+  transform:translate(-50%,-50%);animation:escape 8.5s cubic-bezier(.2,.7,.35,1) infinite;pointer-events:none}
+.esc.d2{animation-delay:2.8s}.esc.d3{animation-delay:5.6s}
+@keyframes tick{0%{transform:translate(-50%,-50%) scale(.62);opacity:.34}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
+.tickring{position:absolute;top:50%;left:50%;width:240px;height:240px;border-radius:50%;
+  border:1px solid rgba(172,156,128,.46);box-shadow:0 1px 0 rgba(255,253,247,.7);
+  transform:translate(-50%,-50%);animation:tick 5s linear infinite;pointer-events:none}
+.tickring.d2{animation-delay:1.67s}.tickring.d3{animation-delay:3.34s}
+
+/* ---------- ripple: amplitude glyph / wave rule ---------- */
+.lr{position:relative;flex:none;color:var(--fg3)}
+.lr i{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;
+  border:1px solid currentColor;display:block}
+@keyframes lrpulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.09)}}
+.lr i{animation:lrpulse 4.2s ease-in-out infinite}
+.lr i:nth-child(2){animation-delay:.28s}.lr i:nth-child(3){animation-delay:.56s}.lr i:nth-child(4){animation-delay:.84s}
+.wr{height:16px;position:relative;overflow:hidden;margin:0 -32px;flex:none}
+.wr i{position:absolute;left:50%;bottom:-56px;transform:translateX(-50%);border-radius:50%;
+  border:1px solid var(--fl);box-shadow:0 1px 0 var(--flh);display:block}
+
+/* ---------- 抽象人形 · 節奏 ---------- */
+.figwrap{position:relative;width:230px;height:230px;flex:none;align-self:center}
+.figwrap .floor{position:absolute;left:6px;right:6px;bottom:26px;height:1px;
+  background:var(--fl);box-shadow:0 1px 0 var(--flh)}
+.figwrap .seat{position:absolute;left:50%;bottom:27px;width:112px;height:1px;margin-left:-30px;
+  background:rgba(172,156,128,.34);box-shadow:0 1px 0 var(--flh)}
+.figwrap .back{position:absolute;left:50%;bottom:27px;margin-left:52px;width:1px;height:64px;
+  background:rgba(172,156,128,.34);box-shadow:1px 0 0 var(--flh)}
+.fig{position:absolute;left:50%;bottom:28px;width:52px;margin-left:-52px;transform-origin:bottom center}
+.fig .head{width:30px;height:30px;border-radius:50%;margin:0 auto 5px;
+  background:linear-gradient(145deg,var(--hi),var(--lo));
+  box-shadow:-4px -4px 9px rgba(255,250,236,.85), 4px 4px 9px rgba(140,124,98,.34)}
+.fig .torso{width:36px;margin:0 auto;border-radius:18px;
+  background:linear-gradient(145deg,var(--hi),var(--lo));
+  box-shadow:-4px -4px 10px rgba(255,250,236,.85), 4px 4px 10px rgba(140,124,98,.36)}
+@keyframes figS{0%{transform:translateY(30px) rotate(8deg)}20%{transform:translateY(15px) rotate(3deg)}
+  33.3%{transform:translateY(0) rotate(0)}50%{transform:translateY(0) rotate(0)}
+  70%{transform:translateY(13px) rotate(4deg)}83.3%{transform:translateY(30px) rotate(8deg)}
+  100%{transform:translateY(30px) rotate(8deg)}}
+@keyframes torS{0%{height:38px}33.3%{height:96px}50%{height:96px}83.3%{height:38px}100%{height:38px}}
+@keyframes figE{0%{transform:translateY(30px) rotate(8deg)}18%{transform:translateY(15px) rotate(3deg)}
+  30%{transform:translateY(0) rotate(0)}50%{transform:translateY(0) rotate(0)}
+  66%{transform:translateY(13px) rotate(4deg)}80%{transform:translateY(30px) rotate(8deg)}
+  100%{transform:translateY(30px) rotate(8deg)}}
+@keyframes torE{0%{height:38px}30%{height:96px}50%{height:96px}80%{height:38px}100%{height:38px}}
+@keyframes figH{0%{transform:translateY(30px) rotate(8deg)}28%{transform:translateY(12px) rotate(3deg)}
+  50%{transform:translateY(0) rotate(0)}78%{transform:translateY(12px) rotate(3deg)}
+  100%{transform:translateY(30px) rotate(8deg)}}
+@keyframes torH{0%{height:38px}50%{height:96px}100%{height:38px}}
+.t-steady .fig{animation:figS 6s cubic-bezier(.4,0,.3,1) infinite}
+.t-steady .fig .torso{animation:torS 6s cubic-bezier(.4,0,.3,1) infinite}
+.t-easy .fig{animation:figE 10s cubic-bezier(.4,0,.3,1) infinite}
+.t-easy .fig .torso{animation:torE 10s cubic-bezier(.4,0,.3,1) infinite}
+.t-hard .fig{animation:figH 4s cubic-bezier(.4,0,.3,1) infinite}
+.t-hard .fig .torso{animation:torH 4s cubic-bezier(.4,0,.3,1) infinite}
+.spk{position:absolute;top:0;right:0;width:46px;height:46px;display:flex;align-items:center;
+  justify-content:center;border:1px solid var(--line);border-radius:2px;background:var(--card);color:var(--fg2)}
+.spk .g{position:relative;width:24px;height:20px}
+.spk .g .dot{position:absolute;top:50%;left:1px;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:currentColor}
+.spk .g i{position:absolute;top:50%;left:1px;transform:translateY(-50%);border-radius:50%;
+  border:1.4px solid currentColor;border-color:transparent currentColor transparent transparent;display:block}
+.spk .g i:nth-of-type(1){width:11px;height:11px}
+.spk .g i:nth-of-type(2){width:17px;height:17px}
+.spk .g i:nth-of-type(3){width:24px;height:24px}
+.spk.off{color:var(--fg3)}
+.spk.off .g i{opacity:.22}
+.spk.off::after{content:'';position:absolute;left:9px;right:9px;top:50%;height:1px;background:currentColor;
+  transform:rotate(-32deg)}
+@keyframes spklive{0%,100%{opacity:.32}50%{opacity:1}}
+.spk:not(.off) .g i{animation:spklive 2.4s ease-in-out infinite}
+.spk:not(.off) .g i:nth-of-type(2){animation-delay:.2s}
+.spk:not(.off) .g i:nth-of-type(3){animation-delay:.4s}
+.cueline{font-size:19px;line-height:1.35;color:var(--fg);text-align:center;min-height:52px;flex:none;
+  display:flex;align-items:center;justify-content:center;padding:0 8px}
+.setup{font-size:17px;line-height:1.5;color:var(--fg2);text-wrap:pretty}
+@media (prefers-reduced-motion:reduce){.fig,.fig .torso{animation:none!important}}
+.clockwrap{position:relative;display:flex;align-items:center;justify-content:center;flex:none}
+.clock{position:absolute;font-family:var(--mono);font-size:40px;letter-spacing:.02em;z-index:3}
+
+/* ---------- entry motion ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.rise>*{animation:rise .5s cubic-bezier(.22,.7,.3,1) both}
+.rise>*:nth-child(1){animation-delay:.03s}.rise>*:nth-child(2){animation-delay:.07s}
+.rise>*:nth-child(3){animation-delay:.11s}.rise>*:nth-child(4){animation-delay:.15s}
+.rise>*:nth-child(5){animation-delay:.19s}.rise>*:nth-child(6){animation-delay:.23s}
+.rise>*:nth-child(7){animation-delay:.27s}.rise>*:nth-child(8){animation-delay:.31s}
+.rise>*:nth-child(9){animation-delay:.35s}.rise>*:nth-child(10){animation-delay:.39s}
+
+/* ---------- debug ---------- */
+#dbg{position:fixed;left:10px;bottom:8px;z-index:50;font-family:var(--mono);font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);display:none}
+body.debug #dbg{display:block}
+
+@media (prefers-reduced-motion:reduce){
+  .rp i,.field i,.esc,.tickring,.lr i,.mic i,.rise>*{animation:none!important}
+  .rise>*{opacity:1;transform:none}
+}
+body.deep{background:var(--bg2)}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="app"></div>
+<div id="dbg"></div>
+
+<script>
+'use strict';
+/* ============================================================
+   One Ripple — prototype
+   Two arguments, nothing else:
+     1. very light movement is enough
+     2. the thing worth noticing is your breath
+   The LLM has one job: turn (purpose, time, effort, limits)
+   into ONE move. Everything else is plain software.
+   ============================================================ */
+
+/* 執行期錯誤直接打在畫面上——demo 期間比 console 有用 */
+window.onerror = function(m, src, ln, col){
+  var d = document.getElementById('dbg');
+  if (d){ d.style.display='block'; d.style.color='#a04040'; d.style.maxWidth='90vw';
+          d.textContent = 'JS ERROR ' + m + ' @' + ln + ':' + col; }
+};
+window.addEventListener('unhandledrejection', function(e){
+  var d = document.getElementById('dbg');
+  if (d){ d.style.display='block'; d.style.color='#b0663a';
+          d.textContent = 'PROMISE ' + (e.reason && e.reason.message || e.reason); }
+});
+document.addEventListener('click', function(e){
+  if (!new URLSearchParams(location.search).has('debug')) return;
+  var t = e.target.closest('[data-a]');
+  var d = document.getElementById('dbg');
+  if (d && !/ERROR|PROMISE/.test(d.textContent))
+    d.textContent = (t ? 'hit ' + t.getAttribute('data-a') : 'miss ' + e.target.tagName + '.' + e.target.className) + ' · ' + d.textContent.split(' · ').slice(-3).join(' · ');
+}, true);
+
+var KEY = 'oneripple.v1';
+var Q   = new URLSearchParams(location.search);
+var API = Q.get('api') || '/api';
+
+if (Q.has('reset')) { localStorage.removeItem(KEY); }
+if (Q.has('debug')) { document.body.classList.add('debug'); }
+
+var S = load();
+function load(){
+  try { var r = JSON.parse(localStorage.getItem(KEY)); if (r) return r; } catch(e){}
+  return { purpose:null, limits:[], ripples:0, lastDone:null, remind:null, seenWelcome:false, seenBox:false };
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+
+function today(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function daysSince(s){
+  if(!s) return 999;
+  var a=s.split('-'), b=new Date(a[0],a[1]-1,a[2]), n=new Date();
+  return Math.round((new Date(n.getFullYear(),n.getMonth(),n.getDate()) - b)/86400000);
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+/* ---------- session ---------- */
+var run = { said:'', reply:null, replyFrom:null, minutes:2, effort:'steady', move:null, source:'-', left:0, iv:null, t0:0, raf:null };
+
+/* ---------- fallback brain (also the failure path) ---------- */
+var PATTERNS = [
+  { test:/grand|baby|child|lift|pick up|carry|floor/i, pattern:'lifting from the floor',
+    moves:{ easy:{name:'Stand up, sit down.',hint:'hands on the seat are fine'},
+            steady:{name:'Stand up, reach down, sit.',hint:'let your hands drop toward the floor'},
+            hard:{name:'Stand up, reach the floor, sit.',hint:'no pause at the top'} } },
+  { test:/chair|hands|stand|sit/i, pattern:'sit-to-stand',
+    moves:{ easy:{name:'Stand up, sit down.',hint:'use your hands, that is fine'},
+            steady:{name:'Stand up, sit down.',hint:'hands off the seat'},
+            hard:{name:'Stand up, sit down.',hint:'no rest at the top'} } },
+  { test:/night|bathroom|bed|dark|up in the/i, pattern:'getting up and turning',
+    moves:{ easy:{name:'Stand up, sit down.',hint:'take your time at the top'},
+            steady:{name:'Stand, half turn, sit.',hint:'alternate the direction'},
+            hard:{name:'Stand, turn, sit.',hint:'keep it moving, both ways'} } },
+  { test:/travel|walk|trip|airport|stair|balance/i, pattern:'staying power and balance',
+    moves:{ easy:{name:'Stand up, sit down.',hint:'steady, one breath each'},
+            steady:{name:'Stand, hold, sit.',hint:'still for one breath at the top'},
+            hard:{name:'Stand, hold, sit.',hint:'keep going, no rest'} } }
+];
+var DEFAULT_MOVES = {
+  easy:{name:'Stand up, sit down.',hint:'hands on the seat are fine'},
+  steady:{name:'Stand up, sit down.',hint:'hands off the seat'},
+  hard:{name:'Stand up, sit down.',hint:'no pause at the top'}
+};
+var SETUP = {
+  easy:'Sit forward on the chair, feet flat. Rest your hands on the seat beside you.',
+  steady:'Sit forward on the chair, feet flat and just behind your knees. Cross your arms on your chest.',
+  hard:'Sit forward, feet flat and firm. Arms crossed, and keep them there.'
+};
+var CUESET = {
+  easy:{ up:'Lean forward, press through your feet', hold:'Stand tall. Take a breath.',
+         down:'Reach back for the seat, lower slowly', rest:'Let the breath out.' },
+  steady:{ up:'Lean forward, push through your heels', hold:'Stand tall. One breath.',
+           down:'Sit down slowly. Do not drop.', rest:'Breathe out.' },
+  hard:{ up:'Push. All the way up.', hold:'Tall.', down:'Down, under control.', rest:'Go.' }
+};
+var NOTES = {
+  easy:'None of this will get you warm. That is allowed.',
+  steady:'The middle of it is where your breathing changes. Stay with it.',
+  hard:'This one gets you out of breath. That is the part that counts.'
+};
+function patternFor(p){
+  for (var i=0;i<PATTERNS.length;i++) if (PATTERNS[i].test.test(p||'')) return PATTERNS[i];
+  return null;
+}
+function fallbackMove(){
+  var p = patternFor(S.purpose);
+  var m = (p ? p.moves : DEFAULT_MOVES)[run.effort] || DEFAULT_MOVES[run.effort];
+  return { name:m.name, hint:m.hint, setup:SETUP[run.effort],
+           cues:CUESET[run.effort], note:NOTES[run.effort] };
+}
+
+/* ---------- the one LLM call ---------- */
+function askForMove(){
+  var body = {
+    purpose: S.purpose,
+    minutes: run.minutes,
+    effort: run.effort,
+    limits: S.limits,
+    pattern: (patternFor(S.purpose)||{}).pattern || null
+  };
+  var ctl = new AbortController();
+  var to = setTimeout(function(){ ctl.abort(); }, 6000);
+  return fetch(API + '/moves', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body), signal:ctl.signal
+    })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(j){
+      clearTimeout(to);
+      if (!j || !j.name || !j.note) throw 0;
+      run.source = 'llm';
+      var fb = fallbackMove(), c = j.cues || {};
+      return { name:String(j.name).slice(0,60), hint:String(j.hint||'').slice(0,60),
+               setup:String(j.setup || fb.setup).slice(0,180),
+               cues:{ up:String(c.up||fb.cues.up).slice(0,60), hold:String(c.hold||fb.cues.hold).slice(0,60),
+                      down:String(c.down||fb.cues.down).slice(0,60), rest:String(c.rest||fb.cues.rest).slice(0,60) },
+               note:String(j.note).slice(0,140) };
+    })
+    .catch(function(){
+      clearTimeout(to);
+      run.source = 'fallback';
+      return fallbackMove();
+    });
+}
+
+/* ---------- the door: say anything, anywhere ----------
+   回應不開新頁、不堆對話串。當前內容下沉，漣漪頂上來，答案用 display 字浮現。
+   整個 App 只有一種表面，這裡也不例外。 */
+function say(text, where){
+  if (!text.trim()) return;
+  run.said = text.trim();
+  run.replyFrom = current;
+  run.reply = null;
+  var pad = document.getElementById('app');
+  pad.classList.add('sinking');
+  setTimeout(function(){ go('reply'); }, 170);
+
+  var ctl = new AbortController();
+  var to = setTimeout(function(){ ctl.abort(); }, 12000);
+  fetch(API + '/say', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ text:text, where:where, purpose:S.purpose, limits:S.limits,
+        ripples:S.ripples, effort:run.effort, minutes:run.minutes,
+        move: run.move ? { name:run.move.name, hint:run.move.hint, setup:run.move.setup } : null }),
+      signal:ctl.signal })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(j){ clearTimeout(to); land(j.reply || 'Noted.'); })
+    .catch(function(){
+      clearTimeout(to);
+      land('I can\u2019t reach my side of this right now. Today\u2019s move is still here \u2014 it doesn\u2019t need me.');
+    });
+
+  if (where === 'purpose'){ S.purpose = text.trim(); save(); }
+  if (where === 'swap' || where === 'fb2' || where === 'move'){ remember(text.trim()); }
+}
+function land(reply){
+  run.reply = reply;
+  if (current === 'reply') render('reply');
+  speak(reply, { rate:0.95 });
+}
+function remember(t){
+  if (!t) return;
+  if (S.limits.indexOf(t) === -1) S.limits.push(t);
+  if (S.limits.length > 8) S.limits.shift();
+  save();
+}
+/* ---------- voice: browser TTS, no key, no network ----------
+   他正在站起來坐下去，眼睛不在螢幕上。節奏該從耳朵進來。 */
+var VOICE = { on: S.voice !== false, v: null, ready: false };
+function pickVoice(){
+  if (!('speechSynthesis' in window)) return;
+  var vs = speechSynthesis.getVoices();
+  if (!vs.length) return;
+  var want = ['Samantha','Ava','Karen','Serena','Google US English','Microsoft Aria'];
+  for (var i=0;i<want.length;i++){
+    var hit = vs.filter(function(v){ return v.name.indexOf(want[i]) === 0; })[0];
+    if (hit){ VOICE.v = hit; break; }
+  }
+  if (!VOICE.v) VOICE.v = vs.filter(function(v){ return /^en/i.test(v.lang); })[0] || vs[0];
+  VOICE.ready = true;
+}
+if ('speechSynthesis' in window){
+  pickVoice();
+  speechSynthesis.onvoiceschanged = pickVoice;
+}
+function speak(text, opts){
+  if (!VOICE.on || !('speechSynthesis' in window) || !text) return;
+  opts = opts || {};
+  if (!opts.queue) speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  if (VOICE.v) u.voice = VOICE.v;
+  u.rate = opts.rate || 0.92;   // 慢一點，給 65+
+  u.pitch = 1;
+  u.volume = 1;
+  try { speechSynthesis.speak(u); } catch(e){}
+}
+function hush(){ if ('speechSynthesis' in window) try { speechSynthesis.cancel(); } catch(e){} }
+
+/* ---------- ripple builders ---------- */
+function field(ax, ay, sizes, slow){
+  return '<div class="field'+(slow?' slow':'')+'" style="--ax:'+ax+';--ay:'+ay+'">'+
+    sizes.map(function(s){ return '<i style="width:'+s+'px;height:'+s+'px"></i>'; }).join('')+'</div>';
+}
+function sculpt(cls, size, pcts){
+  var u = Math.round(size*0.042), b = Math.round(size*0.10);
+  return '<div class="rp '+cls+'" style="--u:'+u+'px;--b:'+b+'px;width:'+size+'px;height:'+size+'px">'+
+    pcts.map(function(p){ return '<i style="width:'+p+'%;height:'+p+'%"></i>'; }).join('')+'</div>';
+}
+function glyph(n){
+  var m = {2:[26,[100,50]],3:[32,[100,66,32]],4:[38,[100,74,49,24]]}[n];
+  return '<div class="lr" style="width:'+m[0]+'px;height:'+m[0]+'px">'+
+    m[1].map(function(p){ return '<i style="width:'+p+'%;height:'+p+'%"></i>'; }).join('')+'</div>';
+}
+function micOnly(ph, where){
+  return '<div class="microw"><button class="micbtn" data-a="openchat" data-v="'+esc(where)+'" '+
+    'data-ph="'+esc(ph)+'" aria-label="Speak or type">'+
+    '<span class="mic"><span class="dot"></span><i></i><i></i><i></i></span></button></div>';
+}
+function chat(ph, where){
+  return '<form class="chat" data-say="'+where+'">'+
+    '<input type="text" placeholder="'+esc(ph)+'" autocomplete="off" enterkeyhint="send">'+
+    '<button class="mic" type="submit" aria-label="Speak"><span class="dot"></span><i></i><i></i><i></i></button></form>';
+}
+function chip(text){
+  return '<button class="opt" data-a="chip" data-v="'+esc(text)+'">'+
+    '<span class="oc"><span class="o1">\u201c'+esc(text)+'\u201d</span></span></button>';
+}
+function opt(action, val, label, sub, amp, ghost){
+  return '<button class="opt'+(ghost?' ghosty':'')+'" data-a="'+action+'" data-v="'+esc(val)+'">'+
+    '<span class="oc"><span class="o1">'+esc(label)+'</span>'+
+    (sub?'<span class="o2">'+esc(sub)+'</span>':'')+'</span>'+(amp?glyph(amp):'')+'</button>';
+}
+function fmtClock(s){ var m=Math.floor(s/60), r=s%60; return m+':'+(r<10?'0':'')+r; }
+function nWord(n){
+  var w=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve'];
+  return n<=12 ? w[n] : String(n);
+}
+
+/* ---------- screens ---------- */
+var app = document.getElementById('app'), bg = document.getElementById('bg');
+var current = null;
+
+var SCREENS = {
+
+welcome: function(){
+  return { bg: field('50%','86%',[660,520,392,276,172,84]),
+  html:
+    '<div class="eb">One Ripple</div>'+
+    '<div class="sp40"></div>'+
+    '<div class="disp">One small movement a day.</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="sup">Small carries further than it looks. That’s what a ripple is.</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn" data-a="go" data-v="purpose">Begin</button>'+
+    micOnly('Ask me anything','welcome') };
+},
+
+purpose: function(){
+  return { bg: field('88%','12%',[520,400,292,196,112]),
+  html:
+    '<div class="eb">One question</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp s">What do you want to be able to do?</div>'+
+    '<div class="sp10"></div>'+
+    '<div class="sup sm">This is the only thing we’ll ask you to explain.</div>'+
+    '<div class="sp26"></div>'+
+    opt('purpose','Lift my granddaughter','Lift my granddaughter')+
+    opt('purpose','Get out of a chair without my hands','Get out of a chair without my hands')+
+    opt('purpose','Get myself up in the night','Get myself up in the night')+
+    opt('purpose','Travel without planning around it','Travel without planning around it')+
+    '<div class="grow"></div>'+
+    chat('Or just say it in your own words','purpose') };
+},
+
+
+effort: function(){
+  return { bg: field('86%','34%',[460,340,232,136]),
+  html:
+    '<div class="eb">One question</div>'+
+    '<div class="sp40"></div>'+
+    '<div class="disp m">How hard do you want it?</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="sup sm">Easy still counts.</div>'+
+    '<div class="grow"></div>'+
+    opt('effort','easy','Easy','barely warm',2)+
+    opt('effort','steady','Steady','breathing noticeably',3)+
+    opt('effort','hard','Hard','properly out of breath',4)+
+    micOnly('Or describe how you feel','effort') };
+},
+
+generating: function(){
+  var spec = run.minutes + ' min · ' + run.effort +
+    (S.purpose ? '<br>to ' + esc(String(S.purpose).replace(/^(i want to |i’d like to |i would like to )/i,'').toLowerCase()) : '');
+  return { bg: field('50%','38%',[600,460],true), center:true,
+  html:
+    '<div class="grow"></div>'+
+    sculpt('expand',200,[100,100,100,100,100,100])+
+    '<div class="sp40"></div>'+
+    '<div class="disp m ctr">Putting today’s together.</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="mono ctr">'+spec+'</div>'+
+    '<div class="grow"></div>' };
+},
+
+move: function(){
+  var m = run.move;
+  return { bg: field('16%','78%',[520,392,272,164]),
+  html:
+    '<div class="eb">Today’s move</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp m">'+esc(m.name)+'</div>'+
+    '<div class="sp10"></div>'+
+    '<div class="mono">'+esc(m.hint)+' · two minutes</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="wr"><i style="width:520px;height:520px"></i><i style="width:400px;height:400px"></i><i style="width:290px;height:290px"></i></div>'+
+    '<div class="sp22"></div>'+
+    '<div class="note">'+esc(m.note)+'</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="setup">'+esc(m.setup)+'</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn" data-a="start">Start</button>'+
+    '<div class="sp10"></div>'+
+    '<button class="btn g" data-a="go" data-v="swap">Give me a different one</button>'+
+    chat('Ask me anything about this','move')+
+    '<div class="fine">Not the right moment? Close it. Nothing is recorded.</div>' };
+},
+
+swap: function(){
+  return { deep:true, bg: field('50%','50%',[640,500,372,252]),
+  html:
+    '<div class="eb">Before we swap it</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp s">What doesn’t work about this one?</div>'+
+    '<div class="sp26"></div>'+
+    opt('swap','My knees','My knees')+
+    opt('swap','My back','My back')+
+    opt('swap','Too hard today','Too hard today')+
+    opt('swap','Too easy','Too easy')+
+    '<div class="grow"></div>'+
+    chat('Or say it in your own words','swap')+
+    '<div class="fine">We’ll remember.</div>' };
+},
+
+timer: function(){
+  return { center:true,
+  html:
+    '<div class="eb">Today\u2019s move</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp s ctr">'+esc(run.move.name)+'</div>'+
+    '<div class="grow"></div>'+
+    '<button class="spk'+(VOICE.on?'':' off')+'" data-a="voice" aria-label="Voice cues">'+
+      '<span class="g"><span class="dot"></span><i></i><i></i><i></i></span></button>'+
+    '<div class="figwrap t-'+run.effort+'">'+
+      '<div class="floor"></div><div class="seat"></div><div class="back"></div>'+
+      '<div class="fig"><div class="head"></div><div class="torso"></div></div>'+
+    '</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="cueline" id="cue">'+esc(run.move.cues.up)+'</div>'+
+    '<div class="mono" id="clk">'+fmtClock(run.left)+'</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn" data-a="finish" style="width:100%">Done</button>' };
+},
+
+done: function(){
+  return { center:true,
+  html:
+    '<div class="grow"></div>'+
+    '<div class="clockwrap" style="width:100%;height:270px">'+
+      '<div class="esc" style="width:200px;height:200px"></div>'+
+      '<div class="esc d2" style="width:200px;height:200px"></div>'+
+      '<div class="esc d3" style="width:200px;height:200px"></div>'+
+      sculpt('breathe',200,[100,80,62,46,31,18])+
+    '</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="disp ctr">That’s today’s.</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="sup ctr">Come back tomorrow.</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn g" data-a="go" data-v="'+(S.seenBox?'fb1':'voicebox')+'">'+
+      (S.seenBox?'Two quick questions':'Before you go')+'</button>'+
+    micOnly('Say how that went','done')+
+    '<div class="fine">Or just close it. Today’s already counted. &nbsp;·&nbsp; '+S.ripples+' ripple'+(S.ripples===1?'':'s')+'</div>' };
+},
+
+voicebox: function(){
+  return { bg: field('50%','24%',[600,458,326,206,110]),
+  html:
+    '<div class="eb">One more thing</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp m">This box is always here.</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="sup sm">Ask about the movement, tell me what your body can\u2019t do, '+
+      'or say something that has nothing to do with either.</div>'+
+    '<div class="sp10"></div>'+
+    '<div class="sup sm" style="color:var(--fg)">I won\u2019t ask you anything.</div>'+
+    '<div class="sp26"></div>'+
+    chip('My knees are bad')+
+    chip('Why this one')+
+    chip('I could not lift her yesterday')+
+    '<div class="grow"></div>'+
+    chat('Or say it in your own words','voicebox')+
+    '<button class="btn g" data-a="donebox" style="margin-top:10px">Skip</button>' };
+},
+
+fb1: function(){
+  return { deep:true, bg: field('50%','30%',[560,428,304,188]),
+  html:
+    '<div class="eb">Two questions</div>'+
+    '<div class="sp40"></div>'+
+    '<div class="disp m">Did your breathing change?</div>'+
+    '<div class="grow"></div>'+
+    opt('fb1','a lot','A lot','',4)+
+    opt('fb1','a little','A little','',3)+
+    opt('fb1','not really','Not really','',2)+
+    micOnly('Or say it in your own words','fb1')+
+    '<div class="fine">This is the only thing we use to size tomorrow’s.</div>' };
+},
+
+fb2: function(){
+  return { deep:true, bg: field('50%','34%',[540,410,290,178]),
+  html:
+    '<div class="eb">Last one</div>'+
+    '<div class="sp26"></div>'+
+    '<div class="disp s">Anything you’d want different next time?</div>'+
+    '<div class="sp26"></div>'+
+    opt('fb2','My knees','My knees')+
+    opt('fb2','My back','My back')+
+    opt('fb2','Too long','Too long')+
+    opt('fb2','','Nothing, that was fine')+
+    '<div class="grow"></div>'+
+    chat('Or say it in your own words','fb2')+
+    '<div class="fine">We’ll remember.</div>' };
+},
+
+remind: function(){
+  return { bg: field('84%','20%',[500,378,262,158]),
+  html:
+    '<div class="eb">One last thing</div>'+
+    '<div class="sp40"></div>'+
+    '<div class="disp m">Same time tomorrow?</div>'+
+    '<div class="grow"></div>'+
+    opt('remind','9:30','9:30 in the morning')+
+    opt('remind','wake','Right after I get up')+
+    opt('remind','breakfast','After breakfast')+
+    opt('remind','none','Don’t remind me','',0,true)+
+    chat('Or tell me when','remind')+
+    '<div class="fine">You can change this whenever.</div>' };
+},
+
+accum: function(){
+  var n = S.ripples;
+  return { center:true,
+  html:
+    '<div class="grow"></div>'+
+    '<div class="clockwrap" style="width:100%;height:300px">'+
+      '<div class="esc" style="width:250px;height:250px"></div>'+
+      '<div class="esc d2" style="width:250px;height:250px"></div>'+
+      sculpt('breathe',240, ringsFor(n))+
+    '</div>'+
+    '<div class="sp30"></div>'+
+    '<div class="disp ctr">'+nWord(n)+'.</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="sup ctr">None of them were big.</div>'+
+    '<div class="grow"></div>'+
+    micOnly('Ask me anything','accum') };
+},
+
+milestone: function(){
+  var n = S.ripples, mins = n * 2;
+  return { center:true,
+  html:
+    '<div class="eb">'+nWord(n)+' ripples</div>'+
+    '<div class="grow"></div>'+
+    '<div class="clockwrap" style="width:100%;height:280px">'+
+      '<div class="esc" style="width:220px;height:220px"></div>'+
+      sculpt('breathe',200, ringsFor(n))+
+    '</div>'+
+    '<div class="sp30"></div>'+
+    '<div class="disp ctr">'+nWord(n)+'.</div>'+
+    '<div class="sp16"></div>'+
+    '<div class="sup ctr">'+nWord(mins)+' minutes, in total.</div>'+
+    '<div class="grow"></div>'+
+    micOnly('Ask me anything','milestone') };
+},
+
+reply: function(){
+  var thinking = !run.reply;
+  return { center:true, bg: field('50%','46%',[620,470,330],true),
+  html:
+    '<div class="said">'+esc(run.said)+'</div>'+
+    '<div class="grow"></div>'+
+    (thinking
+      ? sculpt('expand',170,[100,100,100,100,100])
+      : sculpt('breathe',150,[100,74,50,28]))+
+    '<div class="sp40"></div>'+
+    (thinking ? '' : '<div class="reply">'+esc(run.reply)+'</div>')+
+    '<div class="grow"></div>'+
+    (thinking ? '' : '<button class="btn g" data-a="unreply" style="width:100%">Back</button>') };
+},
+
+ready: function(){
+  return { bg: field('50%','80%',[620,486,356,236,132]),
+  html:
+    '<div class="eb">'+dateLabel()+'</div>'+
+    '<div class="grow"></div>'+
+    '<div class="disp">Today’s ripple.</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="sup">One a day. It takes exactly as long as you have.</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn" data-a="go" data-v="effort">Begin</button>'+
+    micOnly('Ask me anything','ready') };
+},
+
+locked: function(){
+  return { deep:true, bg: field('50%','56%',[700,556,424,300,190],true),
+  html:
+    '<div class="eb">'+dateLabel()+'</div>'+
+    '<div class="grow"></div>'+
+    '<div class="disp m">You’ve already had today’s.</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="sup">That’s the whole idea.</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn g" data-a="extra">Do another one anyway</button>'+
+    chat('Tell me what you need','locked')+
+    '<div class="fine">'+S.ripples+' ripple'+(S.ripples===1?'':'s')+'</div>' };
+},
+
+door: function(){
+  return { bg: field('50%','50%',[760,470,210],true),
+  html:
+    '<div class="eb">'+dateLabel()+'</div>'+
+    '<div class="grow"></div>'+
+    '<div class="disp m">The door was always open.</div>'+
+    '<div class="sp22"></div>'+
+    '<div class="sup">Nothing to catch up on. Today’s is two minutes.</div>'+
+    '<div class="grow"></div>'+
+    '<button class="btn" data-a="go" data-v="effort">Begin</button>'+
+    chat('Tell me what changed','door')+
+    '<div class="fine"><b data-a="go" data-v="purpose">Change what you’re training for</b></div>' };
+}
+
+};
+
+function ringsFor(n){
+  var k = Math.max(3, Math.min(8, 3 + Math.floor(n/7)));
+  var out = [], step = 100/k;
+  for (var i=0;i<k;i++) out.push(Math.round(100 - i*step*0.87));
+  return out;
+}
+function dateLabel(){
+  var d=new Date(), w=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+  var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  return w+' · '+m+' '+d.getDate();
+}
+
+/* ---------- render ---------- */
+function render(name){
+  current = name;
+  var s = SCREENS[name]();
+  bg.innerHTML = s.bg || '';
+  document.body.classList.toggle('deep', !!s.deep);
+  app.className = 'rise' + (s.center ? ' center' : '');
+  app.classList.remove('sinking');
+  app.style.alignItems = s.center ? 'center' : 'stretch';
+  app.innerHTML = s.html;
+  var dbg = document.getElementById('dbg');
+  dbg.textContent = name + ' · ' + run.source + ' · ' + S.ripples + 'r' + (S.purpose ? ' · saved' : '');
+  if (name === 'timer') tickStart();
+}
+function go(name){ if (name !== 'timer') hush(); render(name); }
+
+/* ---------- timer ---------- */
+var CYCLE = { easy:10, steady:6, hard:4 };
+var PHASES = {
+  easy:  [[0,'up'],[.30,'hold'],[.50,'down'],[.80,'rest']],
+  steady:[[0,'up'],[.333,'hold'],[.50,'down'],[.833,'rest']],
+  hard:  [[0,'up'],[.46,'hold'],[.50,'down'],[.96,'rest']]
+};
+function cueLoop(){
+  if (current !== 'timer'){ run.raf = null; return; }
+  var cyc = CYCLE[run.effort] || 6, ph = PHASES[run.effort] || PHASES.steady;
+  var t = ((Date.now() - run.t0) / 1000 % cyc) / cyc, key = 'rest';
+  for (var i=0;i<ph.length;i++) if (t >= ph[i][0]) key = ph[i][1];
+  var el = document.getElementById('cue');
+  if (el){
+    var txt = run.move.cues[key];
+    if (el.textContent !== txt){ el.textContent = txt; speak(txt); }
+  }
+  run.raf = requestAnimationFrame(cueLoop);
+}
+function tickStart(){
+  clearInterval(run.iv);
+  run.t0 = Date.now();
+  if (!run.raf) cueLoop();
+  run.iv = setInterval(function(){
+    run.left--;
+    var el = document.getElementById('clk');
+    if (el) el.textContent = fmtClock(Math.max(0,run.left));
+    if (run.left <= 0) clearInterval(run.iv);
+  }, 1000);
+}
+
+/* ---------- entry point ---------- */
+function boot(){
+  if (Q.has('screen') && SCREENS[Q.get('screen')]){
+    if (Q.has('effort')) run.effort = Q.get('effort');
+    if (!S.purpose) S.purpose = 'Lift my granddaughter';
+    if (!run.move) run.move = fallbackMove();
+    if (!run.left) run.left = run.minutes*60;
+    return render(Q.get('screen'));
+  }
+  if (!S.seenWelcome || !S.purpose) return render('welcome');
+  var d = daysSince(S.lastDone);
+  if (d === 0) return render('locked');
+  if (d >= 7)  return render('door');
+  return render('ready');
+}
+
+/* ---------- actions ---------- */
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-a]');
+  if (!t) return;
+  var a = t.getAttribute('data-a'), v = t.getAttribute('data-v');
+
+  if (a === 'unreply'){
+    if (run.replyFrom === 'voicebox'){ S.seenBox = true; save(); return go('voicebox'); }
+    return go(run.replyFrom || 'ready');
+  }
+  if (a === 'openchat'){
+    var row = t.closest('.microw');
+    row.outerHTML = chat(t.getAttribute('data-ph'), v);
+    var inp = document.querySelector('.chat input'); if (inp) inp.focus();
+    return;
+  }
+  if (a === 'go') { if (v === 'purpose') S.seenWelcome = true, save(); return go(v); }
+
+  if (a === 'purpose'){ S.purpose = v; S.seenWelcome = true; save(); return go('effort'); }
+  if (a === 'time'){ run.minutes = parseInt(v,10); return go('effort'); }
+  if (a === 'effort'){ run.effort = v; return generate(); }
+  if (a === 'swap'){ remember(v); return generate(); }
+  if (a === 'start'){
+    run.left = run.minutes*60;
+    go('timer');
+    speak(run.move.setup + ' ' + run.move.name, { rate:0.9 });
+    return;
+  }
+  if (a === 'voice'){
+    VOICE.on = !VOICE.on; S.voice = VOICE.on; save();
+    t.classList.toggle('off', !VOICE.on);
+    if (!VOICE.on) hush(); else speak('Voice on.');
+    return;
+  }
+
+  if (a === 'finish'){
+    clearInterval(run.iv); hush();
+    if (S.lastDone !== today()){ S.ripples++; S.lastDone = today(); save(); }
+    return go('done');
+  }
+  if (a === 'chip'){ return say(v, 'voicebox'); }
+  if (a === 'donebox'){ S.seenBox = true; save(); return go('fb1'); }
+  if (a === 'fb1'){ return go('fb2'); }
+  if (a === 'fb2'){ remember(v); return S.remind ? afterRun() : go('remind'); }
+  if (a === 'remind'){ S.remind = v; save(); return afterRun(); }
+  if (a === 'extra'){ return go('effort'); }
+});
+
+function afterRun(){ return (S.ripples % 7 === 0) ? go('milestone') : go('accum'); }
+
+function generate(){
+  go('generating');
+  var started = Date.now();
+  askForMove().then(function(m){
+    run.move = m;
+    var wait = Math.max(0, 2200 - (Date.now()-started));
+    setTimeout(function(){ go('move'); }, wait);
+  });
+}
+
+document.addEventListener('submit', function(e){
+  var f = e.target.closest('[data-say]');
+  if (!f) return;
+  e.preventDefault();
+  var inp = f.querySelector('input'), txt = inp.value;
+  inp.value = ''; inp.blur();
+  var where = f.getAttribute('data-say');
+  if (where === 'purpose' && txt.trim()){ S.purpose = txt.trim(); S.seenWelcome = true; save(); return go('effort'); }
+  say(txt, where);   // 打字永遠是說話。換動作只走按鈕，不靠猜。
+});
+
+boot();
+</script>
+</body>
+</html>

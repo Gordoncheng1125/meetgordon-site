@@ -17,7 +17,14 @@ function qs(s){var l=s.toLowerCase();return [ /should/.test(l)?'Who’s saying �
 form.addEventListener('submit',function(e){e.preventDefault();var v=inp.value.trim();if(!v)return;
 if(step===0){q=v}else{ans.push(v)}
 step++;box.dataset.step=step;inp.value='';inp.placeholder='Say it the way you’d say it out loud';
-if(step<4){lab.textContent=qs(q)[step-1];inp.focus();return}
+if(step<4){lab.textContent=qs(q)[step-1];if(document.activeElement===inp||!run)inp.focus({preventScroll:true});return}
 form.hidden=true;card.hidden=false;document.getElementById('o1').textContent=q;document.getElementById('o2').textContent=ans.slice(0,2).join(' ');document.getElementById('o3').textContent='You already said it: “'+ans[2]+'”'});
-document.getElementById('again').addEventListener('click',function(){step=0;ans=[];q='';box.dataset.step=0;card.hidden=true;form.hidden=false;lab.textContent='What’s on your mind?';inp.placeholder='Should I change jobs?';inp.focus()});
+function reset(){step=0;ans=[];q='';box.dataset.step=0;card.hidden=true;form.hidden=false;lab.textContent='What’s on your mind?';inp.value='';inp.placeholder='Should I change jobs?'}
+var demo=['Should I change jobs?','Mostly my parents.','Making things with my hands.','The small project first.'],run=0;
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function play(){var id=++run;reset();var i=0;(function next(){if(id!==run||i>=demo.length)return;var s=demo[i++],k=0;wait(i===1?300:900).then(function t(){if(id!==run)return;inp.value=s.slice(0,++k);if(k<s.length)return wait(42).then(t);return wait(450).then(function(){if(id!==run)return;form.requestSubmit();next()})})})()}
+inp.addEventListener('pointerdown',function(){if(run){run++}});inp.addEventListener('keydown',function(){run++});
+document.getElementById('replay').addEventListener('click',play);
+document.getElementById('again').addEventListener('click',function(){run++;reset();inp.focus()});
+if(!reduce){var seen=false,ao=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!seen){seen=true;ao.disconnect();play()}},{threshold:.55});ao.observe(box)}
 })();

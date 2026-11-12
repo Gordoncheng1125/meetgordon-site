@@ -349,7 +349,7 @@ function setPhase(t){$("phase").textContent=t}
 function banner(p){
   const b=$("banner");
   if(p==="bell"){b.className="banner bell";$("b1").textContent=round<rounds?"Time's up!":"Last bell!";
-    $("b2").textContent=round<rounds?"Wrap up your sentence. Standing people, get ready to move.":"That was round "+rounds+" of "+rounds+".";b.hidden=false}
+    $("b2").textContent=round<rounds?"Wrap up your sentence. Everyone except "+fixedName+", get ready to move.":"That was round "+rounds+" of "+rounds+".";b.hidden=false}
   else if(p==="swap"){b.className="banner";$("b1").textContent="Swap";
     $("b2").textContent="Everyone except "+fixedName+": move one spot along the arrows.";b.hidden=false}
   else if(p==="done"){b.className="banner";$("b1").textContent="That's a wrap";$("b2").textContent="Thanks, everyone. Every one of you met every other one.";b.hidden=false}
@@ -362,7 +362,7 @@ function startPhase(p,sec){
   $("time").classList.toggle("ring",p==="bell");
   if(p!=="swap") $("route")?.classList.remove("active");
   banner(p);
-  if(p==="talk") setPhase(`Round ${round} / ${rounds} · Seated asks first`);
+  if(p==="talk") setPhase(`Round ${round} / ${rounds} · First half: one asks`);
   if(p==="bell"){ setPhase(round<rounds?"Time's up":"Last bell"); ringBell(BELL()); }
   if(p==="swap"){ offset++; moveStanding(true); setPhase(`Swap → Round ${round+1}`); }
 }
@@ -372,9 +372,9 @@ function tick(){
   showTime(left);
   if(state==="talk" && !halfDone && left<=phaseDur/2 && left>0.5){
     halfDone=true; birdCall();
-    setPhase(`Round ${round} / ${rounds} · Standing asks`);
+    setPhase(`Round ${round} / ${rounds} · Second half: switch`);
     const b=$("banner"); b.className="banner"; $("b1").textContent="Switch";
-    $("b2").textContent="Halfway. Now the standing person asks, the seated person answers."; b.hidden=false;
+    $("b2").textContent="Halfway. Now the other person asks."; b.hidden=false;
     halfTimer=setTimeout(()=>{if(state==="talk")b.hidden=true}, testMode?1500:6000);
   }
   if(left>0)return;

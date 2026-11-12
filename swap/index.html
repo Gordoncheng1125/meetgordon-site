@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thesis Swap</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#24130f; --bg2:#321b15; --ink:#f3e6cf; --muted:#b89f86;
+  --wood:#5e3220; --wood2:#4a2718; --linen:#eadcc3; --linen2:#d9c6a6;
+  --flame:#f4b64a; --wine:#b0384a; --rose:#d88a8f; --chair:#7a4a2f;
+}
+*{box-sizing:border-box;margin:0}
+body{background:linear-gradient(rgba(28,14,11,.35),rgba(28,14,11,.55)),url("bg.jpg") center/cover fixed,var(--bg);color:var(--ink);
+  font-family:"DM Sans",system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+.wrap{max-width:1500px;margin:0 auto;padding:22px 16px 40px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-style:italic;font-size:clamp(44px,6vw,84px);line-height:.9;letter-spacing:-.5px}
+h1 span{color:var(--flame)}
+.sub{color:var(--muted);font-size:15px;margin-top:8px;letter-spacing:.4px}
+.clock{text-align:right}
+.time{font-family:"DM Mono",monospace;font-size:clamp(56px,8vw,112px);line-height:1;font-weight:500;font-variant-numeric:tabular-nums}
+.time.alert{color:var(--wine)}
+.phase{font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--flame);margin-top:6px}
+.stage{margin-top:14px;position:relative}
+.banner{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:5;text-align:center;width:max-content;max-width:min(760px,48vw);
+  background:rgba(36,19,15,.94);border:2px solid var(--flame);border-radius:12px;padding:16px 36px;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);animation:pop .22s ease-out}
+.banner .b1{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:600;font-size:clamp(36px,4.4vw,72px);line-height:1;color:var(--flame)}
+.banner .b2{font-size:clamp(15px,1.4vw,21px);margin-top:6px;color:var(--ink)}
+.banner.bell .b1{color:#ff8f9c}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+button.on{background:#e8c98f;color:#2a1510;border-color:#e8c98f}
+body.testing .sub::after{content:" · TEST MODE";color:#ff8f9c;font-weight:700}
+svg{width:100%;height:auto;display:block;max-height:calc(100vh - 235px);margin:0 auto}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px}
+button{font:600 17px "DM Sans",sans-serif;border-radius:6px;padding:14px 22px;cursor:pointer;border:1px solid var(--flame);
+  background:transparent;color:var(--ink);transition:transform .15s ease-out,opacity .15s}
+button.primary{background:var(--flame);color:#2a1510;border-color:var(--flame)}
+button.wine{background:var(--wine);border-color:var(--wine);color:#fff3e8}
+button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+label{color:var(--muted);font-size:14px}
+select{font:500 15px "DM Sans";background:var(--bg2);color:var(--ink);border:1px solid #6b4a3a;border-radius:6px;padding:10px}
+details{margin-top:16px;color:var(--muted)}
+summary{cursor:pointer;font-size:14px}
+textarea{width:100%;max-width:520px;height:300px;margin-top:8px;background:var(--bg2);color:var(--ink);border:1px solid #6b4a3a;
+  border-radius:6px;padding:10px;font:14px/1.5 "DM Mono",monospace}
+.hint{font-size:13px;margin-top:6px}
+.person{transition:transform .9s cubic-bezier(.22,.8,.3,1)}
+.flame{animation:flick 1.6s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+.glow{animation:pulse 2.4s ease-in-out infinite alternate}
+@keyframes flick{0%{transform:scale(1);opacity:.95}50%{transform:scale(.86) translateX(.4px)}100%{transform:scale(1.08);opacity:1}}
+@keyframes pulse{from{opacity:.55}to{opacity:.85}}
+#route .rt{opacity:.35;transition:opacity .25s}
+#route.active .rt{opacity:1;stroke-dasharray:7 7;animation:flow .6s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.ring{animation:ring .35s ease-in-out infinite alternate}
+@keyframes ring{from{opacity:.2}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.flame,.glow,.ring,#route.active .rt,.banner{animation:none}.person{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Thesis <span>Swap</span></h1>
+      <div class="sub">Thesis Lab · Nov 12 · 10 minutes a pair · 5 each way · swap</div>
+    </div>
+    <div class="clock">
+      <div class="time" id="time">5:00</div>
+      <div class="phase" id="phase">Shuffle to begin</div>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="banner" id="banner" hidden><div class="b1" id="b1"></div><div class="b2" id="b2"></div></div>
+    <svg id="room" viewBox="0 0 1400 900" aria-label="Bird's-eye seating chart"></svg>
+  </div>
+
+  <div class="controls">
+    <button class="primary" id="btnShuffle">① Shuffle seats</button>
+    <button class="wine" id="btnStart" disabled>② Start</button>
+    <button id="btnPause" disabled>Pause</button>
+    <button id="btnReset">Reset</button>
+    <label>Round <select id="mins">
+      <option value="600" selected>10 min (5 + 5)</option><option value="480">8 min (4 + 4)</option>
+      <option value="360">6 min (3 + 3)</option>
+      </select></label>
+    <button id="btnTest" aria-pressed="false">Test mode: off</button>
+    <button id="btnBell">🔔 Test bell</button>
+    <button id="btnBird">🐦 Test bird</button>
+  </div>
+
+  <details>
+    <summary>Names (one per line · Allan + 13 classmates)</summary>
+    <textarea id="names"></textarea>
+    <div class="hint">Saved in this browser. Odd count → one seat becomes a break.</div>
+  </details>
+</div>
+
+<script>
+const DEFAULT_NAMES=["Allan","Darren","Feifey","Gordon","JuJu","Kathy","Kevin",
+  "Mingyue","Phil","Ramon","Seren","ShuYang","Sophie","Yuxuan"];
+let testMode=false;
+const BELL=()=>testMode?2:5, SWAP=()=>testMode?3:10, TALK=()=>testMode?6:+$("mins").value;
+const NS="http://www.w3.org/2000/svg";
+const $=id=>document.getElementById(id);
+const svg=$("room");
+
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+$("names").value=store.get("ts-names-v2")||DEFAULT_NAMES.join("\n");
+$("names").addEventListener("input",()=>store.set("ts-names-v2",$("names").value));
+
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e}
+
+let N=7, seatX=[], seated=[], standing=[], offset=0, round=0, rounds=7;
+let state="idle", phaseEnd=0, remaining=0, timer=null, personEls=[];
+
+/* Stacked layout, standing rows face each other across the middle aisle:
+   Table A seats (top) · Table A · A standing row  ‖ aisle ‖  B standing row · Table B · Table B seats (bottom)
+   Standing people walk one loop: A row left→right, drop to B row, B row right→left, back up to A seat 1. */
+const VW=1400, VH=900;
+const A={label:46, seatLbl:84, chair:150, table:[205,315], stand:395};
+const B={stand:525, table:[605,715], chair:770, seatLbl:842, label:880};
+let cols=[], nA=4, nB=3;
+const slotPos=slot=> slot<nA ? {x:cols[slot], t:"A"} : {x:cols[nA-1-(slot-nA)], t:"B"};
+
+function drawRoom(){
+  svg.setAttribute("viewBox",`0 0 ${VW} ${VH}`);
+  svg.innerHTML="";
+  nA=Math.ceil(N/2); nB=N-nA;
+  const s=Math.min(300,(VW-360)/Math.max(1,nA-1)), x0=(VW-s*(nA-1))/2;
+  cols=Array.from({length:nA},(_,i)=>x0+i*s);
+  seatX=Array.from({length:N},(_,i)=>slotPos(i).x);
+  const defs=el("defs",{});
+  defs.innerHTML=`
+    <radialGradient id="cg"><stop offset="0" stop-color="#f4b64a" stop-opacity=".55"/><stop offset="1" stop-color="#f4b64a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a3a24"/><stop offset="1" stop-color="#4a2718"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f4b64a"/></marker>`;
+  el("rect",{x:0,y:0,width:VW,height:VH,fill:"#1c0e0b",opacity:.55,rx:18,stroke:"#f4b64a","stroke-opacity":.25});
+
+  const tables=[{t:"A",cfg:A,xs:cols.slice(0,nA),from:1,to:nA},{t:"B",cfg:B,xs:cols.slice(nA-nB,nA),from:nA+1,to:N}].filter(t=>t.xs.length);
+  tables.forEach(({t,cfg,xs,from,to})=>{
+    const left=Math.min(...xs)-110, right=Math.max(...xs)+110, mid=(left+right)/2, up=t==="A";
+    // label
+    el("text",{x:left,y:cfg.label,fill:"#f4b64a","font-family":"Cormorant Garamond","font-style":"italic","font-weight":600,"font-size":32}).textContent=`Table ${t}`;
+    el("text",{x:left+(t==="A"?118:116),y:cfg.label,fill:"#8c715d","font-family":"DM Mono","font-size":13,"letter-spacing":1.5}).textContent=`SEATS ${from}–${to}`;
+    // chairs (backs face away from table)
+    xs.forEach(x=>{
+      const slot= t==="A"? cols.indexOf(x) : nA+(nA-1-cols.indexOf(x));
+      const backY= up? cfg.chair-58 : cfg.chair+42;
+      el("rect",{x:x-40,y:backY,width:80,height:16,rx:6,fill:"#5a3220"});
+      el("rect",{x:x-36,y:cfg.chair-42+(up?0:-20),width:72,height:62,rx:10,fill:"#7a4a2f",stroke:"#946045","stroke-width":2});
+      el("text",{x:x+48,y:cfg.chair+(up?20:-20),fill:"#b89f86","font-family":"DM Mono","font-size":15}).textContent=`${slot+1}`;
+    });
+    // table
+    const [ty,tb]=cfg.table, th=tb-ty;
+    el("rect",{x:left+6,y:ty+10,width:right-left,height:th,rx:10,fill:"#140a07",opacity:.5});
+    el("rect",{x:left,y:ty,width:right-left,height:th,rx:10,fill:"url(#wood)"});
+    el("rect",{x:left+22,y:ty+16,width:right-left-44,height:th-32,rx:4,fill:"#eadcc3",opacity:.95});
+    el("rect",{x:left+22,y:ty+th/2-9,width:right-left-44,height:18,fill:"#b0384a",opacity:.85});
+    xs.forEach(x=>[ty+33,tb-33].forEach((py,k)=>{
+      el("circle",{cx:x,cy:py,r:15,fill:"#fbf3e4",stroke:"#d9c6a6","stroke-width":2});
+      el("circle",{cx:x,cy:py,r:9,fill:"none",stroke:"#d9c6a6","stroke-width":1});
+      el("circle",{cx:x+(k?-26:26),cy:py+(k?-4:4),r:6,fill:"#c95b6a",opacity:.75,stroke:"#f3e6cf","stroke-width":1.2});
+    }));
+    const sx=xs.slice().sort((p,q)=>p-q), cs=[left+40];
+    for(let i=0;i<sx.length-1;i++)cs.push((sx[i]+sx[i+1])/2); cs.push(right-40);
+    cs.forEach((x,i)=>{const y=ty+th/2;
+      el("circle",{cx:x,cy:y,r:80,fill:"url(#cg)",class:"glow",style:`animation-delay:${-i*.37}s`});
+      el("circle",{cx:x,cy:y,r:11,fill:"#c9a24e"}); el("circle",{cx:x,cy:y,r:7,fill:"#f6ead2"});
+      el("ellipse",{cx:x,cy:y,rx:3.5,ry:4.5,fill:"#ffd77a",class:"flame",style:`animation-delay:${-i*.29}s`});
+    });
+  });
+  drawRoute();
+  el("g",{id:"pairs"});
+  el("g",{id:"people"});
+  renderPeople();
+}
+
+function drawRoute(){
+  const g=el("g",{id:"route"}), arrow=(d,dash)=>el("path",{d,fill:"none",stroke:"#f4b64a","stroke-width":2.5,"marker-end":"url(#arr)",class:"rt",...(dash?{"stroke-dasharray":"7 7"}:{})},g);
+  const Ay=A.stand, By=B.stand;
+  for(let i=0;i<nA-1;i++){const a=cols[i]+40,b=cols[i+1]-40;arrow(`M${a} ${Ay} Q${(a+b)/2} ${Ay-24} ${b} ${Ay}`)}
+  if(nB){
+    const R=cols[nA-1];                                  // A end → B start (same column, straight down)
+    arrow(`M${R+38} ${Ay+8} C${R+95} ${Ay+30} ${R+95} ${By-30} ${R+38} ${By-8}`);
+    for(let k=0;k<nB-1;k++){const a=cols[nA-1-k]-40,b=cols[nA-2-k]+40;arrow(`M${a} ${By} Q${(a+b)/2} ${By+24} ${b} ${By}`)}
+    const Lb=cols[nA-nB], L=cols[0];                     // B end → back to seat 1
+    arrow(`M${Lb-38} ${By-6} C${(Lb+L)/2-40} ${By} ${L-95} ${By-20} ${L-40} ${Ay+12}`,true);
+  } else if(nA>1){
+    arrow(`M${cols[nA-1]+38} ${Ay+8} C${cols[nA-1]+80} ${Ay+70} ${cols[0]-80} ${Ay+70} ${cols[0]-38} ${Ay+8}`,true);
+  }
+  el("text",{x:VW-40,y:(Ay+By)/2+5,"text-anchor":"end",fill:"#e8c98f","font-family":"DM Sans","font-weight":700,"font-size":14,"letter-spacing":2},g).textContent="TO TABLE B";
+  el("text",{x:40,y:(Ay+By)/2+5,fill:"#e8c98f","font-family":"DM Sans","font-weight":700,"font-size":14,"letter-spacing":2},g).textContent="BACK TO SEAT 1";
+}
+
+function personGroup(name,x,y,nameBelow,kind){
+  const g=el("g",{class:"person",transform:`translate(${x},${y})`},$("people"));
+  const col=kind==="seat"?"#d88a8f":"#f4b64a";
+  if(name==null){
+    el("circle",{r:24,fill:"none",stroke:"#8c715d","stroke-dasharray":"3 5","stroke-width":2},g);
+    el("text",{y:5,"text-anchor":"middle",fill:"#8c715d","font-size":12,"font-family":"DM Mono"},g).textContent="break";
+    return g;
+  }
+  el("ellipse",{rx:30,ry:16,fill:col,opacity:.9},g);
+  el("circle",{r:15,fill:"#3a2118",stroke:col,"stroke-width":3},g);
+  el("text",{y:nameBelow?52:-30,"text-anchor":"middle",fill:"#f3e6cf","font-family":"DM Sans","font-weight":700,"font-size":30,"paint-order":"stroke",stroke:"#24130f","stroke-width":5,"stroke-linejoin":"round"},g).textContent=name;
+  return g;
+}
+const seatPt=slot=>{const p=slotPos(slot);return p.t==="A"?{x:p.x,y:A.chair-10,below:false}:{x:p.x,y:B.chair-10,below:true}};
+const standPt=slot=>{const p=slotPos(slot);return p.t==="A"?{x:p.x,y:A.stand,below:true}:{x:p.x,y:B.stand,below:false}};
+
+function renderPeople(){
+  $("people").innerHTML="";$("pairs").innerHTML="";
+  if(!seated.length){
+    for(let i=0;i<N;i++){const a=seatPt(i),b=standPt(i);
+      el("circle",{cx:a.x,cy:a.y,r:6,fill:"#946045"},$("people"));
+      el("circle",{cx:b.x,cy:b.y,r:6,fill:"#6b4a3a"},$("people"));}
+    return;
+  }
+  seated.forEach((n,i)=>{const p=seatPt(i);personGroup(n,p.x,p.y,p.below,"seat")});
+  personEls=standing.map((n,j)=>{const p=standPt((j+offset)%N);const g=personGroup(n,p.x,p.y,p.below,"stand");g.dataset.slot=(j+offset)%N;return g});
+  drawPairs();
+}
+function drawPairs(){
+  $("pairs").innerHTML="";
+  for(let i=0;i<N;i++){const a=seatPt(i),b=standPt(i);
+    el("line",{x1:a.x,y1:a.y+(a.below?-22:22),x2:b.x,y2:b.y+(b.below?-22:22),stroke:"#f4b64a","stroke-width":1.5,"stroke-dasharray":"2 6",opacity:.45},$("pairs"))}
+}
+function moveStanding(anim){
+  personEls.forEach((g,j)=>{
+    const slot=(j+offset)%N, p=standPt(slot);
+    g.style.transition=anim?"transform 1.6s cubic-bezier(.45,0,.3,1)":"none";
+    g.style.transform=`translate(${p.x}px,${p.y}px)`;
+    // flip name side when crossing rows
+    const t=g.querySelector("text"); if(t && t.textContent!=="break") t.setAttribute("y",p.below?52:-30);
+  });
+  $("route")?.classList.toggle("active",!!anim);
+}
+
+function readNames(){return $("names").value.split("\n").map(s=>s.trim()).filter(Boolean)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+$("btnShuffle").onclick=()=>{
+  const names=shuffle(readNames());
+  if(names.length<2){alert("Add names first");return}
+  N=Math.ceil(names.length/2); rounds=N;
+  const list=names.concat(names.length%2?[null]:[]);
+  seated=list.slice(0,N); standing=list.slice(N); offset=0; round=0;
+  drawRoom(); renderPeople();
+  $("btnStart").disabled=false;
+  setPhase("Ready · "+rounds+" rounds"); showTime(TALK());
+};
+
+/* ---------- bell (Web Audio) ---------- */
+let actx=null;
+function ac(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();return actx}
+function strike(t){                       // soft chime: low pitch, gentle attack, filtered, long tail
+  const c=ac(), out=c.createGain(), lp=c.createBiquadFilter();
+  lp.type="lowpass"; lp.frequency.value=1800; out.gain.value=.28;
+  out.connect(lp); lp.connect(c.destination);
+  [[1,1,3.2],[2.0,.28,2.2],[3.0,.08,1.4]].forEach(([r,a,d])=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type="sine"; o.frequency.value=523.25*r;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(a,t+.04); g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g); g.connect(out); o.start(t); o.stop(t+d+.05);
+  });
+}
+function birdCall(){                       // short songbird whistle: three quick rising chirps + one trill
+  const c=ac(), t0=c.currentTime+.02, out=c.createGain(); out.gain.value=.16; out.connect(c.destination);
+  const chirp=(t,f0,f1,d)=>{
+    const o=c.createOscillator(), g=c.createGain(), lfo=c.createOscillator(), lg=c.createGain();
+    o.type="sine"; o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f1,t+d*.7); o.frequency.exponentialRampToValueAtTime(f1*.9,t+d);
+    lfo.frequency.value=38; lg.gain.value=f0*.03; lfo.connect(lg); lg.connect(o.frequency);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(1,t+.015); g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.connect(g); g.connect(out); o.start(t); lfo.start(t); o.stop(t+d+.02); lfo.stop(t+d+.02);
+  };
+  chirp(t0,2400,3900,.11); chirp(t0+.17,2500,4100,.11); chirp(t0+.34,2600,4300,.13);
+  for(let i=0;i<5;i++) chirp(t0+.6+i*.06,3600,3100,.05);
+}
+function ringBell(sec){const c=ac(), t0=c.currentTime+.02;for(let s=0;s<sec;s+=1.25)strike(t0+s)}
+$("btnBell").onclick=()=>ringBell(2);
+$("btnBird").onclick=()=>birdCall();
+
+/* ---------- timer ---------- */
+function fmt(s){s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function showTime(s){$("time").textContent=fmt(s)}
+function setPhase(t){$("phase").textContent=t}
+
+function banner(p){
+  const b=$("banner");
+  if(p==="bell"){b.className="banner bell";$("b1").textContent=round<rounds?"Time's up!":"Last bell!";
+    $("b2").textContent=round<rounds?"Wrap up your sentence. Standing people, get ready to move.":"That was round "+rounds+" of "+rounds+".";b.hidden=false}
+  else if(p==="swap"){b.className="banner";$("b1").textContent="Swap";
+    $("b2").textContent="Standing: move one seat along the arrows. Seated: stay put.";b.hidden=false}
+  else if(p==="done"){b.className="banner";$("b1").textContent="That's a wrap";$("b2").textContent="Thanks, everyone. Every standing person met every seated person.";b.hidden=false}
+  else b.hidden=true;
+}
+let phaseDur=0, halfDone=false, halfTimer=null;
+function startPhase(p,sec){
+  state=p; phaseEnd=performance.now()+sec*1000; phaseDur=sec; halfDone=false; clearTimeout(halfTimer);
+  $("time").classList.toggle("alert",p!=="talk");
+  $("time").classList.toggle("ring",p==="bell");
+  if(p!=="swap") $("route")?.classList.remove("active");
+  banner(p);
+  if(p==="talk") setPhase(`Round ${round} / ${rounds} · Seated asks first`);
+  if(p==="bell"){ setPhase(round<rounds?"Time's up":"Last bell"); ringBell(BELL()); }
+  if(p==="swap"){ offset++; moveStanding(true); setPhase(`Swap → Round ${round+1}`); }
+}
+function tick(){
+  if(state==="idle"||state==="paused"||state==="done")return;
+  const left=(phaseEnd-performance.now())/1000;
+  showTime(left);
+  if(state==="talk" && !halfDone && left<=phaseDur/2){
+    halfDone=true; birdCall();
+    setPhase(`Round ${round} / ${rounds} · Standing asks`);
+    const b=$("banner"); b.className="banner"; $("b1").textContent="Switch";
+    $("b2").textContent="Halfway. Now the standing person asks, the seated person answers."; b.hidden=false;
+    halfTimer=setTimeout(()=>{if(state==="talk")b.hidden=true}, testMode?1500:6000);
+  }
+  if(left>0)return;
+  if(state==="talk") startPhase("bell",BELL());
+  else if(state==="bell"){ if(round<rounds) startPhase("swap",SWAP()); else finish(); }
+  else if(state==="swap"){ round++; startPhase("talk",TALK()); }
+}
+function finish(){state="done";clearInterval(timer);$("time").classList.remove("alert","ring");showTime(0);setPhase("Done · thank you");banner("done");
+  $("btnPause").disabled=true;$("btnShuffle").disabled=false}
+
+$("btnStart").onclick=()=>{
+  ac();
+  if(state==="paused"){phaseEnd=performance.now()+remaining*1000;state=pausedFrom;$("btnPause").textContent="Pause";return}
+  round=1; offset=0; moveStanding();
+  $("btnStart").disabled=true;$("btnShuffle").disabled=true;$("btnPause").disabled=false;
+  clearInterval(timer); timer=setInterval(tick,100);
+  startPhase("talk",TALK());
+};
+let pausedFrom=null;
+$("btnPause").onclick=()=>{
+  if(state==="paused"){phaseEnd=performance.now()+remaining*1000;state=pausedFrom;$("btnPause").textContent="Pause";return}
+  if(["talk","bell","swap"].includes(state)){pausedFrom=state;remaining=(phaseEnd-performance.now())/1000;state="paused";
+    $("btnPause").textContent="Resume";setPhase("Paused")}
+};
+$("btnReset").onclick=()=>{
+  clearInterval(timer);state="idle";round=0;offset=0;banner("idle");
+  $("btnStart").disabled=!seated.length;$("btnShuffle").disabled=false;$("btnPause").disabled=true;$("btnPause").textContent="Pause";
+  $("time").classList.remove("alert","ring");showTime(TALK());setPhase(seated.length?"Ready · "+rounds+" rounds":"Shuffle to begin");
+  if(seated.length)moveStanding();
+};
+$("mins").onchange=()=>{if(state==="idle")showTime(TALK())};
+$("btnTest").onclick=()=>{
+  testMode=!testMode;
+  $("btnTest").textContent="Test mode: "+(testMode?"on · 6s rounds":"off");
+  $("btnTest").setAttribute("aria-pressed",testMode);
+  $("btnTest").classList.toggle("on",testMode);
+  document.body.classList.toggle("testing",testMode);
+  if(state==="idle")showTime(TALK());
+};
+document.addEventListener("keydown",e=>{if(e.target.tagName==="TEXTAREA")return;
+  if(e.code==="Space"){e.preventDefault();$("btnPause").click()}
+  if(e.key==="f")document.documentElement.requestFullscreen?.()});
+
+drawRoom();
+</script>
+</body>
+</html>

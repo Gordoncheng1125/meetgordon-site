@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>1:1 Timekeeper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3efe6;
+    --ink: #1c2420;
+    --soft: #6f766f;
+    --line: #d8d2c4;
+    --card: #fbf9f3;
+    --go: #1f5d4a;
+    --warn: #c8451f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    font-size: 15px;
+    line-height: 1.4;
+    min-height: 100vh;
+    padding: 20px 16px calc(28px + env(safe-area-inset-bottom));
+    transition: background-color 200ms ease-out;
+  }
+  body.warn { background: #f6e3d6; }
+  body.flash { background: var(--warn); color: #fdf6ee; }
+  body.flash .soft, body.flash .eyebrow { color: #fdf6ee; }
+  main { max-width: 960px; margin: 0 auto; display: grid; gap: 28px; }
+  @media (min-width: 820px) {
+    main { grid-template-columns: 1.25fr 1fr; align-items: start; gap: 48px; padding-top: 24px; }
+  }
+  .eyebrow { color: var(--soft); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; display: flex; justify-content: space-between; gap: 12px; }
+  .soft { color: var(--soft); }
+  #name {
+    font-family: 'Bricolage Grotesque', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(56px, 17vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 14px 0 6px;
+    overflow-wrap: anywhere;
+  }
+  #clock {
+    font-weight: 500;
+    font-size: clamp(64px, 21vw, 150px);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    color: var(--go);
+  }
+  body.warn #clock { color: var(--warn); }
+  body.flash #clock { color: #fdf6ee; }
+  #bar { height: 6px; background: var(--line); margin: 16px 0 14px; }
+  #bar i { display: block; height: 100%; width: 100%; background: var(--go); transform-origin: left; transform: scaleX(0); }
+  body.warn #bar i { background: var(--warn); }
+  #next { font-size: 17px; }
+  #next b { font-family: 'Bricolage Grotesque', Georgia, serif; font-size: 22px; }
+  #drift { margin-top: 10px; min-height: 21px; }
+  .controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 20px; }
+  button {
+    font: inherit; color: var(--ink); background: var(--card);
+    border: 1px solid var(--ink); padding: 14px 10px; cursor: pointer;
+    transition: transform 120ms ease-out, opacity 120ms ease-out;
+  }
+  button:active { transform: translateY(1px); opacity: 0.7; }
+  button.primary { background: var(--ink); color: var(--paper); grid-column: 1 / -1; font-size: 17px; padding: 18px 10px; }
+  button:disabled { opacity: 0.35; cursor: default; }
+  button[aria-pressed="true"] { background: var(--go); color: var(--paper); border-color: var(--go); }
+  ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  li {
+    display: grid; grid-template-columns: 2.2em 1fr auto; gap: 8px; align-items: baseline;
+    padding: 11px 8px; border-bottom: 1px solid var(--line); cursor: pointer;
+  }
+  li .n { color: var(--soft); }
+  li .who { font-family: 'Bricolage Grotesque', Georgia, serif; font-size: 20px; font-weight: 500; }
+  li .t { font-variant-numeric: tabular-nums; }
+  li.done { color: var(--soft); }
+  li.done .who { text-decoration: line-through; }
+  li.now { background: var(--ink); color: var(--paper); }
+  li.now .n { color: var(--paper); }
+  li.now .who { font-weight: 700; }
+  .hint { color: var(--soft); font-size: 13px; margin: 10px 0 0; }
+  h2 { font: inherit; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; color: var(--soft); margin: 0 0 10px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <div class="eyebrow"><span id="label">Now</span><span id="wall"></span></div>
+    <div id="name">—</div>
+    <div id="clock">--:--</div>
+    <div id="bar"><i></i></div>
+    <div id="next"></div>
+    <div id="drift" class="soft"></div>
+    <div class="controls">
+      <button class="primary" id="bNext">Next person starts now</button>
+      <button id="bMinus">− 1 min</button>
+      <button id="bPlus">+ 1 min</button>
+      <button id="bRestart">Restart this slot</button>
+      <button id="bUndo" disabled>Undo</button>
+      <button id="bSound" aria-pressed="false">Sound off</button>
+      <button id="bReset">Back to plan</button>
+    </div>
+  </section>
+  <section>
+    <h2>Thesis 1:1 order · 15 min each</h2>
+    <ol id="list"></ol>
+    <p class="hint">Tap a name to start that person now. Times follow the clock on this device and shift when you adjust.</p>
+  </section>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var NAMES = (q.get('names') || 'JuJu,Kathy,Kevin,Gordon,Phil,Ramón,Yuxuan,Feifey,Shuyang,Mingyue,Seren,Sophie,Darren')
+    .split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  var DUR = (parseFloat(q.get('mins')) || 15) * 60000;
+  var WARN = 2 * 60000;
+  var st = (q.get('start') || '13:15').split(':');
+  var base = new Date(); base.setHours(+st[0], +st[1] || 0, 0, 0);
+  var BASE = base.getTime();
+  var N = NAMES.length;
+  var KEY = 'timekeeper:' + base.toDateString() + ':' + st.join(':') + ':' + DUR;
+
+  var shift = 0, undo = null, sound = false;
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved && typeof saved.shift === 'number') shift = saved.shift;
+  } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ shift: shift })); } catch (e) {} }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var elName = $('name'), elClock = $('clock'), elNext = $('next'), elDrift = $('drift'),
+      elLabel = $('label'), elWall = $('wall'), elList = $('list'), elBar = document.querySelector('#bar i');
+
+  function hm(ms) {
+    var d = new Date(ms), h = d.getHours() % 12 || 12, m = d.getMinutes();
+    return h + ':' + (m < 10 ? '0' : '') + m;
+  }
+  function mmss(ms) {
+    var s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60), r = s % 60;
+    if (m >= 60) { var h = Math.floor(m / 60); m = m % 60; return h + ':' + (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+  }
+  function index(now) { return Math.floor((now - BASE - shift) / DUR); }
+
+  function setShift(v) {
+    undo = shift; shift = v; save();
+    $('bUndo').disabled = false;
+    lastIdx = null; warned = index(Date.now()); // adjusting by hand should not fire cues
+    quiet = true; tick();
+  }
+
+  // sound + flash
+  var ctx = null;
+  function beep(times, freq) {
+    if (navigator.vibrate) { try { navigator.vibrate(times > 1 ? [200, 120, 200, 120, 400] : 200); } catch (e) {} }
+    if (!sound || !ctx) return;
+    var t = ctx.currentTime;
+    for (var i = 0; i < times; i++) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t + i * 0.32);
+      g.gain.exponentialRampToValueAtTime(0.5, t + i * 0.32 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.32 + 0.26);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(t + i * 0.32); o.stop(t + i * 0.32 + 0.28);
+    }
+  }
+  function flash() {
+    document.body.classList.add('flash');
+    setTimeout(function () { document.body.classList.remove('flash'); }, 2500);
+  }
+
+  var lastIdx = null, warned = null, quiet = false, listKey = '';
+
+  function renderList(idx) {
+    var k = idx + '|' + shift;
+    if (k === listKey) return;
+    listKey = k;
+    elList.innerHTML = '';
+    NAMES.forEach(function (nm, i) {
+      var li = document.createElement('li');
+      if (i < idx) li.className = 'done'; else if (i === idx) li.className = 'now';
+      li.innerHTML = '<span class="n">' + (i + 1) + '</span><span class="who"></span><span class="t">' + hm(BASE + shift + i * DUR) + '</span>';
+      li.querySelector('.who').textContent = nm;
+      li.onclick = function () { setShift(Date.now() - BASE - i * DUR); };
+      elList.appendChild(li);
+    });
+  }
+
+  function tick() {
+    var now = Date.now(), t0 = BASE + shift, idx = index(now);
+    elWall.textContent = hm(now);
+    var body = document.body;
+
+    if (now < t0) {
+      elLabel.textContent = 'Starts in';
+      elName.textContent = NAMES[0];
+      elClock.textContent = mmss(t0 - now);
+      elBar.style.transform = 'scaleX(0)';
+      elNext.innerHTML = 'First up at <b>' + hm(t0) + '</b>';
+      body.classList.remove('warn');
+      renderList(-1); idx = -1;
+    } else if (idx >= N) {
+      elLabel.textContent = 'Finished';
+      elName.textContent = 'All done';
+      elClock.textContent = '00:00';
+      elBar.style.transform = 'scaleX(1)';
+      elNext.textContent = 'Ended at ' + hm(t0 + N * DUR);
+      body.classList.remove('warn');
+      renderList(N);
+    } else {
+      var end = t0 + (idx + 1) * DUR, left = end - now;
+      elLabel.textContent = 'Now · ' + (idx + 1) + ' of ' + N;
+      elName.textContent = NAMES[idx];
+      elClock.textContent = mmss(left);
+      elBar.style.transform = 'scaleX(' + (1 - left / DUR).toFixed(4) + ')';
+      elNext.innerHTML = idx + 1 < N
+        ? 'Next: <b></b> at ' + hm(end)
+        : 'Last one · ends at ' + hm(end);
+      var b = elNext.querySelector('b'); if (b) b.textContent = NAMES[idx + 1];
+      body.classList.toggle('warn', left <= WARN);
+      if (left <= WARN && warned !== idx) { warned = idx; if (!quiet) beep(1, 660); }
+      renderList(idx);
+    }
+
+    if (lastIdx !== null && idx !== lastIdx && !quiet && idx >= 0) { beep(3, 880); flash(); }
+    lastIdx = idx; quiet = false;
+
+    var mins = Math.round(shift / 60000);
+    elDrift.textContent = mins === 0 ? 'On plan' : Math.abs(mins) + ' min ' + (mins > 0 ? 'behind' : 'ahead of') + ' plan';
+    $('bNext').disabled = idx >= N - 1 && now >= t0;
+    $('bRestart').disabled = idx < 0 || idx >= N;
+  }
+
+  $('bNext').onclick = function () {
+    var now = Date.now(), idx = Math.max(-1, index(now));
+    if (idx + 1 < N) setShift(now - BASE - (idx + 1) * DUR);
+  };
+  $('bRestart').onclick = function () {
+    var now = Date.now(), idx = index(now);
+    if (idx >= 0 && idx < N) setShift(now - BASE - idx * DUR);
+  };
+  $('bPlus').onclick = function () { setShift(shift + 60000); };
+  $('bMinus').onclick = function () { setShift(shift - 60000); };
+  $('bReset').onclick = function () { setShift(0); };
+  $('bUndo').onclick = function () {
+    if (undo === null) return;
+    var u = undo; setShift(u); undo = null; $('bUndo').disabled = true;
+  };
+  $('bSound').onclick = function () {
+    sound = !sound;
+    if (sound) {
+      try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); ctx.resume(); } catch (e) {}
+      beep(1, 880);
+    }
+    this.setAttribute('aria-pressed', sound ? 'true' : 'false');
+    this.textContent = sound ? 'Sound on' : 'Sound off';
+  };
+
+  // keep the screen awake while the page is visible
+  var lock = null;
+  function wake() {
+    if (!('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+    navigator.wakeLock.request('screen').then(function (l) { lock = l; }).catch(function () {});
+  }
+  document.addEventListener('visibilitychange', function () { wake(); quiet = true; tick(); });
+  document.addEventListener('click', function once() { wake(); document.removeEventListener('click', once); });
+  wake();
+
+  quiet = true; tick();
+  setInterval(tick, 250);
+})();
+</script>
+</body>
+</html>
